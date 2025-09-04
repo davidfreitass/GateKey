@@ -28,33 +28,25 @@ identificado.
 
 • RF04: O sistema deve registrar data, hora e identidade em cada acesso. 
 
-• RF05: O sistema deve permitir consulta ao histórico de acessos por administradores. 
+• RF05: O sistema deve permitir consulta ao histórico de acessos por administradores.  
 
-• RF06: O sistema deve gerar relatórios de acessos em formato PDF/Excel. 
+• RF06: O sistema deve oferecer backup e restauração de dados. 
 
-• RF07: O sistema deve oferecer backup e restauração de dados. 
-
-• RF08: O sistema deve permitir o cadastro e gerenciamento de veículos associados a 
-moradores e visitantes. 
-
-• RF09: O sistema deve enviar notificações em tempo real em caso de tentativa de acesso não 
+• RF07: O sistema deve enviar notificações em tempo real em caso de tentativa de acesso não 
 autorizado. 
 
-• RF10: O sistema deve possibilitar integração com dispositivos físicos (portões, catracas, 
-cancelas). 
+• RF08: O sistema deve possibilitar integração com dispositivos físicos (portões, catracas, 
+cancelas).  
 
-• RF11: O sistema deve permitir agendamento e autorização prévia de visitas por parte dos 
-moradores. 
+• RF09: O sistema deve manter registro de tentativas de acesso negadas, incluindo motivo. 
 
-• RF12: O sistema deve manter registro de tentativas de acesso negadas, incluindo motivo. 
-
-• RF13: O sistema deve oferecer perfis de acesso diferenciados (administrador, segurança, 
+• RF10: O sistema deve oferecer perfis de acesso diferenciados (administrador, segurança, 
 morador). 
 
-• RF14: O sistema deve permitir auditoria completa de operações administrativas (cadastros, 
+• RF11: O sistema deve permitir auditoria completa de operações administrativas (cadastros, 
 alterações, exclusões). 
 
-• RF15: O sistema deve permitir configuração de níveis de permissão para usuários internos (ex.: 
+• RF12: O sistema deve permitir configuração de níveis de permissão para usuários internos (ex.: 
 segurança pode consultar mas não alterar dados).
 
     - Requisitos Não Funcionais (RNF) 
@@ -82,5 +74,5 @@ segurança pode consultar mas não alterar dados).
 
 ## Escopo da entrega
 
-<img width="800" height="1080" alt="Captura de tela 2025-03-04 182738" src="https://raw.githubusercontent.com/davidfreitass/GateKey/refs/heads/main/EscopoDeEntrega.PNG" />
+<img width="800" height="1080" alt="Captura de tela 2025-03-04 182738" src="https://raw.githubusercontent.com/davidfreitass/GateKey/refs/heads/main/images/EscopoDeEntrega.PNG" />
 
