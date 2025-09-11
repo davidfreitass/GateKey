@@ -14,6 +14,7 @@ Modelo de Negócio:
     On-premises
 
 ## Modelagem do Banco de Dados (Der)
+<img width="778" height="700" alt="image" src="https://github.com/user-attachments/assets/7d803be2-1f9e-4e19-bad5-0f8e7ab1a5be" />
 
 ## Requisitos:
 
