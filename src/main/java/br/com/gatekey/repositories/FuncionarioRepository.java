@@ -1,4 +1,4 @@
 package br.com.gatekey.repositories;
 
-public class FuncionarioFacade {
+public class FuncionarioRepository {
 }
