@@ -1,26 +1,15 @@
 package br.com.gatekey.repositories;
 
 import br.com.gatekey.entities.Usuario;
-import java.util.ArrayList;
+
 import java.util.List;
 
-public class UsuarioRepository {
-    private List<Usuario> usuarios = new ArrayList<>();
+public interface UsuarioRepository {
 
-    public void salvar(Usuario usuario) {
-        usuarios.add(usuario);
-    }
+    void salvar(Usuario usuario);
+    Usuario buscarPorId(int id);
+    List<Usuario> buscarTodos();
+    void atualizar(Usuario usuario);
+    void remover(int id);
 
-    public Usuario buscarPorLogin(String login) {
-        for (Usuario usuario : usuarios) {
-            if (usuario.getLogin().equalsIgnoreCase(login)) {
-                return usuario;
-            }
-        }
-        return null;
-    }
-
-    public List<Usuario> listarTodos() {
-        return usuarios;
-    }
 }

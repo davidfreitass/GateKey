@@ -1,30 +1,34 @@
 package br.com.gatekey.applications;
 
-import br.com.gatekey.entities.*;
-import br.com.gatekey.facades.UsuarioFacade;
+import br.com.gatekey.entities.Usuario;
+import br.com.gatekey.repositories.UsuarioRepository;
+
+import java.util.List;
 
 public class UsuarioApplication {
-    public static void main(String[] args) {
-        UsuarioFacade usuarioFacade = new UsuarioFacade();
+    private final UsuarioRepository repository;
 
-        Usuario usuario = new Usuario(
-                1,
-                "adm",
-                "12345",
-                NivelAcesso.ADMIN,
-                Status.ATIVO,
-                0,
-                0
-        );
+    public UsuarioApplication(UsuarioRepository repository) {
+        this.repository = repository;
+    }
 
-        usuarioFacade.registrarUsuario(usuario);
+    public void cadastrar(Usuario usuario) {
+        repository.salvar(usuario);
+    }
 
-        Usuario logado = usuarioFacade.login("adm", "12345");
+    public Usuario buscarPorId(int id) {
+        return repository.buscarPorId(id);
+    }
 
-        if (logado != null) {
-            System.out.println("Login realizado com sucesso! Bem-vindo, " + logado.getLogin());
-        } else {
-            System.out.println("Falha no login!");
-        }
+    public List<Usuario> listarTodos() {
+        return repository.buscarTodos();
+    }
+
+    public void atualizar(Usuario usuario) {
+        repository.atualizar(usuario);
+    }
+
+    public void remover(int id) {
+        repository.remover(id);
     }
 }

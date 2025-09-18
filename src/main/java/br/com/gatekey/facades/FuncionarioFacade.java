@@ -1,30 +1,36 @@
 package br.com.gatekey.facades;
 
+import br.com.gatekey.applications.FuncionarioApplication;
 import br.com.gatekey.entities.Funcionario;
-import br.com.gatekey.entities.Status;
 import br.com.gatekey.repositories.FuncionarioRepository;
+
 import java.util.List;
 
 public class FuncionarioFacade {
-    private FuncionarioRepository funcionarioRepository;
 
-    public FuncionarioFacade() {
-        this.funcionarioRepository = new FuncionarioRepository();
+    private final FuncionarioApplication application;
+
+    public FuncionarioFacade(FuncionarioApplication application) {
+        this.application = application;
     }
 
-    public void registrarFuncionario(Funcionario funcionario) {
-        funcionarioRepository.salvar(funcionario);
+    public void cadastrar(Funcionario funcionario) {
+        application.cadastrar(funcionario);
     }
 
-    public Funcionario buscarPorCpf(String cpf) {
-        return funcionarioRepository.buscarPorCpf(cpf);
+    public Funcionario buscarPorId(int id) {
+        return application.buscarPorId(id);
     }
 
     public List<Funcionario> listarTodos() {
-        return funcionarioRepository.listarTodos();
+        return application.listarTodos();
     }
 
-    public boolean isAtivo(Funcionario funcionario) {
-        return funcionario.getStatus() == Status.ATIVO;
+    public void atualizar(Funcionario funcionario) {
+        application.atualizar(funcionario);
+    }
+
+    public void remover(int id) {
+        application.remover(id);
     }
 }

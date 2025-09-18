@@ -1,30 +1,34 @@
 package br.com.gatekey.applications;
 
 import br.com.gatekey.entities.Funcionario;
-import br.com.gatekey.entities.Status;
-import br.com.gatekey.facades.FuncionarioFacade;
+import br.com.gatekey.repositories.FuncionarioRepository;
+
+import java.util.List;
 
 public class FuncionarioApplication {
-    public static void main(String[] args) {
-        FuncionarioFacade facade = new FuncionarioFacade();
+    private final FuncionarioRepository repository;
 
-        Funcionario funcionario = new Funcionario(
-                1,
-                "Jefté",
-                "123.456.789-00",
-                "(75) 94002-8922",
-                "jefte@ba.docente.senai.br",
-                null,
-                Status.ATIVO
-        );
+    public FuncionarioApplication(FuncionarioRepository repository) {
+        this.repository = repository;
+    }
 
-        facade.registrarFuncionario(funcionario);
+    public void cadastrar(Funcionario funcionario) {
+        repository.salvar(funcionario);
+    }
 
-        Funcionario f = facade.buscarPorCpf("123.456.789-00");
-        if (f != null && facade.isAtivo(f)) {
-            System.out.println("Funcionário encontrado: " + f.getNome());
-        } else {
-            System.out.println("Funcionário não encontrado ou inativo!");
-        }
+    public Funcionario buscarPorId(int id) {
+        return repository.buscarPorId(id);
+    }
+
+    public List<Funcionario> listarTodos() {
+        return repository.buscarTodos();
+    }
+
+    public void atualizar(Funcionario funcionario) {
+        repository.atualizar(funcionario);
+    }
+
+    public void remover(int id) {
+        repository.remover(id);
     }
 }
