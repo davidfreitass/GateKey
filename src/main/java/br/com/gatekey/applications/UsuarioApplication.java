@@ -3,7 +3,7 @@ package br.com.gatekey.applications;
 import br.com.gatekey.entities.*;
 import br.com.gatekey.facades.UsuarioFacade;
 
-public class Main {
+public class UsuarioApplication {
     public static void main(String[] args) {
         UsuarioFacade usuarioFacade = new UsuarioFacade();
 
