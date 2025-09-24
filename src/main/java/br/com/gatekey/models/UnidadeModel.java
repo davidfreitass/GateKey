@@ -1,6 +1,6 @@
-package br.com.gatekey.entities;
+package br.com.gatekey.models;
 
-public class Unidade {
+public class UnidadeModel {
     private int id;
     private String numero;
     private String bloco;

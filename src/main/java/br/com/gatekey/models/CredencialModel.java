@@ -1,6 +1,6 @@
-package br.com.gatekey.entities;
+package br.com.gatekey.models;
 
-public class Credencial {
+public class CredencialModel {
     private int id;
     private String tipo;
     private byte[] dadosBiometricos;
