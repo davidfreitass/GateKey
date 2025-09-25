@@ -17,13 +17,30 @@ import java.time.LocalDateTime;
 
         private String situacao;
 
-        public int getId() { return id; }
-        public void setId(int id) { this.id = id; }
+        public int getId() {
+            return id;
+        }
 
-        public LocalDateTime getDataHora() { return dataHora; }
-        public void setDataHora(LocalDateTime dataHora) { this.dataHora = dataHora; }
+        public void setId(int id) {
+            this.id = id;
+        }
 
-        public String getSituacao() { return situacao; }
-        public void setSituacao(String situacao) { this.situacao = situacao; }
+        public LocalDateTime getDataHora() {
+            return dataHora;
+        }
+
+        public void setDataHora(LocalDateTime dataHora) {
+            this.dataHora = dataHora;
+        }
+
+        public String getSituacao() {
+            return situacao;
+        }
+
+        public void setSituacao(String situacao) {
+            this.situacao = situacao;
+        }
     }
+
+
 

@@ -5,6 +5,7 @@ import br.com.gatekey.entities.Dispositivo;
 import br.com.gatekey.repositories.DispositivoRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DispositivoApplication {
@@ -15,10 +16,17 @@ public class DispositivoApplication {
     }
 
     public Dispositivo salvar(Dispositivo dispositivo) {
-        return repository.save(dispositivo);
+        return null;
     }
 
     public List<Dispositivo> listar() {
         return repository.findAll();
+    }
+
+    public Optional<Dispositivo> buscarPorId(Integer id) {
+        return repository.findById(id);
+    }
+
+    public void excluir(Integer id) {
     }
 }
