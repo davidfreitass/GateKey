@@ -1,6 +1,6 @@
 package br.com.gatekey.entities;
 
-public class Morador {
+public class Funcionario {
     private int id;
     private String nome;
     private String cpf;
