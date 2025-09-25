@@ -1,6 +1,6 @@
-package br.com.gatekey.entities;
+package br.com.gatekey.models;
 
-public class Funcionario {
+public class MoradorModel {
     private int id;
     private String nome;
     private String cpf;
