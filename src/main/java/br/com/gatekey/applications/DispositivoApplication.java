@@ -1,6 +1,7 @@
 package br.com.gatekey.applications;
 
 
+
 import br.com.gatekey.entities.Dispositivo;
 import br.com.gatekey.repositories.DispositivoRepository;
 import org.springframework.stereotype.Service;
@@ -15,18 +16,20 @@ public class DispositivoApplication {
         this.repository = repository;
     }
 
-    public Dispositivo salvar(Dispositivo dispositivo) {
-        return null;
+    public Dispositivo salvar(Dispositivo credencial) {
+        return repository.salvar(credencial);
     }
 
-    public List<Dispositivo> listar() {
-        return repository.findAll();
+    public Dispositivo buscarPorId(int id) {
+        return repository.buscarPorId(id);
     }
 
-    public Optional<Dispositivo> buscarPorId(Integer id) {
-        return repository.findById(id);
+    public List<Dispositivo> listarTodos() {
+        return repository.listarTodos();
     }
 
-    public void excluir(Integer id) {
+    public void deletar(int id) {
+        repository.deletar(id);
     }
 }
+

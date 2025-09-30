@@ -1,10 +1,10 @@
 package br.com.gatekey.applications;
 
+
 import br.com.gatekey.entities.RegistroAcesso;
 import br.com.gatekey.repositories.RegistroAcessoRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class RegistroAcessoApplication {
@@ -14,19 +14,19 @@ public class RegistroAcessoApplication {
         this.repository = repository;
     }
 
-    public RegistroAcesso salvar(RegistroAcesso registro) {
-        return repository.save(registro);
+    public RegistroAcesso salvar(RegistroAcesso registroAcesso) {
+        return repository.salvar(registroAcesso);
     }
 
-    public List<RegistroAcesso> listar() {
-        return repository.findAll();
+    public RegistroAcesso buscarPorId(int id) {
+        return repository.buscarPorId(id);
     }
 
-    public Optional<RegistroAcesso> buscarPorId(Integer id) {
-        return repository.findById(id);
+    public List<RegistroAcesso> listarTodos() {
+        return repository.listarTodos();
     }
 
-    public void excluir(Integer id) {
-        repository.deleteById(id);
+    public void deletar(int id) {
+        repository.deletar(id);
     }
 }

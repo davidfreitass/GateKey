@@ -1,6 +1,8 @@
 package br.com.gatekey.facades;
 
+import br.com.gatekey.applications.CredencialApplication;
 import br.com.gatekey.applications.RegistroAcessoApplication;
+import br.com.gatekey.entities.Credencial;
 import br.com.gatekey.entities.RegistroAcesso;
 import org.springframework.stereotype.Component;
 import java.util.List;
@@ -13,11 +15,19 @@ public class RegistroAcessoFacade {
         this.application = application;
     }
 
-    public RegistroAcesso registrarAcesso(RegistroAcesso registro) {
-        return application.salvar(registro);
+    public RegistroAcesso salvar(RegistroAcesso registroAcesso) {
+        return application.salvar(registroAcesso);
     }
 
-    public List<RegistroAcesso> listarAcessos() {
-        return application.listar();
+    public RegistroAcesso buscarPorId(int id) {
+        return application.buscarPorId(id);
+    }
+
+    public List<RegistroAcesso> listarTodos() {
+        return application.listarTodos();
+    }
+
+    public void deletar(int id) {
+        application.deletar(id);
     }
 }

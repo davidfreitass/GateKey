@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private int id;
 
-        @Column(name = "data_hora", nullable = false)
         private LocalDateTime dataHora;
 
         private String situacao;
