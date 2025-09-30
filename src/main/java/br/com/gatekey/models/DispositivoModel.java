@@ -2,11 +2,9 @@ package br.com.gatekey.models;
 
 import jakarta.persistence.*;
 
+@Entity
+@Table(name = "Dispositivo")
 public class DispositivoModel {
-
-    @Entity
-    @Table(name = "Dispositivo")
-    public class Dispositivo {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,11 +16,20 @@ public class DispositivoModel {
 
         private String status;
 
-        public int getId() { return id; }
-        public void setId(int id) { this.id = id; }
+        public int getId() {
+            return id;
+        }
 
-        public String getLocalizacao() { return localizacao; }
-        public void setLocalizacao(String localizacao) { this.localizacao = localizacao; }
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getLocalizacao() {
+            return localizacao;
+        }
+        public void setLocalizacao(String localizacao) {
+            this.localizacao = localizacao;
+        }
 
         public String getTipo() { return tipo; }
         public void setTipo(String tipo) { this.tipo = tipo; }
@@ -31,4 +38,3 @@ public class DispositivoModel {
         public void setStatus(String status) { this.status = status; }
     }
 
-}
