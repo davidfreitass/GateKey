@@ -1,0 +1,45 @@
+package br.com.gatekey.entities;
+
+import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
+
+    @Entity
+    @Table(name = "RegistroAcesso")
+    public class RegistroAcesso {
+
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private int id;
+
+        private LocalDateTime dataHora;
+
+        private String situacao;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public LocalDateTime getDataHora() {
+            return dataHora;
+        }
+
+        public void setDataHora(LocalDateTime dataHora) {
+            this.dataHora = dataHora;
+        }
+
+        public String getSituacao() {
+            return situacao;
+        }
+
+        public void setSituacao(String situacao) {
+            this.situacao = situacao;
+        }
+    }
+
+
+
