@@ -36,21 +36,21 @@ public class MoradorController {
     @PostMapping
     public MoradorModel create(@RequestBody MoradorModel model) {
         Morador morador = toEntity(model);
-        Morador saved = moradorFacade.salvar(morador);
+        Morador saved = moradorFacade.cadastrar(morador);
         return toModel(saved);
     }
 
     @PutMapping("/{id}")
-    public MoradorModel update(@PathVariable int id, @RequestBody MoradorModel model) {
+    public MoradorModel editar (@PathVariable int id, @RequestBody MoradorModel model) {
         Morador morador = toEntity(model);
         morador.setId(id);
-        Morador updated = moradorFacade.salvar(morador);
+        Morador updated = moradorFacade.atualizar(morador);
         return toModel(updated);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id) {
-        moradorFacade.deletar(id);
+    public void Remover (@PathVariable int id) {
+        moradorFacade.remover(id);
     }
 
     private Morador toEntity(MoradorModel model) {
@@ -59,7 +59,8 @@ public class MoradorController {
         morador.setNome(model.getNome());
         morador.setCpf(model.getCpf());
         morador.setTelefone(model.getTelefone());
-        morador.setApartamento(model.getApartamento());
+        morador.setEmail(model.getEmail());
+        morador.setStatus(model.getStatus());
         return morador;
     }
 
@@ -69,7 +70,8 @@ public class MoradorController {
         model.setNome(morador.getNome());
         model.setCpf(morador.getCpf());
         model.setTelefone(morador.getTelefone());
-        model.setApartamento(morador.getApartamento());
+        model.setEmail(morador.getEmail());
+        model.setStatus(morador.getStatus());
         return model;
     }
 }

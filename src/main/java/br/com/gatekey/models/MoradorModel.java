@@ -1,10 +1,10 @@
-package br.com.gatekey.entities;
+package br.com.gatekey.models;
 
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Morador")
-public class Morador {
+public class MoradorModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
