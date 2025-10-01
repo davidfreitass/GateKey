@@ -1,31 +1,33 @@
 package br.com.gatekey.applications;
 
 import br.com.gatekey.entities.Credencial;
-import br.com.gatekey.repositories.CredencialRepository;
+import br.com.gatekey.facades.CredencialFacade;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class CredencialApplication {
 
-    private final CredencialRepository repository;
+    private final CredencialFacade facade;
 
-    public CredencialApplication(CredencialRepository repository) {
-        this.repository = repository;
+    public CredencialApplication(CredencialFacade facade) {
+        this.facade = facade;
     }
 
     public Credencial salvar(Credencial credencial) {
-        return repository.salvar(credencial);
+        return facade.salvar(credencial);
     }
 
     public Credencial buscarPorId(int id) {
-        return repository.buscarPorId(id);
+        return facade.buscarPorId(id);
     }
 
     public List<Credencial> listarTodos() {
-        return repository.listarTodos();
+        return facade.listarTodos();
     }
 
     public void deletar(int id) {
-        repository.deletar(id);
+        facade.deletar(id);
     }
 }

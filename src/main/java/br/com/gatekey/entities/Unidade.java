@@ -1,40 +1,33 @@
 package br.com.gatekey.entities;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "unidades")
 public class Unidade {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(nullable = false)
     private String numero;
+
+    @Column(nullable = false)
     private String bloco;
+
+    @Column(nullable = false)
     private String tipo;
 
-    public int getId() {
-        return id;
-    }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public String getNumero() { return numero; }
+    public void setNumero(String numero) { this.numero = numero; }
 
-    public String getNumero() {
-        return numero;
-    }
+    public String getBloco() { return bloco; }
+    public void setBloco(String bloco) { this.bloco = bloco; }
 
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
-    public String getBloco() {
-        return bloco;
-    }
-
-    public void setBloco(String bloco) {
-        this.bloco = bloco;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
+    public String getTipo() { return tipo; }
+    public void setTipo(String tipo) { this.tipo = tipo; }
 }
