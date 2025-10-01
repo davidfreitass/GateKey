@@ -1,11 +1,9 @@
 package br.com.gatekey.repositories;
 
 import br.com.gatekey.entities.Unidade;
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface UnidadeRepository {
-    Unidade salvar(Unidade unidade);
-    Unidade buscarPorId(int id);
-    List<Unidade> listarTodos();
-    void deletar(int id);
+@Repository
+public interface UnidadeRepository extends JpaRepository<Unidade, Integer> {
 }
