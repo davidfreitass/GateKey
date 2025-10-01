@@ -3,9 +3,11 @@ package br.com.gatekey.facades;
 import br.com.gatekey.applications.MoradorApplication;
 import br.com.gatekey.entities.Morador;
 import br.com.gatekey.repositories.MoradorRepository;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class MoradorFacade {
 
     private final MoradorApplication application;

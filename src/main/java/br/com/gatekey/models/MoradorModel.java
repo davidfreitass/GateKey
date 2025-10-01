@@ -1,12 +1,26 @@
-package br.com.gatekey.models;
+package br.com.gatekey.entities;
 
-public class MoradorModel {
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "Morador")
+public class Morador {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String nome;
+
     private String cpf;
+
     private String telefone;
+
     private String email;
+
+    @Lob
     private byte[] fotoPerfil;
+
     private String status;
 
     public int getId() {
