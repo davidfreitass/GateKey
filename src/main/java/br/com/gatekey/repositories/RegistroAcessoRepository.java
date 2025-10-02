@@ -11,8 +11,5 @@ import java.util.List;
 
 @Repository
 public interface RegistroAcessoRepository extends JpaRepository<RegistroAcesso, Integer>{
-    RegistroAcesso salvar(RegistroAcesso registroAcesso);
-    RegistroAcesso buscarPorId(int id);
-    List<RegistroAcesso> listarTodos();
-    void deletar(int id);
+
 }

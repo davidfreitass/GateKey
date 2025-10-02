@@ -11,26 +11,27 @@ import java.util.Optional;
 
 @Service
 public class DispositivoApplication {
+
     private final DispositivoRepository repository;
 
     public DispositivoApplication(DispositivoRepository repository) {
         this.repository = repository;
     }
 
-    public Dispositivo salvar(Dispositivo credencial) {
-        return repository.salvar(credencial);
-    }
-
-    public Dispositivo buscarPorId(int id) {
-        return repository.buscarPorId(id);
+    public Dispositivo salvar(Dispositivo dispositivo) {
+        return repository.save(dispositivo);
     }
 
     public List<Dispositivo> listarTodos() {
-        return repository.listarTodos();
+        return repository.findAll();
     }
 
-    public void deletar(int id) {
-        repository.deletar(id);
+    public Optional<Dispositivo> buscarPorId(Integer id) {
+        return repository.findById(id);
     }
+
+    public void deletar(Integer id) {
+        repository.deleteById(id);
+ }
 }
 
