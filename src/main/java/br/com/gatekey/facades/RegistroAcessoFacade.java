@@ -29,4 +29,5 @@ public class RegistroAcessoFacade {
     public void deletar(int id) {
         application.deletar(id);
     }
+
 }
