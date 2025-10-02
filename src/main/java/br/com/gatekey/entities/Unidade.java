@@ -1,9 +1,22 @@
 package br.com.gatekey.entities;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "unidades")
 public class Unidade {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(nullable = false)
     private String numero;
+
+    @Column(nullable = false)
     private String bloco;
+
+    @Column(nullable = false)
     private String tipo;
 
     public int getId() { return id; }

@@ -1,10 +1,12 @@
 package br.com.gatekey.facades;
 
-import br.com.gatekey.applications.UnidadeApplication;
+import br.com.gatekey.application.UnidadeApplication;
 import br.com.gatekey.entities.Unidade;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class UnidadeFacade {
 
     private final UnidadeApplication application;

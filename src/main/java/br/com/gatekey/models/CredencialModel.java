@@ -1,19 +1,8 @@
-package br.com.gatekey.entities;
+package br.com.gatekey.models;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "credenciais")
-public class Credencial {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CredencialModel {
     private int id;
-
-    @Column(nullable = false, length = 20)
     private String tipo;
-
-    @Lob
     private byte[] dadosBiometricos;
 
     public int getId() {
