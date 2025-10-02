@@ -1,33 +1,34 @@
 package br.com.gatekey.applications;
 
 import br.com.gatekey.entities.Funcionario;
-import br.com.gatekey.facades.FuncionarioFacade;
-import org.springframework.stereotype.Component;
+import br.com.gatekey.repositories.FuncionarioRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
-@Component
+@Service
 public class FuncionarioApplication {
 
-    private final FuncionarioFacade funcionarioFacade;
+    private final FuncionarioRepository repository;
 
-    public FuncionarioApplication(FuncionarioFacade funcionarioFacade) {
-        this.funcionarioFacade = funcionarioFacade;
+    public FuncionarioApplication(FuncionarioRepository repository) {
+        this.repository = repository;
     }
 
     public Funcionario salvar(Funcionario funcionario) {
-        return funcionarioFacade.salvar(funcionario);
-    }
-
-    public Funcionario buscarPorId(int id) {
-        return funcionarioFacade.buscarPorId(id);
+        return repository.save(funcionario);
     }
 
     public List<Funcionario> listarTodos() {
-        return funcionarioFacade.listarTodos();
+        return repository.findAll();
     }
 
-    public void deletar(int id) {
-        funcionarioFacade.deletar(id);
+    public Optional<Funcionario> buscarPorId(Integer id) {
+        return repository.findById(id);
+    }
+
+    public void deletar(Integer id) {
+        repository.deleteById(id);
     }
 }
