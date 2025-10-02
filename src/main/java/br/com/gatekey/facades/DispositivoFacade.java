@@ -4,10 +4,10 @@ package br.com.gatekey.facades;
 import br.com.gatekey.applications.DispositivoApplication;
 import br.com.gatekey.entities.Dispositivo;
 import br.com.gatekey.models.DispositivoModel;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import java.util.List;
 
-@Component
+@Service
 public class DispositivoFacade {
     private final DispositivoApplication application;
 

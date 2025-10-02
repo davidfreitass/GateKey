@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-    @RequestMapping("/dispositivos")
-    public class DispositivoController {
+@RequestMapping("/dispositivos")
+public class DispositivoController {
 
     private final DispositivoFacade dispositivoFacade;
 

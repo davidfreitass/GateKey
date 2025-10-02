@@ -1,13 +1,11 @@
 package br.com.gatekey.facades;
 
-import br.com.gatekey.applications.CredencialApplication;
 import br.com.gatekey.applications.RegistroAcessoApplication;
-import br.com.gatekey.entities.Credencial;
 import br.com.gatekey.entities.RegistroAcesso;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import java.util.List;
 
-@Component
+@Service
 public class RegistroAcessoFacade {
     private final RegistroAcessoApplication application;
 

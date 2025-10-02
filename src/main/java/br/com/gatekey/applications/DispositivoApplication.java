@@ -5,6 +5,7 @@ package br.com.gatekey.applications;
 import br.com.gatekey.entities.Dispositivo;
 import br.com.gatekey.repositories.DispositivoRepository;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
