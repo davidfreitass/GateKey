@@ -1,11 +1,14 @@
 package br.com.gatekey.facades;
 
+
 import br.com.gatekey.applications.DispositivoApplication;
 import br.com.gatekey.entities.Dispositivo;
-import org.springframework.stereotype.Component;
+import br.com.gatekey.models.DispositivoModel;
+import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
-@Component
+@Service
 public class DispositivoFacade {
     private final DispositivoApplication application;
 
@@ -13,11 +16,21 @@ public class DispositivoFacade {
         this.application = application;
     }
 
-    public Dispositivo cadastrarDispositivo(Dispositivo dispositivo) {
+    public Dispositivo salvar(Dispositivo dispositivo) {
         return application.salvar(dispositivo);
     }
 
-    public List<Dispositivo> listarDispositivos() {
-        return application.listar();
+    public Optional<Dispositivo> buscarPorId(int id) {
+        return application.buscarPorId(id);
+    }
+
+    public List<Dispositivo> listarTodos() {
+        return application.listarTodos();
+    }
+
+    public void deletar(int id) {
+        application.deletar(id);
     }
 }
+
+

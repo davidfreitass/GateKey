@@ -1,45 +1,59 @@
 package br.com.gatekey.controllers;
 
-
 import br.com.gatekey.entities.Morador;
+import br.com.gatekey.applications.MoradorApplication;
 import br.com.gatekey.facades.MoradorFacade;
+import br.com.gatekey.models.MoradorModel;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/moradores")
 public class MoradorController {
 
-    private final MoradorFacade facade;
+    private final MoradorFacade moradorFacade;
 
-    public MoradorController(MoradorFacade facade) {
-        this.facade = facade;
-    }
-
-    @PostMapping
-    public void cadastrar(@RequestBody Morador morador) {
-        facade.cadastrar(morador);
-    }
-
-    @GetMapping("/{id}")
-    public Morador buscarPorId(@PathVariable int id) {
-        return facade.buscarPorId(id);
+    public MoradorController(MoradorFacade moradorFacade) {
+        this.moradorFacade = moradorFacade;
     }
 
     @GetMapping
-    public List<Morador> listarTodos() {
-        return facade.listarTodos();
+    public List<Morador> listAll() {
+        return moradorFacade.listarTodos();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Morador> buscar(@PathVariable Integer id) {
+        return moradorFacade.buscarPorId(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    public Morador create(@RequestBody Morador morador) {
+        return moradorFacade.salvar(morador);
     }
 
     @PutMapping("/{id}")
-    public void atualizar(@PathVariable int id, @RequestBody Morador morador) {
+    public ResponseEntity<Morador> update(@PathVariable Integer id, @RequestBody Morador morador) {
+        if (moradorFacade.buscarPorId(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
         morador.setId(id);
-        facade.atualizar(morador);
+        return ResponseEntity.ok(moradorFacade.salvar(morador));
     }
-    
+
     @DeleteMapping("/{id}")
-    public void remover(@PathVariable int id) {
-        facade.remover(id);
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        if (moradorFacade.buscarPorId(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        moradorFacade.deletar(id);
+        return ResponseEntity.noContent().build();
     }
 }
+

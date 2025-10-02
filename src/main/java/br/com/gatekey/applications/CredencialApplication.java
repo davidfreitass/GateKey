@@ -2,9 +2,12 @@ package br.com.gatekey.applications;
 
 import br.com.gatekey.entities.Credencial;
 import br.com.gatekey.repositories.CredencialRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
+@Service
 public class CredencialApplication {
 
     private final CredencialRepository repository;
@@ -14,18 +17,18 @@ public class CredencialApplication {
     }
 
     public Credencial salvar(Credencial credencial) {
-        return repository.salvar(credencial);
-    }
-
-    public Credencial buscarPorId(int id) {
-        return repository.buscarPorId(id);
+        return repository.save(credencial);
     }
 
     public List<Credencial> listarTodos() {
-        return repository.listarTodos();
+        return repository.findAll();
     }
 
-    public void deletar(int id) {
-        repository.deletar(id);
+    public Optional<Credencial> buscarPorId(Integer id) {
+        return repository.findById(id);
+    }
+
+    public void deletar(Integer id) {
+        repository.deleteById(id);
     }
 }

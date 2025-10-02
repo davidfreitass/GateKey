@@ -1,14 +1,17 @@
 package br.com.gatekey.applications;
 
 
+
 import br.com.gatekey.entities.Dispositivo;
 import br.com.gatekey.repositories.DispositivoRepository;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class DispositivoApplication {
+
     private final DispositivoRepository repository;
 
     public DispositivoApplication(DispositivoRepository repository) {
@@ -16,10 +19,10 @@ public class DispositivoApplication {
     }
 
     public Dispositivo salvar(Dispositivo dispositivo) {
-        return null;
+        return repository.save(dispositivo);
     }
 
-    public List<Dispositivo> listar() {
+    public List<Dispositivo> listarTodos() {
         return repository.findAll();
     }
 
@@ -27,6 +30,8 @@ public class DispositivoApplication {
         return repository.findById(id);
     }
 
-    public void excluir(Integer id) {
-    }
+    public void deletar(Integer id) {
+        repository.deleteById(id);
+ }
 }
+

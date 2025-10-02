@@ -1,19 +1,16 @@
 package br.com.gatekey.models;
-
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "RegistroAcesso")
 public class RegistroAcessoModel {
-    @Entity
-    @Table(name = "RegistroAcesso")
-    public class RegistroAcesso {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private int id;
 
-        @Column(name = "data_hora", nullable = false)
+
         private LocalDateTime dataHora;
 
         private String situacao;
@@ -29,4 +26,3 @@ public class RegistroAcessoModel {
     }
 
 
-}

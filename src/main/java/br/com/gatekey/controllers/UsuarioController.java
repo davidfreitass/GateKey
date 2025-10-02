@@ -2,11 +2,11 @@ package br.com.gatekey.controllers;
 
 import br.com.gatekey.entities.Usuario;
 import br.com.gatekey.facades.UsuarioFacade;
-import br.com.gatekey.applications.UsuarioApplication;
-import br.com.gatekey.repositories.UsuarioRepository;
+import br.com.gatekey.models.UsuarioModel;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -14,37 +14,61 @@ public class UsuarioController {
 
     private final UsuarioFacade usuarioFacade;
 
-    public UsuarioController(UsuarioRepository usuarioRepository) {
-        UsuarioApplication usuarioApplication = new UsuarioApplication(usuarioRepository);
-        this.usuarioFacade = new UsuarioFacade(usuarioApplication);
+    public UsuarioController(UsuarioFacade usuarioFacade) {
+        this.usuarioFacade = usuarioFacade;
     }
 
     @PostMapping
-    public String cadastrar(@RequestBody Usuario usuario) {
-        usuarioFacade.cadastrar(usuario);
-        return "Usuário cadastrado com sucesso!";
+    public UsuarioModel create(@RequestBody UsuarioModel model) {
+        Usuario usuario = toEntity(model);
+        Usuario saved = usuarioFacade.salvar(usuario);
+        return toModel(saved);
     }
 
     @GetMapping("/{id}")
-    public Usuario buscarPorId(@PathVariable int id) {
-        return usuarioFacade.buscarPorId(id);
+    public UsuarioModel read(@PathVariable int id) {
+        Usuario usuario = usuarioFacade.buscarPorId(id);
+        return toModel(usuario);
     }
 
     @GetMapping
-    public List<Usuario> listarTodos() {
-        return usuarioFacade.listarTodos();
+    public List<UsuarioModel> listAll() {
+        return usuarioFacade.listarTodos()
+                .stream()
+                .map(this::toModel)
+                .collect(Collectors.toList());
     }
 
     @PutMapping("/{id}")
-    public String atualizar(@PathVariable int id, @RequestBody Usuario usuario) {
+    public UsuarioModel update(@PathVariable int id, @RequestBody UsuarioModel model) {
+        Usuario usuario = toEntity(model);
         usuario.setId(id);
-        usuarioFacade.atualizar(usuario);
-        return "Usuário atualizado com sucesso!";
+        Usuario updated = usuarioFacade.salvar(usuario);
+        return toModel(updated);
     }
 
     @DeleteMapping("/{id}")
-    public String remover(@PathVariable int id) {
-        usuarioFacade.remover(id);
-        return "Usuário removido com sucesso!";
+    public void delete(@PathVariable int id) {
+        usuarioFacade.deletar(id);
+    }
+
+    private Usuario toEntity(UsuarioModel model) {
+        Usuario usuario = new Usuario();
+        usuario.setId(model.getId());
+        usuario.setLogin(model.getLogin());
+        usuario.setSenha(model.getSenha());
+        usuario.setNivelAcesso(model.getNivelAcesso());
+        usuario.setStatus(model.getStatus());
+        return usuario;
+    }
+
+    private UsuarioModel toModel(Usuario usuario) {
+        UsuarioModel model = new UsuarioModel();
+        model.setId(usuario.getId());
+        model.setLogin(usuario.getLogin());
+        model.setSenha(usuario.getSenha());
+        model.setNivelAcesso(usuario.getNivelAcesso());
+        model.setStatus(usuario.getStatus());
+        return model;
     }
 }

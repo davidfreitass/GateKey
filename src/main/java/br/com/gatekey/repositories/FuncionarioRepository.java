@@ -1,15 +1,9 @@
 package br.com.gatekey.repositories;
 
 import br.com.gatekey.entities.Funcionario;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
-public interface FuncionarioRepository {
-
-    void salvar(Funcionario funcionario);
-    Funcionario buscarPorId(int id);
-    List<Funcionario> buscarTodos();
-    void atualizar(Funcionario funcionario);
-    void remover(int id);
-
+@Repository
+public interface FuncionarioRepository extends JpaRepository<Funcionario, Integer> {
 }

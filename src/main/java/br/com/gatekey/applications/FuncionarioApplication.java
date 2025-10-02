@@ -2,33 +2,33 @@ package br.com.gatekey.applications;
 
 import br.com.gatekey.entities.Funcionario;
 import br.com.gatekey.repositories.FuncionarioRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
+@Service
 public class FuncionarioApplication {
+
     private final FuncionarioRepository repository;
 
     public FuncionarioApplication(FuncionarioRepository repository) {
         this.repository = repository;
     }
 
-    public void cadastrar(Funcionario funcionario) {
-        repository.salvar(funcionario);
-    }
-
-    public Funcionario buscarPorId(int id) {
-        return repository.buscarPorId(id);
+    public Funcionario salvar(Funcionario funcionario) {
+        return repository.save(funcionario);
     }
 
     public List<Funcionario> listarTodos() {
-        return repository.buscarTodos();
+        return repository.findAll();
     }
 
-    public void atualizar(Funcionario funcionario) {
-        repository.atualizar(funcionario);
+    public Optional<Funcionario> buscarPorId(Integer id) {
+        return repository.findById(id);
     }
 
-    public void remover(int id) {
-        repository.remover(id);
+    public void deletar(Integer id) {
+        repository.deleteById(id);
     }
 }

@@ -1,47 +1,78 @@
 package br.com.gatekey.controllers;
 
-import br.com.gatekey.applications.DispositivoApplication;
 import br.com.gatekey.entities.Dispositivo;
+import br.com.gatekey.facades.DispositivoFacade;
+import br.com.gatekey.models.DispositivoModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
-    @RestController
-    @RequestMapping("/dispositivos")
-    public class DispositivoController {
+@RestController
+@RequestMapping("/dispositivos")
+public class DispositivoController {
 
-        private final DispositivoApplication application;
+    private final DispositivoFacade dispositivoFacade;
 
-        public DispositivoController(DispositivoApplication application) {
-            this.application = application;
-        }
+    public DispositivoController(DispositivoFacade dispositivoFacade) {
+        this.dispositivoFacade = dispositivoFacade;
 
-        @GetMapping
-        public ResponseEntity<List<Dispositivo>> listar() {
-            return ResponseEntity.ok(application.listar());
-        }
+    }
 
-        @GetMapping("/{id}")
-        public ResponseEntity<Dispositivo> buscar(@PathVariable Integer id) {
-            return application.buscarPorId(id)
-                    .map(ResponseEntity::ok)
-                    .orElse(ResponseEntity.notFound().build());
-        }
+    @GetMapping
+    public List<DispositivoModel> listAll() {
+        return dispositivoFacade.listarTodos()
+                .stream()
+                .map(this::toModel)
+                .collect(Collectors.toList());
+    }
+
+
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<DispositivoModel> buscar(@PathVariable Integer id) {
+        return dispositivoFacade.buscarPorId(id)
+                .map(this::toModel)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
 
         @PostMapping
-        public ResponseEntity<Dispositivo> salvar(@RequestBody Dispositivo dispositivo) {
-            return ResponseEntity.ok(application.salvar(dispositivo));
-        }
+    public DispositivoModel create(@RequestBody DispositivoModel model) {
+        Dispositivo dispositivo = toEntity(model);
+        Dispositivo saved = dispositivoFacade.salvar(dispositivo);
+        return toModel(saved);
+    }
 
-        @PutMapping("/{id}")
-        public ResponseEntity<Dispositivo> atualizar(@PathVariable Integer id, @RequestBody Dispositivo dispositivo) {
-            dispositivo.setId(id);
-            return ResponseEntity.ok(application.salvar(dispositivo));
-        }
+    @PutMapping("/{id}")
+    public DispositivoModel update(@PathVariable int id, @RequestBody DispositivoModel model) {
+        Dispositivo dispositivo = toEntity(model);
+        dispositivo.setId(id);
+        Dispositivo updated = dispositivoFacade.salvar(dispositivo);
+        return toModel(updated);
+    }
 
-        @DeleteMapping("/{id}")
-        public ResponseEntity<Void> excluir(@PathVariable Integer id) {
-            application.excluir(id);
-            return ResponseEntity.noContent().build();
-        }
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable int id) {
+        dispositivoFacade.deletar(id);
+    }
+
+    private Dispositivo toEntity(DispositivoModel model) {
+        Dispositivo dispositivo = new Dispositivo();
+        dispositivo.setId(model.getId());
+        dispositivo.setTipo(model.getTipo());
+        dispositivo.setLocalizacao(model.getLocalizacao());
+        return dispositivo;
+    }
+
+
+    private DispositivoModel toModel(Dispositivo dispositivo) {
+        DispositivoModel model = new DispositivoModel();
+        model.setId(dispositivo.getId());
+        model.setTipo(dispositivo.getTipo());
+        model.setLocalizacao(dispositivo.getLocalizacao());
+        return model;
+    }
 }

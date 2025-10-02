@@ -2,10 +2,12 @@ package br.com.gatekey.facades;
 
 import br.com.gatekey.applications.MoradorApplication;
 import br.com.gatekey.entities.Morador;
-import br.com.gatekey.repositories.MoradorRepository;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
+@Component
 public class MoradorFacade {
 
     private final MoradorApplication application;
@@ -14,11 +16,11 @@ public class MoradorFacade {
         this.application = application;
     }
 
-    public void cadastrar(Morador morador) {
-        application.cadastrar(morador);
+    public Morador salvar(Morador morador) {
+        return application.salvar(morador);
     }
 
-    public Morador buscarPorId(int id) {
+    public Optional<Morador> buscarPorId(Integer id) {
         return application.buscarPorId(id);
     }
 
@@ -26,11 +28,7 @@ public class MoradorFacade {
         return application.listarTodos();
     }
 
-    public void atualizar(Morador morador) {
-        application.atualizar(morador);
-    }
-
-    public void remover(int id) {
-        application.remover(id);
+    public void deletar(Integer id) {
+        application.deletar(id);
     }
 }

@@ -1,11 +1,9 @@
 package br.com.gatekey.repositories;
 
 import br.com.gatekey.entities.Credencial;
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface CredencialRepository {
-    Credencial salvar(Credencial credencial);
-    Credencial buscarPorId(int id);
-    List<Credencial> listarTodos();
-    void deletar(int id);
+@Repository
+public interface CredencialRepository extends JpaRepository<Credencial, Integer> {
 }

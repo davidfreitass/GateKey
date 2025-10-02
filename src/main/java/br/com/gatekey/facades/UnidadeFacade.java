@@ -2,9 +2,12 @@ package br.com.gatekey.facades;
 
 import br.com.gatekey.applications.UnidadeApplication;
 import br.com.gatekey.entities.Unidade;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
+@Service
 public class UnidadeFacade {
 
     private final UnidadeApplication application;
@@ -17,7 +20,7 @@ public class UnidadeFacade {
         return application.salvar(unidade);
     }
 
-    public Unidade buscarPorId(int id) {
+    public Optional<Unidade> buscarPorId(int id) {
         return application.buscarPorId(id);
     }
 

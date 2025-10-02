@@ -1,70 +1,72 @@
 package br.com.gatekey.controllers;
 
 import br.com.gatekey.entities.Credencial;
-import br.com.gatekey.facades.CredencialFacade;
+import br.com.gatekey.applications.CredencialApplication;
 import br.com.gatekey.models.CredencialModel;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/credenciais")
 public class CredencialController {
 
-    private final CredencialFacade credencialFacade;
+    private final CredencialApplication application;
 
-    public CredencialController(CredencialFacade credencialFacade) {
-        this.credencialFacade = credencialFacade;
-    }
-
-    @PostMapping
-    public CredencialModel create(@RequestBody CredencialModel model) {
-        Credencial credencial = toEntity(model);
-        Credencial saved = credencialFacade.salvar(credencial);
-        return toModel(saved);
-    }
-
-    @GetMapping("/{id}")
-    public CredencialModel read(@PathVariable int id) {
-        Credencial credencial = credencialFacade.buscarPorId(id);
-        return toModel(credencial);
+    public CredencialController(CredencialApplication application) {
+        this.application = application;
     }
 
     @GetMapping
     public List<CredencialModel> listAll() {
-        return credencialFacade.listarTodos()
+        return application.listarTodos()
                 .stream()
                 .map(this::toModel)
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/{id}")
+    public CredencialModel buscar(@PathVariable Integer id) {
+        Optional<Credencial> credencialOpt = application.buscarPorId(id);
+        return credencialOpt.map(this::toModel)
+                .orElseThrow(() -> new RuntimeException("Credencial não encontrada com id: " + id));
+    }
+
+    @PostMapping
+    public CredencialModel create(@RequestBody CredencialModel model) {
+        Credencial credencial = toEntity(model);
+        Credencial saved = application.salvar(credencial);
+        return toModel(saved);
+    }
+
     @PutMapping("/{id}")
-    public CredencialModel update(@PathVariable int id, @RequestBody CredencialModel model) {
+    public CredencialModel update(@PathVariable Integer id, @RequestBody CredencialModel model) {
         Credencial credencial = toEntity(model);
         credencial.setId(id);
-        Credencial updated = credencialFacade.salvar(credencial);
+        Credencial updated = application.salvar(credencial);
         return toModel(updated);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id) {
-        credencialFacade.deletar(id);
+    public void delete(@PathVariable Integer id) {
+        application.deletar(id);
     }
 
     private Credencial toEntity(CredencialModel model) {
-        Credencial credencial = new Credencial();
-        credencial.setId(model.getId());
-        credencial.setTipo(model.getTipo());
-        credencial.setDadosBiometricos(model.getDadosBiometricos());
-        return credencial;
+        Credencial entity = new Credencial();
+        entity.setId(model.getId());
+        entity.setTipo(model.getTipo());
+        entity.setDadosBiometricos(model.getDadosBiometricos());
+        return entity;
     }
 
-    private CredencialModel toModel(Credencial credencial) {
+    private CredencialModel toModel(Credencial entity) {
         CredencialModel model = new CredencialModel();
-        model.setId(credencial.getId());
-        model.setTipo(credencial.getTipo());
-        model.setDadosBiometricos(credencial.getDadosBiometricos());
+        model.setId(entity.getId());
+        model.setTipo(entity.getTipo());
+        model.setDadosBiometricos(entity.getDadosBiometricos());
         return model;
     }
 }
