@@ -1,38 +1,34 @@
 package br.com.gatekey.facades;
 
-import br.com.gatekey.applications.MoradorApplication;
-import br.com.gatekey.applications.UsuarioApplication;
-import br.com.gatekey.entities.Morador;
 import br.com.gatekey.entities.Usuario;
-import br.com.gatekey.repositories.MoradorRepository;
+import br.com.gatekey.repositories.UsuarioRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class UsuarioFacade {
 
-    private final UsuarioApplication application;
+    private final UsuarioRepository repository;
 
-    public UsuarioFacade(UsuarioApplication application) {
-        this.application = application;
+    public UsuarioFacade(UsuarioRepository repository) {
+        this.repository = repository;
     }
 
-    public void cadastrar(Usuario usuario) {
-        application.cadastrar(usuario);
+    public Usuario salvar(Usuario usuario) {
+        return repository.save(usuario);
     }
 
     public Usuario buscarPorId(int id) {
-        return application.buscarPorId(id);
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
     }
 
     public List<Usuario> listarTodos() {
-        return application.listarTodos();
+        return repository.findAll();
     }
 
-    public void atualizar(Usuario usuario) {
-        application.atualizar(usuario);
-    }
-
-    public void remover(int id) {
-        application.remover(id);
+    public void deletar(int id) {
+        repository.deleteById(id);
     }
 }

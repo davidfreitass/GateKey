@@ -1,25 +1,10 @@
-package br.com.gatekey.entities;
+package br.com.gatekey.models;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "usuarios")
-public class Usuario {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class UsuarioModel {
     private int id;
-
-    @Column(nullable = false, length = 50)
     private String login;
-
-    @Column(nullable = false, length = 100)
     private String senha;
-
-    @Column(nullable = false, length = 20)
     private String nivelAcesso;
-
-    @Column(nullable = false, length = 20)
     private String status;
 
     public int getId() { return id; }
