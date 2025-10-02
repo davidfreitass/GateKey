@@ -3,6 +3,7 @@ package br.com.gatekey.controllers;
 import br.com.gatekey.applications.RegistroAcessoApplication;
 import br.com.gatekey.entities.RegistroAcesso;
 import br.com.gatekey.facades.RegistroAcessoFacade;
+import br.com.gatekey.models.DispositivoModel;
 import br.com.gatekey.models.RegistroAcessoModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,9 +30,11 @@ public class RegistroAcessoController {
     }
 
     @GetMapping("/{id}")
-    public RegistroAcessoModel read(@PathVariable int id) {
-        RegistroAcesso registroAcesso = registroAcessoFacade.buscarPorId(id);
-        return toModel(registroAcesso);
+    public ResponseEntity<RegistroAcessoModel> buscar(@PathVariable Integer id) {
+        return registroAcessoFacade.buscarPorId(id)
+                .map(this::toModel)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping

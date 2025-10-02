@@ -3,6 +3,7 @@ package br.com.gatekey.controllers;
 import br.com.gatekey.entities.Dispositivo;
 import br.com.gatekey.facades.DispositivoFacade;
 import br.com.gatekey.models.DispositivoModel;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,14 +28,18 @@ public class DispositivoController {
     }
 
 
+
+
     @GetMapping("/{id}")
-    public DispositivoModel buscar(@PathVariable int id) {
-        Dispositivo dispositivo = dispositivoFacade.buscarPorId(id);
-        return toModel(dispositivo);
+    public ResponseEntity<DispositivoModel> buscar(@PathVariable Integer id) {
+        return dispositivoFacade.buscarPorId(id)
+                .map(this::toModel)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
 
-    @PostMapping
+        @PostMapping
     public DispositivoModel create(@RequestBody DispositivoModel model) {
         Dispositivo dispositivo = toEntity(model);
         Dispositivo saved = dispositivoFacade.salvar(dispositivo);
@@ -59,16 +64,15 @@ public class DispositivoController {
         dispositivo.setId(model.getId());
         dispositivo.setTipo(model.getTipo());
         dispositivo.setLocalizacao(model.getLocalizacao());
-        dispositivo.setTipo(model.getTipo());
         return dispositivo;
     }
+
 
     private DispositivoModel toModel(Dispositivo dispositivo) {
         DispositivoModel model = new DispositivoModel();
         model.setId(dispositivo.getId());
         model.setTipo(dispositivo.getTipo());
         model.setLocalizacao(dispositivo.getLocalizacao());
-        model.setTipo(model.getTipo());
         return model;
     }
 }
