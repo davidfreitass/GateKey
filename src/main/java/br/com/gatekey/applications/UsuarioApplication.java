@@ -1,33 +1,34 @@
 package br.com.gatekey.applications;
 
 import br.com.gatekey.entities.Usuario;
-import br.com.gatekey.facades.UsuarioFacade;
-import org.springframework.stereotype.Component;
+import br.com.gatekey.repositories.UsuarioRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
-@Component
+@Service
 public class UsuarioApplication {
 
-    private final UsuarioFacade usuarioFacade;
+    private final UsuarioRepository repository;
 
-    public UsuarioApplication(UsuarioFacade usuarioFacade) {
-        this.usuarioFacade = usuarioFacade;
+    public UsuarioApplication(UsuarioRepository repository) {
+        this.repository = repository;
     }
 
     public Usuario salvar(Usuario usuario) {
-        return usuarioFacade.salvar(usuario);
-    }
-
-    public Usuario buscarPorId(int id) {
-        return usuarioFacade.buscarPorId(id);
+        return repository.save(usuario);
     }
 
     public List<Usuario> listarTodos() {
-        return usuarioFacade.listarTodos();
+        return repository.findAll();
     }
 
-    public void deletar(int id) {
-        usuarioFacade.deletar(id);
+    public Optional<Usuario> buscarPorId(Integer id) {
+        return repository.findById(id);
+    }
+
+    public void deletar(Integer id) {
+        repository.deleteById(id);
     }
 }
