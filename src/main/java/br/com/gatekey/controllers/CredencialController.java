@@ -1,11 +1,12 @@
 package br.com.gatekey.controllers;
 
 import br.com.gatekey.entities.Credencial;
-import br.com.gatekey.models.CredencialModel;
 import br.com.gatekey.applications.CredencialApplication;
+import br.com.gatekey.models.CredencialModel;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -18,19 +19,6 @@ public class CredencialController {
         this.application = application;
     }
 
-    @PostMapping
-    public CredencialModel create(@RequestBody CredencialModel model) {
-        Credencial entity = toEntity(model);
-        Credencial saved = application.salvar(entity);
-        return toModel(saved);
-    }
-
-    @GetMapping("/{id}")
-    public CredencialModel read(@PathVariable int id) {
-        Credencial entity = application.buscarPorId(id);
-        return toModel(entity);
-    }
-
     @GetMapping
     public List<CredencialModel> listAll() {
         return application.listarTodos()
@@ -39,16 +27,30 @@ public class CredencialController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/{id}")
+    public CredencialModel buscar(@PathVariable Integer id) {
+        Optional<Credencial> credencialOpt = application.buscarPorId(id);
+        return credencialOpt.map(this::toModel)
+                .orElseThrow(() -> new RuntimeException("Credencial não encontrada com id: " + id));
+    }
+
+    @PostMapping
+    public CredencialModel create(@RequestBody CredencialModel model) {
+        Credencial credencial = toEntity(model);
+        Credencial saved = application.salvar(credencial);
+        return toModel(saved);
+    }
+
     @PutMapping("/{id}")
-    public CredencialModel update(@PathVariable int id, @RequestBody CredencialModel model) {
-        Credencial entity = toEntity(model);
-        entity.setId(id);
-        Credencial updated = application.salvar(entity);
+    public CredencialModel update(@PathVariable Integer id, @RequestBody CredencialModel model) {
+        Credencial credencial = toEntity(model);
+        credencial.setId(id);
+        Credencial updated = application.salvar(credencial);
         return toModel(updated);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id) {
+    public void delete(@PathVariable Integer id) {
         application.deletar(id);
     }
 

@@ -10,7 +10,6 @@ public class Credencial {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable = false, length = 20)
     private String tipo;
 
     @Lob

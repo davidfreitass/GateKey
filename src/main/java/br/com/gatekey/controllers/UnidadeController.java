@@ -2,11 +2,11 @@ package br.com.gatekey.controllers;
 
 import br.com.gatekey.entities.Unidade;
 import br.com.gatekey.facades.UnidadeFacade;
-import br.com.gatekey.models.UnidadeModel;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/unidades")
@@ -18,55 +18,38 @@ public class UnidadeController {
         this.unidadeFacade = unidadeFacade;
     }
 
-    @PostMapping
-    public UnidadeModel create(@RequestBody UnidadeModel model) {
-        Unidade unidade = toEntity(model);
-        Unidade saved = unidadeFacade.salvar(unidade);
-        return toModel(saved);
+    @GetMapping
+    public List<Unidade> listAll() {
+        return unidadeFacade.listarTodos();
     }
 
     @GetMapping("/{id}")
-    public UnidadeModel read(@PathVariable int id) {
-        Unidade unidade = unidadeFacade.buscarPorId(id);
-        return toModel(unidade);
+    public ResponseEntity<Unidade> buscar(@PathVariable Integer id) {
+        Optional<Unidade> unidade = unidadeFacade.buscarPorId(id);
+        return unidade.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping
-    public List<UnidadeModel> listAll() {
-        return unidadeFacade.listarTodos()
-                .stream()
-                .map(this::toModel)
-                .collect(Collectors.toList());
+    @PostMapping
+    public Unidade create(@RequestBody Unidade unidade) {
+        return unidadeFacade.salvar(unidade);
     }
 
     @PutMapping("/{id}")
-    public UnidadeModel update(@PathVariable int id, @RequestBody UnidadeModel model) {
-        Unidade unidade = toEntity(model);
+    public ResponseEntity<Unidade> update(@PathVariable Integer id, @RequestBody Unidade unidade) {
+        if (unidadeFacade.buscarPorId(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
         unidade.setId(id);
-        Unidade updated = unidadeFacade.salvar(unidade);
-        return toModel(updated);
+        return ResponseEntity.ok(unidadeFacade.salvar(unidade));
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id) {
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        if (unidadeFacade.buscarPorId(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
         unidadeFacade.deletar(id);
-    }
-
-    private Unidade toEntity(UnidadeModel model) {
-        Unidade unidade = new Unidade();
-        unidade.setId(model.getId());
-        unidade.setNumero(model.getNumero());
-        unidade.setBloco(model.getBloco());
-        unidade.setTipo(model.getTipo());
-        return unidade;
-    }
-
-    private UnidadeModel toModel(Unidade unidade) {
-        UnidadeModel model = new UnidadeModel();
-        model.setId(unidade.getId());
-        model.setNumero(unidade.getNumero());
-        model.setBloco(unidade.getBloco());
-        model.setTipo(unidade.getTipo());
-        return model;
+        return ResponseEntity.noContent().build();
     }
 }
