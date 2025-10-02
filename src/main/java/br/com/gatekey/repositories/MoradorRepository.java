@@ -6,12 +6,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface MoradorRepository {
-
-    void salvar(Morador morador);
-    Morador buscarPorId(int id);
-    List<Morador> buscarTodos();
-    void atualizar(Morador morador);
-    void remover(int id);
+public interface MoradorRepository extends JpaRepository<Morador,Integer> {
 
 }

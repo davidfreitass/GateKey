@@ -1,56 +1,57 @@
 package br.com.gatekey.controllers;
 
 import br.com.gatekey.entities.Morador;
-import br.com.gatekey.facades.MoradorFacade;
-import org.springframework.stereotype.Service;
+import br.com.gatekey.applications.MoradorApplication;
 import br.com.gatekey.models.MoradorModel;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/moradores")
 public class MoradorController {
 
-    private final MoradorFacade moradorFacade;
+    private final MoradorApplication moradorApplication;
 
-    public MoradorController(MoradorFacade moradorFacade) {
-        this.moradorFacade = moradorFacade;
+    public MoradorController(MoradorApplication moradorApplication) {
+        this.moradorApplication = moradorApplication;
     }
 
     @GetMapping
     public List<MoradorModel> listAll() {
-        return moradorFacade.listarTodos()
+        return moradorApplication.listarTodos()
                 .stream()
                 .map(this::toModel)
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
-    public MoradorModel buscar(@PathVariable int id) {
-        Morador morador = moradorFacade.buscarPorId(id);
-        return toModel(morador);
+    public MoradorModel buscar(@PathVariable Integer id) {
+        Optional<Morador> moradorOpt = moradorApplication.buscarPorId(id);
+        return moradorOpt.map(this::toModel)
+                .orElseThrow(() -> new RuntimeException("Morador não encontrado com id: " + id));
     }
 
     @PostMapping
     public MoradorModel create(@RequestBody MoradorModel model) {
         Morador morador = toEntity(model);
-        Morador saved = moradorFacade.salvar(morador);
+        Morador saved = moradorApplication.salvar(morador);
         return toModel(saved);
     }
 
     @PutMapping("/{id}")
-    public MoradorModel update(@PathVariable int id, @RequestBody MoradorModel model) {
+    public MoradorModel update(@PathVariable Integer id, @RequestBody MoradorModel model) {
         Morador morador = toEntity(model);
         morador.setId(id);
-        Morador updated = moradorFacade.salvar(morador);
+        Morador updated = moradorApplication.salvar(morador);
         return toModel(updated);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id) {
-        moradorFacade.deletar(id);
+    public void delete(@PathVariable Integer id) {
+        moradorApplication.deletar(id);
     }
 
     private Morador toEntity(MoradorModel model) {
@@ -59,7 +60,8 @@ public class MoradorController {
         morador.setNome(model.getNome());
         morador.setCpf(model.getCpf());
         morador.setTelefone(model.getTelefone());
-        morador.setApartamento(model.getApartamento());
+        morador.setEmail(model.getEmail());
+        morador.setStatus(model.getStatus());
         return morador;
     }
 
@@ -69,7 +71,8 @@ public class MoradorController {
         model.setNome(morador.getNome());
         model.setCpf(morador.getCpf());
         model.setTelefone(morador.getTelefone());
-        model.setApartamento(morador.getApartamento());
+        model.setEmail(morador.getEmail());
+        model.setStatus(morador.getStatus());
         return model;
     }
 }

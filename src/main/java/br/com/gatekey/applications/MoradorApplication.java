@@ -5,32 +5,30 @@ import br.com.gatekey.repositories.MoradorRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MoradorApplication {
+
     private final MoradorRepository repository;
 
     public MoradorApplication(MoradorRepository repository) {
         this.repository = repository;
     }
 
-    public void cadastrar(Morador morador) {
-        repository.salvar(morador);
-    }
-
-    public Morador buscarPorId(int id) {
-        return repository.buscarPorId(id);
+    public Morador salvar(Morador morador) {
+        return repository.save(morador);
     }
 
     public List<Morador> listarTodos() {
-        return repository.buscarTodos();
+        return repository.findAll();
     }
 
-    public void atualizar(Morador morador) {
-        repository.atualizar(morador);
+    public Optional<Morador> buscarPorId(Integer id) {
+        return repository.findById(id);
     }
 
-    public void remover(int id) {
-        repository.remover(id);
+    public void deletar(Integer id) {
+        repository.deleteById(id);
     }
 }
