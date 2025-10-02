@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface DispositivoRepository  {
+public interface DispositivoRepository extends JpaRepository<Dispositivo, Integer>  {
     Dispositivo salvar(Dispositivo dispositivo);
     Dispositivo buscarPorId(int id);
     List<Dispositivo> listarTodos();

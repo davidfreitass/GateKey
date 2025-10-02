@@ -2,6 +2,7 @@ package br.com.gatekey.repositories;
 
 
 
+
 import br.com.gatekey.entities.RegistroAcesso;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface RegistroAcessoRepository {
+public interface RegistroAcessoRepository extends JpaRepository<RegistroAcesso, Integer>{
     RegistroAcesso salvar(RegistroAcesso registroAcesso);
     RegistroAcesso buscarPorId(int id);
     List<RegistroAcesso> listarTodos();
