@@ -10,8 +10,5 @@ import java.util.List;
 
 @Repository
 public interface DispositivoRepository extends JpaRepository<Dispositivo, Integer>  {
-    Dispositivo salvar(Dispositivo dispositivo);
-    Dispositivo buscarPorId(int id);
-    List<Dispositivo> listarTodos();
-    void deletar(int id);
+
 }
