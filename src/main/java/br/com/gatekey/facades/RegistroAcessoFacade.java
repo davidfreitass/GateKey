@@ -4,6 +4,7 @@ import br.com.gatekey.applications.RegistroAcessoApplication;
 import br.com.gatekey.entities.RegistroAcesso;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RegistroAcessoFacade {
@@ -17,7 +18,7 @@ public class RegistroAcessoFacade {
         return application.salvar(registroAcesso);
     }
 
-    public RegistroAcesso buscarPorId(int id) {
+    public Optional<RegistroAcesso> buscarPorId(int id) {
         return application.buscarPorId(id);
     }
 
@@ -28,4 +29,5 @@ public class RegistroAcessoFacade {
     public void deletar(int id) {
         application.deletar(id);
     }
+
 }

@@ -6,6 +6,7 @@ import br.com.gatekey.entities.Dispositivo;
 import br.com.gatekey.models.DispositivoModel;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DispositivoFacade {
@@ -19,7 +20,7 @@ public class DispositivoFacade {
         return application.salvar(dispositivo);
     }
 
-    public Dispositivo buscarPorId(int id) {
+    public Optional<Dispositivo> buscarPorId(int id) {
         return application.buscarPorId(id);
     }
 
