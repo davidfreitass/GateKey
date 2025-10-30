@@ -3,10 +3,10 @@ package com.project.controllers;
 import com.project.entities.Credencial;
 import com.project.applications.CredencialApplication;
 import com.project.models.CredencialModel;
+import org.springframework.http.ResponseEntity; // Importação adicionada
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -28,10 +28,13 @@ public class CredencialController {
     }
 
     @GetMapping("/{id}")
-    public CredencialModel buscar(@PathVariable Integer id) {
-        Optional<Credencial> credencialOpt = application.buscarPorId(id);
-        return credencialOpt.map(this::toModel)
-                .orElseThrow(() -> new RuntimeException("Credencial não encontrada com id: " + id));
+    public ResponseEntity<CredencialModel> buscar(@PathVariable Integer id) {
+        // Usa o Optional para mapear para o DTO e encapsular no ResponseEntity 200 OK,
+        // ou retorna 404 Not Found se vazio.
+        return application.buscarPorId(id)
+                .map(this::toModel)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
@@ -42,16 +45,28 @@ public class CredencialController {
     }
 
     @PutMapping("/{id}")
-    public CredencialModel update(@PathVariable Integer id, @RequestBody CredencialModel model) {
+    public ResponseEntity<CredencialModel> update(@PathVariable Integer id, @RequestBody CredencialModel model) {
+        // Verifica se o recurso existe antes de tentar atualizar.
+        if (application.buscarPorId(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
         Credencial credencial = toEntity(model);
         credencial.setId(id);
         Credencial updated = application.salvar(credencial);
-        return toModel(updated);
+        return ResponseEntity.ok(toModel(updated));
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id) {
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        // Verifica se o recurso existe antes de tentar deletar.
+        if (application.buscarPorId(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
         application.deletar(id);
+        // Retorna 204 No Content para exclusão bem-sucedida.
+        return ResponseEntity.noContent().build();
     }
 
     private Credencial toEntity(CredencialModel model) {
