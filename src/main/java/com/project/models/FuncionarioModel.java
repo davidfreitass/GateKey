@@ -1,11 +1,20 @@
 package com.project.models;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "funcionarios")
 public class FuncionarioModel {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nome;
     private String cpf;
     private String telefone;
     private String email;
+
+    @Lob
     private byte[] fotoPerfil;
     private String status;
 

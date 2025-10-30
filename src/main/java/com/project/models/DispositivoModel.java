@@ -1,8 +1,11 @@
 package com.project.models;
 
-import jakarta.persistence.*;
 
-    @Entity
+import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
     @Table(name = "Dispositivo")
     public class DispositivoModel {
 
@@ -15,6 +18,9 @@ import jakarta.persistence.*;
             private String tipo;
 
             private String status;
+
+            @OneToMany(mappedBy = "dispositivoModel")
+            private List<RegistroAcessoModel> registroAcessoModels = new ArrayList<>();
 
             public int getId() { return id; }
             public void setId(int id) { this.id = id; }

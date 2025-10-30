@@ -1,4 +1,5 @@
 package com.project.models;
+
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -14,6 +15,14 @@ public class RegistroAcessoModel {
         private LocalDateTime dataHora;
 
         private String situacao;
+
+        @ManyToOne
+        @JoinColumn(name = "dispositivo_id", referencedColumnName = "id")
+        private DispositivoModel dispositivoModel;
+
+        @ManyToOne
+        @JoinColumn(name = "credencial_id", referencedColumnName = "id")
+        private CredencialModel credencialModel;
 
         public int getId() { return id; }
         public void setId(int id) { this.id = id; }

@@ -1,11 +1,26 @@
 package com.project.models;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "usuario")
 public class UsuarioModel {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String login;
     private String senha;
     private String nivelAcesso;
     private String status;
+
+    @OneToOne()
+    @JoinColumn(name = "morador_id", referencedColumnName = "id")
+    private MoradorModel morador;
+
+    @OneToOne()
+    @JoinColumn(name = "funcionario_id", referencedColumnName = "id")
+    private FuncionarioModel funcionario;
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }

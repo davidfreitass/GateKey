@@ -1,10 +1,23 @@
 package com.project.models;
 
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "unidade")
 public class UnidadeModel {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String numero;
     private String bloco;
     private String tipo;
+
+    @OneToMany(mappedBy = "unidade")
+    private List<MoradorUnidadeModel> moradorUnidadeModelList = new ArrayList<>();
 
     public int getId() {
         return id;

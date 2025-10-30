@@ -1,9 +1,27 @@
 package com.project.models;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "credenciais")
 public class CredencialModel {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String tipo;
+
+    @Lob
     private byte[] dadosBiometricos;
+
+
+    @OneToOne
+    @JoinColumn(name = "morador_id", referencedColumnName = "id")
+    private MoradorModel morador;
+
+    @OneToOne
+    @JoinColumn(name = "funcionario_id", referencedColumnName = "id")
+    private FuncionarioModel funcionario;
 
     public int getId() {
         return id;
