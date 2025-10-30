@@ -3,7 +3,7 @@ package com.project.controllers;
 import com.project.entities.Credencial;
 import com.project.applications.CredencialApplication;
 import com.project.models.CredencialModel;
-import org.springframework.http.ResponseEntity; // Importação adicionada
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,8 +29,6 @@ public class CredencialController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CredencialModel> buscar(@PathVariable Integer id) {
-        // Usa o Optional para mapear para o DTO e encapsular no ResponseEntity 200 OK,
-        // ou retorna 404 Not Found se vazio.
         return application.buscarPorId(id)
                 .map(this::toModel)
                 .map(ResponseEntity::ok)
@@ -46,7 +44,6 @@ public class CredencialController {
 
     @PutMapping("/{id}")
     public ResponseEntity<CredencialModel> update(@PathVariable Integer id, @RequestBody CredencialModel model) {
-        // Verifica se o recurso existe antes de tentar atualizar.
         if (application.buscarPorId(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -59,13 +56,11 @@ public class CredencialController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
-        // Verifica se o recurso existe antes de tentar deletar.
         if (application.buscarPorId(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
         application.deletar(id);
-        // Retorna 204 No Content para exclusão bem-sucedida.
         return ResponseEntity.noContent().build();
     }
 
