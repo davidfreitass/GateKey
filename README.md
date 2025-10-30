@@ -5,7 +5,7 @@ O GateKey tem como objetivos principais:
 
     Automatizar o controle de entrada e saída de pessoas em ambientes privados.
      
-    Aumentar a segurança por meio de reconhecimento facial e registro de acessos. 
+    Aumentar a segurança por meio de reconhecimento digital e registro de acessos. 
 
     Disponibilizar relatórios e históricos para auditoria e gestão de segurança. 
 
