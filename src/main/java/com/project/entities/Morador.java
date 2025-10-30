@@ -1,13 +1,7 @@
 package com.project.entities;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "Morador")
 public class Morador {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String nome;
@@ -18,7 +12,6 @@ public class Morador {
 
     private String email;
 
-    @Lob
     private byte[] fotoPerfil;
 
     private String status;

@@ -1,13 +1,7 @@
 package com.project.entities;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "Dispositivo")
 public class Dispositivo {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String localizacao;

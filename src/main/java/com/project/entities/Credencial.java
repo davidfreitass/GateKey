@@ -1,18 +1,11 @@
 package com.project.entities;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "credenciais")
 public class Credencial {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String tipo;
 
-    @Lob
     private byte[] dadosBiometricos;
 
     public int getId() {

@@ -1,15 +1,8 @@
 package com.project.entities;
 
-import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 
-    @Entity
-    @Table(name = "RegistroAcesso")
-    public class RegistroAcesso {
-
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class RegistroAcesso {
         private int id;
 
         private LocalDateTime dataHora;
@@ -39,7 +32,7 @@ import java.time.LocalDateTime;
         public void setSituacao(String situacao) {
             this.situacao = situacao;
         }
-    }
+}
 
 
 

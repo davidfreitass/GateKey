@@ -1,21 +1,14 @@
 package com.project.entities;
 
-import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Entity
-@Table(name = "Morador_Unidade")
 public class MoradorUnidade implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "Morador_idMorador", nullable = false)
     private Integer idMorador;
 
-    @Column(name = "Unidade_idUnidade", nullable = false)
     private Integer idUnidade;
 
     public MoradorUnidade() {}
