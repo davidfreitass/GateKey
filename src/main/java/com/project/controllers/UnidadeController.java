@@ -1,7 +1,7 @@
-package br.com.gatekey.controllers;
+package com.project.controllers;
 
-import br.com.gatekey.entities.Unidade;
-import br.com.gatekey.facades.UnidadeFacade;
+import com.project.entities.Unidade;
+import com.project.facades.UnidadeFacade;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

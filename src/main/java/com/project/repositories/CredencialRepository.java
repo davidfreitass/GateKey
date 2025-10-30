@@ -1,6 +1,6 @@
-package br.com.gatekey.repositories;
+package com.project.repositories;
 
-import br.com.gatekey.entities.Credencial;
+import com.project.entities.Credencial;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package br.com.gatekey.entities;
+package com.project.entities;
 
 import jakarta.persistence.*;
 

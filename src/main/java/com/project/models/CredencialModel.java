@@ -1,4 +1,4 @@
-package br.com.gatekey.models;
+package com.project.models;
 
 public class CredencialModel {
     private int id;

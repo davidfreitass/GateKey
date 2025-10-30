@@ -1,7 +1,7 @@
-package br.com.gatekey.facades;
+package com.project.facades;
 
-import br.com.gatekey.entities.Credencial;
-import br.com.gatekey.repositories.CredencialRepository;
+import com.project.entities.Credencial;
+import com.project.repositories.CredencialRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

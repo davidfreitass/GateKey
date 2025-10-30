@@ -1,6 +1,6 @@
-package br.com.gatekey.repositories;
+package com.project.repositories;
 
-import br.com.gatekey.entities.Unidade;
+import com.project.entities.Unidade;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

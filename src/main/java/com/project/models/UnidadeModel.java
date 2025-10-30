@@ -1,4 +1,4 @@
-package br.com.gatekey.models;
+package com.project.models;
 
 public class UnidadeModel {
     private int id;

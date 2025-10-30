@@ -1,8 +1,8 @@
-package br.com.gatekey.controllers;
+package com.project.controllers;
 
-import br.com.gatekey.entities.Credencial;
-import br.com.gatekey.applications.CredencialApplication;
-import br.com.gatekey.models.CredencialModel;
+import com.project.entities.Credencial;
+import com.project.applications.CredencialApplication;
+import com.project.models.CredencialModel;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

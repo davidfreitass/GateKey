@@ -1,7 +1,7 @@
-package br.com.gatekey.facades;
+package com.project.facades;
 
-import br.com.gatekey.applications.UnidadeApplication;
-import br.com.gatekey.entities.Unidade;
+import com.project.applications.UnidadeApplication;
+import com.project.entities.Unidade;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
