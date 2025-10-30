@@ -8,15 +8,25 @@ import java.util.Objects;
 @Table(name = "Morador_Unidade")
 public class MoradorUnidadeModel implements Serializable {
 
-    @EmbeddedId
-    private MoradorUnidadeIdModel id;
-
     @ManyToOne
-    @JoinColumn(name = "Morador_idMorador")
+    @JoinColumn(
+            name = "Morador_idMorador",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "FK_MoradorUnidade_Morador_ID"),
+            insertable = false,
+            updatable = false
+    )
+
     private MoradorModel morador;
 
     @ManyToOne
-    @JoinColumn(name = "Unidade_idUnidade")
+    @JoinColumn(
+            name = "Unidade_idUnidade",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "FK_MoradorUnidade_Unidade_ID"),
+            insertable = false,
+            updatable = false
+    )
     private UnidadeModel unidade;
 
     public MoradorUnidadeModel() {}
@@ -24,15 +34,6 @@ public class MoradorUnidadeModel implements Serializable {
     public MoradorUnidadeModel(MoradorModel morador, UnidadeModel unidade) {
         this.morador = morador;
         this.unidade = unidade;
-        this.id = new MoradorUnidadeIdModel(morador.getId(), unidade.getId());
-    }
-
-    public MoradorUnidadeIdModel getId() {
-        return id;
-    }
-
-    public void setId(MoradorUnidadeIdModel id) {
-        this.id = id;
     }
 
     public MoradorModel getMorador() {
@@ -56,11 +57,12 @@ public class MoradorUnidadeModel implements Serializable {
         if (this == o) return true;
         if (!(o instanceof MoradorUnidadeModel)) return false;
         MoradorUnidadeModel that = (MoradorUnidadeModel) o;
-        return Objects.equals(id, that.id);
+        return Objects.equals(morador, that.morador) &&
+                Objects.equals(unidade, that.unidade);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(morador, unidade);
     }
 }
