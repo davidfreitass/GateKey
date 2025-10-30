@@ -14,6 +14,15 @@ public class CredencialModel {
     @Lob
     private byte[] dadosBiometricos;
 
+
+    @OneToOne()
+    @JoinColumn(name = "morador_id", referencedColumnName = "id")
+    private MoradorModel morador;
+
+    @OneToOne()
+    @JoinColumn(name = "funcionario_id", referencedColumnName = "id")
+    private FuncionarioModel funcionario;
+
     public int getId() {
         return id;
     }
