@@ -1,6 +1,13 @@
 package com.project.models;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "usuarios")
 public class UsuarioModel {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String login;
     private String senha;
