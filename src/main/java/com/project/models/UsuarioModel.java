@@ -14,6 +14,14 @@ public class UsuarioModel {
     private String nivelAcesso;
     private String status;
 
+    @OneToOne()
+    @JoinColumn(name = "morador_id", referencedColumnName = "id")
+    private MoradorModel morador;
+
+    @OneToOne()
+    @JoinColumn(name = "funcionario_id", referencedColumnName = "id")
+    private FuncionarioModel funcionario;
+
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
