@@ -8,6 +8,10 @@ import java.util.Objects;
 @Table(name = "Morador_Unidade")
 public class MoradorUnidadeModel implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @ManyToOne
     @JoinColumn(
             name = "Morador_idMorador",
@@ -17,7 +21,7 @@ public class MoradorUnidadeModel implements Serializable {
             updatable = false
     )
 
-    private MoradorModel morador;
+    private MoradorModel moradorModel;
 
     @ManyToOne
     @JoinColumn(
@@ -32,16 +36,16 @@ public class MoradorUnidadeModel implements Serializable {
     public MoradorUnidadeModel() {}
 
     public MoradorUnidadeModel(MoradorModel morador, UnidadeModel unidade) {
-        this.morador = morador;
+        this.moradorModel = morador;
         this.unidade = unidade;
     }
 
     public MoradorModel getMorador() {
-        return morador;
+        return moradorModel;
     }
 
     public void setMorador(MoradorModel morador) {
-        this.morador = morador;
+        this.moradorModel = morador;
     }
 
     public UnidadeModel getUnidade() {
@@ -57,12 +61,12 @@ public class MoradorUnidadeModel implements Serializable {
         if (this == o) return true;
         if (!(o instanceof MoradorUnidadeModel)) return false;
         MoradorUnidadeModel that = (MoradorUnidadeModel) o;
-        return Objects.equals(morador, that.morador) &&
+        return Objects.equals(moradorModel, that.moradorModel) &&
                 Objects.equals(unidade, that.unidade);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(morador, unidade);
+        return Objects.hash(moradorModel, unidade);
     }
 }

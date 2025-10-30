@@ -1,7 +1,6 @@
 package com.project.controllers;
 
 import com.project.entities.MoradorUnidade;
-import com.project.entities.MoradorUnidadeId;
 import com.project.facades.MoradorUnidadeFacade;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,10 +22,19 @@ public class MoradorUnidadeController {
         return facade.listarTodos();
     }
 
-    @GetMapping("/{moradorId}/{unidadeId}")
-    public ResponseEntity<MoradorUnidade> buscar(@PathVariable Integer moradorId, @PathVariable Integer unidadeId) {
-        MoradorUnidadeId id = new MoradorUnidadeId(moradorId, unidadeId);
+    @GetMapping("/{id}")
+    public ResponseEntity<MoradorUnidade> buscarPorId(@PathVariable Long id) {
         return facade.buscarPorId(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/detalhe/{moradorId}/{unidadeId}")
+    public ResponseEntity<MoradorUnidade> buscarPorIdsLogicos(
+            @PathVariable Integer moradorId,
+            @PathVariable Integer unidadeId) {
+
+        return facade.buscarPorIdsMoradorUnidade(moradorId, unidadeId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -36,13 +44,22 @@ public class MoradorUnidadeController {
         return facade.salvar(moradorUnidade);
     }
 
-    @DeleteMapping("/{moradorId}/{unidadeId}")
-    public ResponseEntity<Void> delete(@PathVariable Integer moradorId, @PathVariable Integer unidadeId) {
-        MoradorUnidadeId id = new MoradorUnidadeId(moradorId, unidadeId);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePorId(@PathVariable Long id) {
         if (facade.buscarPorId(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         facade.deletar(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/detalhe/{moradorId}/{unidadeId}")
+    public ResponseEntity<Void> deletePorIdsLogicos(
+            @PathVariable Integer moradorId,
+            @PathVariable Integer unidadeId) {
+        if (facade.deletarPorIdsMoradorUnidade(moradorId, unidadeId)) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }

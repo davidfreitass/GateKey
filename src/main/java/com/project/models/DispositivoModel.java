@@ -19,7 +19,7 @@ import java.util.List;
 
             private String status;
 
-            @OneToMany(mappedBy = "dispositivo")
+            @OneToMany(mappedBy = "dispositivoModel")
             private List<RegistroAcessoModel> registroAcessoModels = new ArrayList<>();
 
             public int getId() { return id; }

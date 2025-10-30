@@ -1,13 +1,12 @@
 package com.project.models;
 
-import com.project.entities.Unidade;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "unidades")
+@Table(name = "unidade")
 public class UnidadeModel {
 
     @Id

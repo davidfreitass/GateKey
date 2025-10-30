@@ -8,21 +8,45 @@ import java.util.Objects;
 @Table(name = "Morador_Unidade")
 public class MoradorUnidade implements Serializable {
 
-    @EmbeddedId
-    private MoradorUnidadeId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "Morador_idMorador", nullable = false)
+    private Integer idMorador;
+
+    @Column(name = "Unidade_idUnidade", nullable = false)
+    private Integer idUnidade;
 
     public MoradorUnidade() {}
 
-    public MoradorUnidade(MoradorUnidadeId id) {
-        this.id = id;
+    public MoradorUnidade(Integer idMorador, Integer idUnidade) {
+        this.idMorador = idMorador;
+        this.idUnidade = idUnidade;
     }
 
-    public MoradorUnidadeId getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(MoradorUnidadeId id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public Integer getIdMorador() {
+        return idMorador;
+    }
+
+    public void setIdMorador(Integer idMorador) {
+        this.idMorador = idMorador;
+    }
+
+    public Integer getIdUnidade() {
+        return idUnidade;
+    }
+
+    public void setIdUnidade(Integer idUnidade) {
+        this.idUnidade = idUnidade;
     }
 
     @Override

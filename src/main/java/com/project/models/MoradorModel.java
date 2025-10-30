@@ -26,7 +26,7 @@ public class MoradorModel {
 
     private String status;
 
-    @OneToMany(mappedBy = "morador")
+    @OneToMany(mappedBy = "moradorModel")
     private List<MoradorUnidadeModel> moradorUnidadeModelList = new ArrayList<>();
 
     public int getId() {

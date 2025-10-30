@@ -1,7 +1,6 @@
 package com.project.applications;
 
 import com.project.entities.MoradorUnidade;
-import com.project.entities.MoradorUnidadeId;
 import com.project.repositories.MoradorUnidadeRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +17,9 @@ public class MoradorUnidadeApplication {
     }
 
     public MoradorUnidade salvar(MoradorUnidade moradorUnidade) {
+        if (moradorUnidade.getIdMorador() == null || moradorUnidade.getIdUnidade() == null) {
+            throw new IllegalArgumentException("Os IDs de Morador e Unidade são obrigatórios para a associação.");
+        }
         return repository.save(moradorUnidade);
     }
 
@@ -25,11 +27,25 @@ public class MoradorUnidadeApplication {
         return repository.findAll();
     }
 
-    public Optional<MoradorUnidade> buscarPorId(MoradorUnidadeId id) {
+    public Optional<MoradorUnidade> buscarPorId(Long id) {
         return repository.findById(id);
     }
 
-    public void deletar(MoradorUnidadeId id) {
+    public void deletarPorId(Long id) {
         repository.deleteById(id);
+    }
+
+    public Optional<MoradorUnidade> buscarPorMoradorIdEUnidadeId(Integer moradorId, Integer unidadeId) {
+        return repository.findByIdMoradorAndIdUnidade(moradorId, unidadeId);
+    }
+
+    public boolean deletarPorMoradorIdEUnidadeId(Integer moradorId, Integer unidadeId) {
+        Optional<MoradorUnidade> associacao = repository.findByIdMoradorAndIdUnidade(moradorId, unidadeId);
+
+        if (associacao.isPresent()) {
+            repository.delete(associacao.get());
+            return true;
+        }
+        return false;
     }
 }
