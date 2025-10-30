@@ -1,6 +1,10 @@
 package com.project.models;
 
+import com.project.entities.Unidade;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "unidades")
@@ -12,6 +16,9 @@ public class UnidadeModel {
     private String numero;
     private String bloco;
     private String tipo;
+
+    @OneToMany(mappedBy = "unidade")
+    private List<MoradorUnidadeModel> moradorUnidadeModelList = new ArrayList<>();
 
     public int getId() {
         return id;

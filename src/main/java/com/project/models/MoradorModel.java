@@ -2,6 +2,9 @@ package com.project.models;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "Morador")
 public class MoradorModel {
@@ -22,6 +25,9 @@ public class MoradorModel {
     private byte[] fotoPerfil;
 
     private String status;
+
+    @OneToMany(mappedBy = "morador")
+    private List<MoradorUnidadeModel> moradorUnidadeModelList = new ArrayList<>();
 
     public int getId() {
         return id;

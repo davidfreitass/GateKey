@@ -1,5 +1,6 @@
 package com.project.models;
 
+import com.project.entities.Credencial;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,6 +14,15 @@ public class CredencialModel {
 
     @Lob
     private byte[] dadosBiometricos;
+
+
+    @OneToOne(mappedBy = "credencial")
+    @JoinColumn(name = "morador_id", referencedColumnName = "id")
+    private MoradorModel morador;
+
+    @OneToOne(mappedBy = "credencial")
+    @JoinColumn(name = "funcionario_id", referencedColumnName = "id")
+    private FuncionarioModel funcionario;
 
     public int getId() {
         return id;
