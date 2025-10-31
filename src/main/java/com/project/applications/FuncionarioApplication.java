@@ -1,6 +1,7 @@
 package com.project.applications;
 
 import com.project.entities.Funcionario;
+import com.project.models.FuncionarioModel;
 import com.project.repositories.FuncionarioRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,15 +17,15 @@ public class FuncionarioApplication {
         this.repository = repository;
     }
 
-    public Funcionario salvar(Funcionario funcionario) {
-        return repository.save(funcionario);
+    public FuncionarioModel salvar(FuncionarioModel funcionarioModel) {
+        return repository.save(funcionarioModel);
     }
 
-    public List<Funcionario> listarTodos() {
+    public List<FuncionarioModel> listarTodos() {
         return repository.findAll();
     }
 
-    public Optional<Funcionario> buscarPorId(Integer id) {
+    public Optional<FuncionarioModel> buscarPorId(Integer id) {
         return repository.findById(id);
     }
 

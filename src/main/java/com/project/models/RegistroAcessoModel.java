@@ -11,7 +11,6 @@ public class RegistroAcessoModel {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private int id;
 
-
         private LocalDateTime dataHora;
 
         private String situacao;
@@ -32,6 +31,28 @@ public class RegistroAcessoModel {
 
         public String getSituacao() { return situacao; }
         public void setSituacao(String situacao) { this.situacao = situacao; }
+
+
+
+    public DispositivoModel getDispositivoModel() {
+        return dispositivoModel;
     }
+
+    public void setDispositivoModel(DispositivoModel dispositivoModel) {
+        this.dispositivoModel = dispositivoModel;
+    }
+
+
+
+    public CredencialModel getCredencialModel() {
+        return credencialModel;
+    }
+
+    public void setCredencialModel(CredencialModel credencialModel) {
+        this.credencialModel = credencialModel;
+    }
+
+
+}
 
 

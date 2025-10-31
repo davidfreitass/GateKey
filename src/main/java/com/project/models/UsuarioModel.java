@@ -8,22 +8,22 @@ public class UsuarioModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String login;
     private String senha;
     private String nivelAcesso;
     private String status;
 
     @OneToOne()
-    @JoinColumn(name = "morador_id", referencedColumnName = "id")
+    @JoinColumn(name = "morador_id", referencedColumnName = "id", nullable = true)
     private MoradorModel morador;
 
     @OneToOne()
-    @JoinColumn(name = "funcionario_id", referencedColumnName = "id")
+    @JoinColumn(name = "funcionario_id", referencedColumnName = "id", nullable = true)
     private FuncionarioModel funcionario;
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
     public String getLogin() { return login; }
     public void setLogin(String login) { this.login = login; }
@@ -36,4 +36,10 @@ public class UsuarioModel {
 
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
+
+    public MoradorModel getMorador() { return morador; }
+    public void setMorador(MoradorModel morador) { this.morador = morador; }
+
+    public FuncionarioModel getFuncionario() { return funcionario; }
+    public void setFuncionario(FuncionarioModel funcionario) { this.funcionario = funcionario; }
 }

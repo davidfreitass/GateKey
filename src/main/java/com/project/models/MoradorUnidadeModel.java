@@ -2,50 +2,49 @@ package com.project.models;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Entity
-@Table(name = "Morador_Unidade")
+@Table(name = "Morador_Unidade", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"morador_id", "unidade_id"}, name = "UK_Morador_Unidade")
+})
 public class MoradorUnidadeModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(
-            name = "Morador_idMorador",
-            referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "FK_MoradorUnidade_Morador_ID"),
-            insertable = false,
-            updatable = false
+            name = "morador_idMorador",
+            nullable = false,
+            foreignKey = @ForeignKey(name = "FK_MoradorUnidade_Morador_ID")
     )
+    private MoradorModel morador;
 
-    private MoradorModel moradorModel;
-
-    @ManyToOne
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(
-            name = "Unidade_idUnidade",
-            referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "FK_MoradorUnidade_Unidade_ID"),
-            insertable = false,
-            updatable = false
+            name = "unidade_idUnidade",
+            nullable = false,
+            foreignKey = @ForeignKey(name = "FK_MoradorUnidade_Unidade_ID")
     )
     private UnidadeModel unidade;
 
     public MoradorUnidadeModel() {}
 
-    public MoradorUnidadeModel(MoradorModel morador, UnidadeModel unidade) {
-        this.moradorModel = morador;
-        this.unidade = unidade;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public MoradorModel getMorador() {
-        return moradorModel;
+        return morador;
     }
 
     public void setMorador(MoradorModel morador) {
-        this.moradorModel = morador;
+        this.morador = morador;
     }
 
     public UnidadeModel getUnidade() {
@@ -54,19 +53,5 @@ public class MoradorUnidadeModel implements Serializable {
 
     public void setUnidade(UnidadeModel unidade) {
         this.unidade = unidade;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof MoradorUnidadeModel)) return false;
-        MoradorUnidadeModel that = (MoradorUnidadeModel) o;
-        return Objects.equals(moradorModel, that.moradorModel) &&
-                Objects.equals(unidade, that.unidade);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(moradorModel, unidade);
     }
 }

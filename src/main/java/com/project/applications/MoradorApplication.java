@@ -1,6 +1,7 @@
 package com.project.applications;
 
 import com.project.entities.Morador;
+import com.project.models.MoradorModel;
 import com.project.repositories.MoradorRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,15 +17,15 @@ public class MoradorApplication {
         this.repository = repository;
     }
 
-    public Morador salvar(Morador morador) {
-        return repository.save(morador);
+    public MoradorModel salvar(MoradorModel moradorModel) {
+        return repository.save(moradorModel);
     }
 
-    public List<Morador> listarTodos() {
+    public List<MoradorModel> listarTodos() {
         return repository.findAll();
     }
 
-    public Optional<Morador> buscarPorId(Integer id) {
+    public Optional<MoradorModel> buscarPorId(Integer id) {
         return repository.findById(id);
     }
 

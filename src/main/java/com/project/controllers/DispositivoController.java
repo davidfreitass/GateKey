@@ -1,12 +1,10 @@
 package com.project.controllers;
 
-import com.project.entities.Dispositivo;
 import com.project.facades.DispositivoFacade;
 import com.project.models.DispositivoModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/dispositivos")
@@ -21,58 +19,41 @@ public class DispositivoController {
 
     @GetMapping
     public List<DispositivoModel> listAll() {
-        return dispositivoFacade.listarTodos()
-                .stream()
-                .map(this::toModel)
-                .collect(Collectors.toList());
+        return dispositivoFacade.listarTodos();
     }
-
-
 
 
     @GetMapping("/{id}")
     public ResponseEntity<DispositivoModel> buscar(@PathVariable Integer id) {
         return dispositivoFacade.buscarPorId(id)
-                .map(this::toModel)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
 
-        @PostMapping
+    @PostMapping
     public DispositivoModel create(@RequestBody DispositivoModel model) {
-        Dispositivo dispositivo = toEntity(model);
-        Dispositivo saved = dispositivoFacade.salvar(dispositivo);
-        return toModel(saved);
+        DispositivoModel saved = dispositivoFacade.salvar(model);
+        return saved;
     }
 
     @PutMapping("/{id}")
-    public DispositivoModel update(@PathVariable int id, @RequestBody DispositivoModel model) {
-        Dispositivo dispositivo = toEntity(model);
-        dispositivo.setId(id);
-        Dispositivo updated = dispositivoFacade.salvar(dispositivo);
-        return toModel(updated);
+    public ResponseEntity<DispositivoModel> update(@PathVariable Integer id, @RequestBody DispositivoModel model) {
+        if (dispositivoFacade.buscarPorId(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        model.setId(id);
+        DispositivoModel updated = dispositivoFacade.salvar(model);
+        return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id) {
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        if (dispositivoFacade.buscarPorId(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
         dispositivoFacade.deletar(id);
-    }
-
-    private Dispositivo toEntity(DispositivoModel model) {
-        Dispositivo dispositivo = new Dispositivo();
-        dispositivo.setId(model.getId());
-        dispositivo.setTipo(model.getTipo());
-        dispositivo.setLocalizacao(model.getLocalizacao());
-        return dispositivo;
-    }
-
-
-    private DispositivoModel toModel(Dispositivo dispositivo) {
-        DispositivoModel model = new DispositivoModel();
-        model.setId(dispositivo.getId());
-        model.setTipo(dispositivo.getTipo());
-        model.setLocalizacao(dispositivo.getLocalizacao());
-        return model;
+        return ResponseEntity.noContent().build();
     }
 }

@@ -1,31 +1,19 @@
 package com.project.entities;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "funcionarios")
 public class Funcionario {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable = false, length = 100)
     private String nome;
 
-    @Column(nullable = false, length = 15)
     private String cpf;
 
-    @Column(length = 20)
     private String telefone;
 
-    @Column(length = 50)
     private String email;
 
-    @Lob
     private byte[] fotoPerfil;
 
-    @Column(length = 20)
     private String status;
 
     public int getId() { return id; }

@@ -1,13 +1,6 @@
 package com.project.entities;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "unidades")
 public class Unidade {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String numero;

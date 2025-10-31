@@ -2,12 +2,13 @@ package com.project.facades;
 
 import com.project.applications.MoradorUnidadeApplication;
 import com.project.entities.MoradorUnidade;
-import org.springframework.stereotype.Component;
+import com.project.models.MoradorUnidadeModel;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Service
 public class MoradorUnidadeFacade {
 
     private final MoradorUnidadeApplication application;
@@ -16,27 +17,27 @@ public class MoradorUnidadeFacade {
         this.application = application;
     }
 
-    public MoradorUnidade salvar(MoradorUnidade moradorUnidade) {
-        return application.salvar(moradorUnidade);
+    public MoradorUnidadeModel salvar(MoradorUnidadeModel moradorUnidadeModel) {
+        return application.salvar(moradorUnidadeModel);
     }
 
-    public List<MoradorUnidade> listarTodos() {
-        return application.listarTodos();
-    }
-
-    public Optional<MoradorUnidade> buscarPorId(Long id) {
+    public Optional<MoradorUnidadeModel> buscarPorId(Long id) {
         return application.buscarPorId(id);
     }
 
-    public void deletar(Long id) {
-        application.deletarPorId(id);
+    public List<MoradorUnidadeModel> listarTodos() {
+        return application.listarTodos();
     }
 
-    public Optional<MoradorUnidade> buscarPorIdsMoradorUnidade(Integer moradorId, Integer unidadeId) {
-        return application.buscarPorMoradorIdEUnidadeId(moradorId, unidadeId);
+    public void deletar(Long id) {
+        application.deletar(id);
+    }
+
+    public Optional<MoradorUnidadeModel> buscarPorIdsMoradorUnidade(Integer moradorId, Integer unidadeId) {
+        return application.buscarPorIdsMoradorUnidade(moradorId, unidadeId);
     }
 
     public boolean deletarPorIdsMoradorUnidade(Integer moradorId, Integer unidadeId) {
-        return application.deletarPorMoradorIdEUnidadeId(moradorId, unidadeId);
+        return application.deletarPorIdsMoradorUnidade(moradorId, unidadeId);
     }
 }

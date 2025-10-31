@@ -1,11 +1,12 @@
 package com.project.controllers;
 
-import com.project.entities.Morador;
 import com.project.facades.MoradorFacade;
+import com.project.models.MoradorModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/moradores")
@@ -18,29 +19,34 @@ public class MoradorController {
     }
 
     @GetMapping
-    public List<Morador> listAll() {
+    public List<MoradorModel> listAll() {
         return moradorFacade.listarTodos();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Morador> buscar(@PathVariable Integer id) {
+    public ResponseEntity<MoradorModel> buscar(@PathVariable Integer id) {
         return moradorFacade.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Morador create(@RequestBody Morador morador) {
-        return moradorFacade.salvar(morador);
+    public MoradorModel create(@RequestBody MoradorModel model) {
+        MoradorModel saved = moradorFacade.salvar(model);
+        return saved;
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Morador> update(@PathVariable Integer id, @RequestBody Morador morador) {
-        if (moradorFacade.buscarPorId(id).isEmpty()) {
+    public ResponseEntity<MoradorModel> update(@PathVariable Integer id, @RequestBody MoradorModel model) {
+        Optional<MoradorModel> existing = moradorFacade.buscarPorId(id);
+
+        if (existing.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        morador.setId(id);
-        return ResponseEntity.ok(moradorFacade.salvar(morador));
+
+        model.setId(id);
+        MoradorModel updated = moradorFacade.salvar(model);
+        return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")
@@ -52,4 +58,3 @@ public class MoradorController {
         return ResponseEntity.noContent().build();
     }
 }
-

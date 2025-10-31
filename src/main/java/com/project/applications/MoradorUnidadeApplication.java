@@ -1,8 +1,9 @@
 package com.project.applications;
 
-import com.project.entities.MoradorUnidade;
+import com.project.models.MoradorUnidadeModel;
 import com.project.repositories.MoradorUnidadeRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,32 +17,33 @@ public class MoradorUnidadeApplication {
         this.repository = repository;
     }
 
-    public MoradorUnidade salvar(MoradorUnidade moradorUnidade) {
-        if (moradorUnidade.getIdMorador() == null || moradorUnidade.getIdUnidade() == null) {
-            throw new IllegalArgumentException("Os IDs de Morador e Unidade são obrigatórios para a associação.");
-        }
-        return repository.save(moradorUnidade);
+    @Transactional
+    public MoradorUnidadeModel salvar(MoradorUnidadeModel moradorUnidadeModel) {
+        return repository.save(moradorUnidadeModel);
     }
 
-    public List<MoradorUnidade> listarTodos() {
+    public List<MoradorUnidadeModel> listarTodos() {
         return repository.findAll();
     }
 
-    public Optional<MoradorUnidade> buscarPorId(Long id) {
+    public Optional<MoradorUnidadeModel> buscarPorId(Long id) {
         return repository.findById(id);
     }
 
-    public void deletarPorId(Long id) {
+    @Transactional
+    public void deletar(Long id) {
         repository.deleteById(id);
     }
 
-    public Optional<MoradorUnidade> buscarPorMoradorIdEUnidadeId(Integer moradorId, Integer unidadeId) {
-        return repository.findByIdMoradorAndIdUnidade(moradorId, unidadeId);
+    public Optional<MoradorUnidadeModel> buscarPorIdsMoradorUnidade(Integer moradorId, Integer unidadeId) {
+        // O nome do método de repositório deve ser ajustado
+        return repository.findByMorador_IdAndUnidade_Id(moradorId, unidadeId);
     }
 
-    public boolean deletarPorMoradorIdEUnidadeId(Integer moradorId, Integer unidadeId) {
-        Optional<MoradorUnidade> associacao = repository.findByIdMoradorAndIdUnidade(moradorId, unidadeId);
-
+    @Transactional
+    public boolean deletarPorIdsMoradorUnidade(Integer moradorId, Integer unidadeId) {
+        // O nome do método de repositório deve ser ajustado
+        Optional<MoradorUnidadeModel> associacao = repository.findByMorador_IdAndUnidade_Id(moradorId, unidadeId);
         if (associacao.isPresent()) {
             repository.delete(associacao.get());
             return true;

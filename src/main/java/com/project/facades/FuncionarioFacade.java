@@ -1,10 +1,12 @@
 package com.project.facades;
 
 import com.project.entities.Funcionario;
+import com.project.models.FuncionarioModel;
 import com.project.repositories.FuncionarioRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FuncionarioFacade {
@@ -15,20 +17,19 @@ public class FuncionarioFacade {
         this.repository = repository;
     }
 
-    public Funcionario salvar(Funcionario funcionario) {
-        return repository.save(funcionario);
+    public FuncionarioModel salvar(FuncionarioModel funcionarioModel) {
+        return repository.save(funcionarioModel);
     }
 
-    public Funcionario buscarPorId(int id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Funcionário não encontrado"));
+    public Optional<FuncionarioModel> buscarPorId(Integer id) {
+        return repository.findById(id);
     }
 
-    public List<Funcionario> listarTodos() {
+    public List<FuncionarioModel> listarTodos() {
         return repository.findAll();
     }
 
-    public void deletar(int id) {
+    public void deletar(Integer id) {
         repository.deleteById(id);
     }
 }

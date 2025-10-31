@@ -3,6 +3,7 @@ package com.project.applications;
 
 
 import com.project.entities.Dispositivo;
+import com.project.models.DispositivoModel;
 import com.project.repositories.DispositivoRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,15 +19,15 @@ public class DispositivoApplication {
         this.repository = repository;
     }
 
-    public Dispositivo salvar(Dispositivo dispositivo) {
-        return repository.save(dispositivo);
+    public DispositivoModel salvar(DispositivoModel dispositivoModel) {
+        return repository.save(dispositivoModel);
     }
 
-    public List<Dispositivo> listarTodos() {
+    public List<DispositivoModel> listarTodos() {
         return repository.findAll();
     }
 
-    public Optional<Dispositivo> buscarPorId(Integer id) {
+    public Optional<DispositivoModel> buscarPorId(Integer id) {
         return repository.findById(id);
     }
 

@@ -2,6 +2,7 @@ package com.project.facades;
 
 import com.project.applications.MoradorApplication;
 import com.project.entities.Morador;
+import com.project.models.MoradorModel;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -16,15 +17,15 @@ public class MoradorFacade {
         this.application = application;
     }
 
-    public Morador salvar(Morador morador) {
-        return application.salvar(morador);
+    public MoradorModel salvar(MoradorModel moradorModel) {
+        return application.salvar(moradorModel);
     }
 
-    public Optional<Morador> buscarPorId(Integer id) {
+    public Optional<MoradorModel> buscarPorId(Integer id) {
         return application.buscarPorId(id);
     }
 
-    public List<Morador> listarTodos() {
+    public List<MoradorModel> listarTodos() {
         return application.listarTodos();
     }
 
