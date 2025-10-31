@@ -11,11 +11,11 @@ public class MoradorUnidadeModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "Morador_idMorador", nullable = false)
-    private Integer idMorador;
+    @Column(name = "Morador_idMorador")
+    private int idMorador;
 
-    @Column(name = "Unidade_idUnidade", nullable = false)
-    private Integer idUnidade;
+    @Column(name = "Unidade_idUnidade")
+    private int idUnidade;;
 
     @ManyToOne
     @JoinColumn(
