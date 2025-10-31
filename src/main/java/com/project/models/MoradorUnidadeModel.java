@@ -1,43 +1,71 @@
 package com.project.models;
 
 import jakarta.persistence.*;
-import java.io.Serializable;
-import java.util.Objects;
+
 
 @Entity
 @Table(name = "Morador_Unidade")
-public class MoradorUnidadeModel implements Serializable {
+public class MoradorUnidadeModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "Morador_idMorador", nullable = false)
+    private Integer idMorador;
+
+    @Column(name = "Unidade_idUnidade", nullable = false)
+    private Integer idUnidade;
+
     @ManyToOne
     @JoinColumn(
             name = "Morador_idMorador",
             referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "FK_MoradorUnidade_Morador_ID"),
             insertable = false,
-            updatable = false
+            updatable = false,
+            foreignKey = @ForeignKey(name = "FK_MoradorUnidade_Morador_ID")
     )
-
     private MoradorModel moradorModel;
 
     @ManyToOne
     @JoinColumn(
             name = "Unidade_idUnidade",
             referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "FK_MoradorUnidade_Unidade_ID"),
             insertable = false,
-            updatable = false
+            updatable = false,
+            foreignKey = @ForeignKey(name = "FK_MoradorUnidade_Unidade_ID")
     )
-    private UnidadeModel unidade;
+    private UnidadeModel unidadeModel;
 
     public MoradorUnidadeModel() {}
 
-    public MoradorUnidadeModel(MoradorModel morador, UnidadeModel unidade) {
-        this.moradorModel = morador;
-        this.unidade = unidade;
+    public MoradorUnidadeModel(Integer idMorador, Integer idUnidade) {
+        this.idMorador = idMorador;
+        this.idUnidade = idUnidade;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Integer getIdMorador() {
+        return idMorador;
+    }
+
+    public void setIdMorador(Integer idMorador) {
+        this.idMorador = idMorador;
+    }
+
+    public Integer getIdUnidade() {
+        return idUnidade;
+    }
+
+    public void setIdUnidade(Integer idUnidade) {
+        this.idUnidade = idUnidade;
     }
 
     public MoradorModel getMorador() {
@@ -49,24 +77,10 @@ public class MoradorUnidadeModel implements Serializable {
     }
 
     public UnidadeModel getUnidade() {
-        return unidade;
+        return unidadeModel;
     }
 
     public void setUnidade(UnidadeModel unidade) {
-        this.unidade = unidade;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof MoradorUnidadeModel)) return false;
-        MoradorUnidadeModel that = (MoradorUnidadeModel) o;
-        return Objects.equals(moradorModel, that.moradorModel) &&
-                Objects.equals(unidade, that.unidade);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(moradorModel, unidade);
+        this.unidadeModel = unidade;
     }
 }

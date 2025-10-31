@@ -2,12 +2,12 @@ package com.project.facades;
 
 import com.project.applications.MoradorUnidadeApplication;
 import com.project.entities.MoradorUnidade;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Service
 public class MoradorUnidadeFacade {
 
     private final MoradorUnidadeApplication application;
@@ -20,23 +20,23 @@ public class MoradorUnidadeFacade {
         return application.salvar(moradorUnidade);
     }
 
-    public List<MoradorUnidade> listarTodos() {
-        return application.listarTodos();
-    }
-
     public Optional<MoradorUnidade> buscarPorId(Long id) {
         return application.buscarPorId(id);
     }
 
+    public List<MoradorUnidade> listarTodos() {
+        return application.listarTodos();
+    }
+
     public void deletar(Long id) {
-        application.deletarPorId(id);
+        application.deletar(id);
     }
 
     public Optional<MoradorUnidade> buscarPorIdsMoradorUnidade(Integer moradorId, Integer unidadeId) {
-        return application.buscarPorMoradorIdEUnidadeId(moradorId, unidadeId);
+        return application.buscarPorIdsMoradorUnidade(moradorId, unidadeId);
     }
 
     public boolean deletarPorIdsMoradorUnidade(Integer moradorId, Integer unidadeId) {
-        return application.deletarPorMoradorIdEUnidadeId(moradorId, unidadeId);
+        return application.deletarPorIdsMoradorUnidade(moradorId, unidadeId);
     }
 }

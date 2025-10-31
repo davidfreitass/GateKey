@@ -31,17 +31,16 @@ public class MoradorUnidadeApplication {
         return repository.findById(id);
     }
 
-    public void deletarPorId(Long id) {
+    public void deletar(Long id) {
         repository.deleteById(id);
     }
 
-    public Optional<MoradorUnidade> buscarPorMoradorIdEUnidadeId(Integer moradorId, Integer unidadeId) {
+    public Optional<MoradorUnidade> buscarPorIdsMoradorUnidade(Integer moradorId, Integer unidadeId) {
         return repository.findByIdMoradorAndIdUnidade(moradorId, unidadeId);
     }
 
-    public boolean deletarPorMoradorIdEUnidadeId(Integer moradorId, Integer unidadeId) {
+    public boolean deletarPorIdsMoradorUnidade(Integer moradorId, Integer unidadeId) {
         Optional<MoradorUnidade> associacao = repository.findByIdMoradorAndIdUnidade(moradorId, unidadeId);
-
         if (associacao.isPresent()) {
             repository.delete(associacao.get());
             return true;
