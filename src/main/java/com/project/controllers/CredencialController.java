@@ -79,4 +79,5 @@ public class CredencialController {
         model.setDadosBiometricos(entity.getDadosBiometricos());
         return model;
     }
+
 }

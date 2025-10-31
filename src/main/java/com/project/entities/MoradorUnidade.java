@@ -1,9 +1,6 @@
 package com.project.entities;
 
-import java.io.Serializable;
-import java.util.Objects;
-
-public class MoradorUnidade implements Serializable {
+public class MoradorUnidade {
 
     private Long id;
 
@@ -42,16 +39,4 @@ public class MoradorUnidade implements Serializable {
         this.idUnidade = idUnidade;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof MoradorUnidade)) return false;
-        MoradorUnidade that = (MoradorUnidade) o;
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

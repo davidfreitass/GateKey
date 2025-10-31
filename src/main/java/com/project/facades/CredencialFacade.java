@@ -15,6 +15,7 @@ public class CredencialFacade {
         this.repository = repository;
     }
 
+
     public Credencial salvar(Credencial credencial) {
         return repository.save(credencial);
     }
