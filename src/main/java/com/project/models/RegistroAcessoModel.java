@@ -11,14 +11,19 @@ public class RegistroAcessoModel {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private int id;
 
-
         private LocalDateTime dataHora;
 
         private String situacao;
 
+        @Column(name = "dispositivo_id")
+        private int dispositivoId;
+
         @ManyToOne
         @JoinColumn(name = "dispositivo_id", referencedColumnName = "id")
         private DispositivoModel dispositivoModel;
+
+        @Column(name = "credencial_id")
+        private int credencialId;
 
         @ManyToOne
         @JoinColumn(name = "credencial_id", referencedColumnName = "id")
