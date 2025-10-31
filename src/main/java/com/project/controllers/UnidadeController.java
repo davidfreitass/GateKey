@@ -1,13 +1,12 @@
 package com.project.controllers;
 
-import com.project.entities.Unidade;
 import com.project.facades.UnidadeFacade;
 import com.project.models.UnidadeModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/unidades")
@@ -21,37 +20,33 @@ public class UnidadeController {
 
     @GetMapping
     public List<UnidadeModel> listAll() {
-        return unidadeFacade.listarTodos()
-                .stream()
-                .map(this::toModel)
-                .collect(Collectors.toList());
+        return unidadeFacade.listarTodos();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UnidadeModel> buscar(@PathVariable Integer id) {
         return unidadeFacade.buscarPorId(id)
-                .map(this::toModel)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
     public UnidadeModel create(@RequestBody UnidadeModel model) {
-        Unidade unidade = toEntity(model);
-        Unidade saved = unidadeFacade.salvar(unidade);
-        return toModel(saved);
+        UnidadeModel saved = unidadeFacade.salvar(model);
+        return saved;
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UnidadeModel> update(@PathVariable Integer id, @RequestBody UnidadeModel model) {
-        if (unidadeFacade.buscarPorId(id).isEmpty()) {
+        Optional<UnidadeModel> existing = unidadeFacade.buscarPorId(id);
+
+        if (existing.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        Unidade unidade = toEntity(model);
-        unidade.setId(id);
-        Unidade updated = unidadeFacade.salvar(unidade);
-        return ResponseEntity.ok(toModel(updated));
+        model.setId(id);
+        UnidadeModel updated = unidadeFacade.salvar(model);
+        return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")
@@ -62,23 +57,5 @@ public class UnidadeController {
 
         unidadeFacade.deletar(id);
         return ResponseEntity.noContent().build();
-    }
-
-    private Unidade toEntity(UnidadeModel model) {
-        Unidade entity = new Unidade();
-        entity.setId(model.getId());
-        entity.setNumero(model.getNumero());
-        entity.setBloco(model.getBloco());
-        entity.setTipo(model.getTipo());
-        return entity;
-    }
-
-    private UnidadeModel toModel(Unidade entity) {
-        UnidadeModel model = new UnidadeModel();
-        model.setId(entity.getId());
-        model.setNumero(entity.getNumero());
-        model.setBloco(entity.getBloco());
-        model.setTipo(entity.getTipo());
-        return model;
     }
 }

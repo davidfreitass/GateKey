@@ -3,6 +3,7 @@ package com.project.facades;
 
 import com.project.applications.DispositivoApplication;
 import com.project.entities.Dispositivo;
+import com.project.models.DispositivoModel;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -15,15 +16,15 @@ public class DispositivoFacade {
         this.application = application;
     }
 
-    public Dispositivo salvar(Dispositivo dispositivo) {
-        return application.salvar(dispositivo);
+    public DispositivoModel salvar(DispositivoModel dispositivoModel) {
+        return application.salvar(dispositivoModel);
     }
 
-    public Optional<Dispositivo> buscarPorId(int id) {
+    public Optional<DispositivoModel> buscarPorId(int id) {
         return application.buscarPorId(id);
     }
 
-    public List<Dispositivo> listarTodos() {
+    public List<DispositivoModel> listarTodos() {
         return application.listarTodos();
     }
 

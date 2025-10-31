@@ -2,6 +2,7 @@ package com.project.facades;
 
 import com.project.applications.MoradorUnidadeApplication;
 import com.project.entities.MoradorUnidade;
+import com.project.models.MoradorUnidadeModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,15 +17,15 @@ public class MoradorUnidadeFacade {
         this.application = application;
     }
 
-    public MoradorUnidade salvar(MoradorUnidade moradorUnidade) {
-        return application.salvar(moradorUnidade);
+    public MoradorUnidadeModel salvar(MoradorUnidadeModel moradorUnidadeModel) {
+        return application.salvar(moradorUnidadeModel);
     }
 
-    public Optional<MoradorUnidade> buscarPorId(Long id) {
+    public Optional<MoradorUnidadeModel> buscarPorId(Long id) {
         return application.buscarPorId(id);
     }
 
-    public List<MoradorUnidade> listarTodos() {
+    public List<MoradorUnidadeModel> listarTodos() {
         return application.listarTodos();
     }
 
@@ -32,7 +33,7 @@ public class MoradorUnidadeFacade {
         application.deletar(id);
     }
 
-    public Optional<MoradorUnidade> buscarPorIdsMoradorUnidade(Integer moradorId, Integer unidadeId) {
+    public Optional<MoradorUnidadeModel> buscarPorIdsMoradorUnidade(Integer moradorId, Integer unidadeId) {
         return application.buscarPorIdsMoradorUnidade(moradorId, unidadeId);
     }
 

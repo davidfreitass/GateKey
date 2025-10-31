@@ -1,6 +1,7 @@
 package com.project.facades;
 
 import com.project.entities.Credencial;
+import com.project.models.CredencialModel;
 import com.project.repositories.CredencialRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,16 +17,16 @@ public class CredencialFacade {
     }
 
 
-    public Credencial salvar(Credencial credencial) {
-        return repository.save(credencial);
+    public CredencialModel salvar(CredencialModel credencialModel) {
+        return repository.save(credencialModel);
     }
 
-    public Credencial buscarPorId(int id) {
+    public CredencialModel buscarPorId(int id) {
         return repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Credencial não encontrada"));
     }
 
-    public List<Credencial> listarTodos() {
+    public List<CredencialModel> listarTodos() {
         return repository.findAll();
     }
 

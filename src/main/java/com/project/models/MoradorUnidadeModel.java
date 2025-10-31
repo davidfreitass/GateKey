@@ -1,48 +1,35 @@
 package com.project.models;
 
 import jakarta.persistence.*;
-
+import java.io.Serializable;
 
 @Entity
-@Table(name = "Morador_Unidade")
-public class MoradorUnidadeModel {
+@Table(name = "Morador_Unidade", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"morador_id", "unidade_id"}, name = "UK_Morador_Unidade")
+})
+public class MoradorUnidadeModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "Morador_idMorador")
-    private int idMorador;
-
-    @Column(name = "Unidade_idUnidade")
-    private int idUnidade;;
-
-    @ManyToOne
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(
-            name = "Morador_idMorador",
-            referencedColumnName = "id",
-            insertable = false,
-            updatable = false,
+            name = "morador_idMorador",
+            nullable = false,
             foreignKey = @ForeignKey(name = "FK_MoradorUnidade_Morador_ID")
     )
-    private MoradorModel moradorModel;
+    private MoradorModel morador;
 
-    @ManyToOne
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(
-            name = "Unidade_idUnidade",
-            referencedColumnName = "id",
-            insertable = false,
-            updatable = false,
+            name = "unidade_idUnidade",
+            nullable = false,
             foreignKey = @ForeignKey(name = "FK_MoradorUnidade_Unidade_ID")
     )
-    private UnidadeModel unidadeModel;
+    private UnidadeModel unidade;
 
     public MoradorUnidadeModel() {}
-
-    public MoradorUnidadeModel(Integer idMorador, Integer idUnidade) {
-        this.idMorador = idMorador;
-        this.idUnidade = idUnidade;
-    }
 
     public Long getId() {
         return id;
@@ -52,35 +39,19 @@ public class MoradorUnidadeModel {
         this.id = id;
     }
 
-    public Integer getIdMorador() {
-        return idMorador;
-    }
-
-    public void setIdMorador(Integer idMorador) {
-        this.idMorador = idMorador;
-    }
-
-    public Integer getIdUnidade() {
-        return idUnidade;
-    }
-
-    public void setIdUnidade(Integer idUnidade) {
-        this.idUnidade = idUnidade;
-    }
-
     public MoradorModel getMorador() {
-        return moradorModel;
+        return morador;
     }
 
     public void setMorador(MoradorModel morador) {
-        this.moradorModel = morador;
+        this.morador = morador;
     }
 
     public UnidadeModel getUnidade() {
-        return unidadeModel;
+        return unidade;
     }
 
     public void setUnidade(UnidadeModel unidade) {
-        this.unidadeModel = unidade;
+        this.unidade = unidade;
     }
 }

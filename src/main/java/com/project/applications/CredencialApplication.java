@@ -1,6 +1,7 @@
 package com.project.applications;
 
 import com.project.entities.Credencial;
+import com.project.models.CredencialModel;
 import com.project.repositories.CredencialRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,15 +17,15 @@ public class CredencialApplication {
         this.repository = repository;
     }
 
-    public Credencial salvar(Credencial credencial) {
-        return repository.save(credencial);
+    public CredencialModel salvar(CredencialModel credencialModel) {
+        return repository.save(credencialModel);
     }
 
-    public List<Credencial> listarTodos() {
+    public List<CredencialModel> listarTodos() {
         return repository.findAll();
     }
 
-    public Optional<Credencial> buscarPorId(Integer id) {
+    public Optional<CredencialModel> buscarPorId(Integer id) {
         return repository.findById(id);
     }
 

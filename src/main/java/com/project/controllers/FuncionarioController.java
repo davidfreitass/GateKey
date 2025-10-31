@@ -1,12 +1,12 @@
 package com.project.controllers;
 
-import com.project.entities.Funcionario;
 import com.project.facades.FuncionarioFacade;
 import com.project.models.FuncionarioModel;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/funcionarios")
@@ -20,59 +20,41 @@ public class FuncionarioController {
 
     @PostMapping
     public FuncionarioModel create(@RequestBody FuncionarioModel model) {
-        Funcionario funcionario = toEntity(model);
-        Funcionario saved = funcionarioFacade.salvar(funcionario);
-        return toModel(saved);
+        FuncionarioModel saved = funcionarioFacade.salvar(model);
+        return saved;
     }
 
     @GetMapping("/{id}")
-    public FuncionarioModel read(@PathVariable int id) {
-        Funcionario funcionario = funcionarioFacade.buscarPorId(id);
-        return toModel(funcionario);
+    public ResponseEntity<FuncionarioModel> read(@PathVariable Integer id) {
+        return funcionarioFacade.buscarPorId(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping
     public List<FuncionarioModel> listAll() {
-        return funcionarioFacade.listarTodos()
-                .stream()
-                .map(this::toModel)
-                .collect(Collectors.toList());
+        return funcionarioFacade.listarTodos();
     }
 
     @PutMapping("/{id}")
-    public FuncionarioModel update(@PathVariable int id, @RequestBody FuncionarioModel model) {
-        Funcionario funcionario = toEntity(model);
-        funcionario.setId(id);
-        Funcionario updated = funcionarioFacade.salvar(funcionario);
-        return toModel(updated);
+    public ResponseEntity<FuncionarioModel> update(@PathVariable Integer id, @RequestBody FuncionarioModel model) {
+        Optional<FuncionarioModel> existing = funcionarioFacade.buscarPorId(id);
+
+        if (existing.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        model.setId(id);
+        FuncionarioModel updated = funcionarioFacade.salvar(model);
+        return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id) {
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        if (funcionarioFacade.buscarPorId(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
         funcionarioFacade.deletar(id);
-    }
-
-    private Funcionario toEntity(FuncionarioModel model) {
-        Funcionario funcionario = new Funcionario();
-        funcionario.setId(model.getId());
-        funcionario.setNome(model.getNome());
-        funcionario.setCpf(model.getCpf());
-        funcionario.setTelefone(model.getTelefone());
-        funcionario.setEmail(model.getEmail());
-        funcionario.setFotoPerfil(model.getFotoPerfil());
-        funcionario.setStatus(model.getStatus());
-        return funcionario;
-    }
-
-    private FuncionarioModel toModel(Funcionario funcionario) {
-        FuncionarioModel model = new FuncionarioModel();
-        model.setId(funcionario.getId());
-        model.setNome(funcionario.getNome());
-        model.setCpf(funcionario.getCpf());
-        model.setTelefone(funcionario.getTelefone());
-        model.setEmail(funcionario.getEmail());
-        model.setFotoPerfil(funcionario.getFotoPerfil());
-        model.setStatus(funcionario.getStatus());
-        return model;
+        return ResponseEntity.noContent().build();
     }
 }

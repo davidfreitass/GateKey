@@ -15,15 +15,9 @@ public class RegistroAcessoModel {
 
         private String situacao;
 
-        @Column(name = "dispositivo_id")
-        private int dispositivoId;
-
         @ManyToOne
         @JoinColumn(name = "dispositivo_id", referencedColumnName = "id")
         private DispositivoModel dispositivoModel;
-
-        @Column(name = "credencial_id")
-        private int credencialId;
 
         @ManyToOne
         @JoinColumn(name = "credencial_id", referencedColumnName = "id")
@@ -37,6 +31,28 @@ public class RegistroAcessoModel {
 
         public String getSituacao() { return situacao; }
         public void setSituacao(String situacao) { this.situacao = situacao; }
+
+
+
+    public DispositivoModel getDispositivoModel() {
+        return dispositivoModel;
     }
+
+    public void setDispositivoModel(DispositivoModel dispositivoModel) {
+        this.dispositivoModel = dispositivoModel;
+    }
+
+
+
+    public CredencialModel getCredencialModel() {
+        return credencialModel;
+    }
+
+    public void setCredencialModel(CredencialModel credencialModel) {
+        this.credencialModel = credencialModel;
+    }
+
+
+}
 
 

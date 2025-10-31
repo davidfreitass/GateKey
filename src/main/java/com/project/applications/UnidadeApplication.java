@@ -1,6 +1,7 @@
 package com.project.applications;
 
 import com.project.entities.Unidade;
+import com.project.models.UnidadeModel;
 import com.project.repositories.UnidadeRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,15 +17,15 @@ public class UnidadeApplication {
             this.repository = repository;
         }
 
-        public Unidade salvar(Unidade unidade) {
-            return repository.save(unidade);
+        public UnidadeModel salvar(UnidadeModel unidadeModel) {
+            return repository.save(unidadeModel);
         }
 
-        public List<Unidade> listarTodos() {
+        public List<UnidadeModel> listarTodos() {
             return repository.findAll();
         }
 
-        public Optional<Unidade> buscarPorId(Integer id) {
+        public Optional<UnidadeModel> buscarPorId(Integer id) {
             return repository.findById(id);
         }
 

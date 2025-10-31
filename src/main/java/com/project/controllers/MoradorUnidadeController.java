@@ -1,16 +1,12 @@
 package com.project.controllers;
 
-import com.project.entities.MoradorUnidade;
 import com.project.facades.MoradorUnidadeFacade;
 import com.project.models.MoradorUnidadeModel;
-import com.project.models.MoradorModel;
-import com.project.models.UnidadeModel;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @RestController
 @RequestMapping("/morador-unidade")
@@ -24,16 +20,12 @@ public class MoradorUnidadeController {
 
     @GetMapping
     public List<MoradorUnidadeModel> listAll() {
-        return facade.listarTodos()
-                .stream()
-                .map(this::toModel)
-                .collect(Collectors.toList());
+        return facade.listarTodos();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<MoradorUnidadeModel> buscarPorId(@PathVariable Long id) {
         return facade.buscarPorId(id)
-                .map(this::toModel)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -44,16 +36,14 @@ public class MoradorUnidadeController {
             @PathVariable Integer unidadeId) {
 
         return facade.buscarPorIdsMoradorUnidade(moradorId, unidadeId)
-                .map(this::toModel)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
     public MoradorUnidadeModel create(@RequestBody MoradorUnidadeModel model) {
-        MoradorUnidade entity = toEntity(model);
-        MoradorUnidade saved = facade.salvar(entity);
-        return toModel(saved);
+        MoradorUnidadeModel saved = facade.salvar(model);
+        return saved;
     }
 
     @PutMapping("/{id}")
@@ -63,10 +53,10 @@ public class MoradorUnidadeController {
             return ResponseEntity.notFound().build();
         }
 
-        MoradorUnidade entity = toEntity(model);
-        entity.setId(id);
-        MoradorUnidade updated = facade.salvar(entity);
-        return ResponseEntity.ok(toModel(updated));
+        model.setId(id);
+
+        MoradorUnidadeModel updated = facade.salvar(model);
+        return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")
@@ -85,31 +75,5 @@ public class MoradorUnidadeController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
-    }
-
-    private MoradorUnidade toEntity(MoradorUnidadeModel model) {
-        MoradorUnidade entity = new MoradorUnidade();
-        if (model.getId() != null) entity.setId(model.getId());
-        if (model.getMorador() != null) entity.setIdMorador(model.getMorador().getId());
-        if (model.getUnidade() != null) entity.setIdUnidade(model.getUnidade().getId());
-        return entity;
-    }
-
-    private MoradorUnidadeModel toModel(MoradorUnidade entity) {
-        MoradorModel morador = new MoradorModel();
-        morador.setId(entity.getIdMorador());
-
-        UnidadeModel unidade = new UnidadeModel();
-        unidade.setId(entity.getIdUnidade());
-
-        MoradorUnidadeModel model = new MoradorUnidadeModel();
-
-        model.setMorador(morador);
-        model.setUnidade(unidade);
-        model.setIdMorador(entity.getIdMorador());
-        model.setIdUnidade(entity.getIdUnidade());
-        model.setId(entity.getId());
-
-        return model;
     }
 }

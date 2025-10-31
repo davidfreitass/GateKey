@@ -2,6 +2,7 @@ package com.project.facades;
 
 import com.project.applications.UnidadeApplication;
 import com.project.entities.Unidade;
+import com.project.models.UnidadeModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,15 +17,15 @@ public class UnidadeFacade {
         this.application = application;
     }
 
-    public Unidade salvar(Unidade unidade) {
-        return application.salvar(unidade);
+    public UnidadeModel salvar(UnidadeModel unidadeModel) {
+        return application.salvar(unidadeModel);
     }
 
-    public Optional<Unidade> buscarPorId(int id) {
+    public Optional<UnidadeModel> buscarPorId(int id) {
         return application.buscarPorId(id);
     }
 
-    public List<Unidade> listarTodos() {
+    public List<UnidadeModel> listarTodos() {
         return application.listarTodos();
     }
 

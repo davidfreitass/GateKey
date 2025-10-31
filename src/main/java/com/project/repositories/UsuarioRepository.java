@@ -1,9 +1,10 @@
 package com.project.repositories;
 
-import com.project.entities.Usuario;
+
+import com.project.models.UsuarioModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
+public interface UsuarioRepository extends JpaRepository<UsuarioModel, Integer> {
 }
