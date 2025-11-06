@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "Morador_Unidade", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"morador_id", "unidade_id"}, name = "UK_Morador_Unidade")
+        @UniqueConstraint(columnNames = {"morador_idMorador", "unidade_idUnidade"}, name = "UK_Morador_Unidade")
 })
 public class MoradorUnidadeModel implements Serializable {
 
