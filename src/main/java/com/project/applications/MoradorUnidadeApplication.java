@@ -17,7 +17,6 @@ public class MoradorUnidadeApplication {
         this.repository = repository;
     }
 
-    @Transactional
     public MoradorUnidadeModel salvar(MoradorUnidadeModel moradorUnidadeModel) {
         return repository.save(moradorUnidadeModel);
     }
@@ -30,19 +29,15 @@ public class MoradorUnidadeApplication {
         return repository.findById(id);
     }
 
-    @Transactional
     public void deletar(Long id) {
         repository.deleteById(id);
     }
 
     public Optional<MoradorUnidadeModel> buscarPorIdsMoradorUnidade(Integer moradorId, Integer unidadeId) {
-        // O nome do método de repositório deve ser ajustado
         return repository.findByMorador_IdAndUnidade_Id(moradorId, unidadeId);
     }
 
-    @Transactional
     public boolean deletarPorIdsMoradorUnidade(Integer moradorId, Integer unidadeId) {
-        // O nome do método de repositório deve ser ajustado
         Optional<MoradorUnidadeModel> associacao = repository.findByMorador_IdAndUnidade_Id(moradorId, unidadeId);
         if (associacao.isPresent()) {
             repository.delete(associacao.get());
