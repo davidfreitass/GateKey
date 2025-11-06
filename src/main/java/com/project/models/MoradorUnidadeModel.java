@@ -1,13 +1,12 @@
 package com.project.models;
 
 import jakarta.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "Morador_Unidade", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"morador_idMorador", "unidade_idUnidade"}, name = "UK_Morador_Unidade")
 })
-public class MoradorUnidadeModel implements Serializable {
+public class MoradorUnidadeModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
