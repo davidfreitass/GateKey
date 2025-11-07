@@ -12,14 +12,18 @@ import java.util.List;
             @Id
             @GeneratedValue(strategy = GenerationType.IDENTITY)
             private int id;
-
             private String localizacao;
-
             private String tipo;
-
             private String status;
 
-            @OneToMany(mappedBy = "dispositivoModel")
+    public DispositivoModel(int id, String localizacao, String tipo, String status) {
+        this.id = id;
+        this.localizacao = localizacao;
+        this.tipo = tipo;
+        this.status = status;
+    }
+
+    @OneToMany(mappedBy = "dispositivoModel")
             private List<RegistroAcessoModel> registroAcessoModels = new ArrayList<>();
 
             public int getId() { return id; }

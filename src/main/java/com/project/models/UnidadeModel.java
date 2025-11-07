@@ -16,6 +16,13 @@ public class UnidadeModel {
     private String bloco;
     private String tipo;
 
+    public UnidadeModel(int id, String numero, String bloco, String tipo) {
+        this.id = id;
+        this.numero = numero;
+        this.bloco = bloco;
+        this.tipo = tipo;
+    }
+
     @OneToMany(mappedBy = "unidade")
     private List<MoradorUnidadeModel> moradorUnidadeModelList = new ArrayList<>();
 

@@ -15,7 +15,12 @@ public class RegistroAcessoModel {
 
         private String situacao;
 
-        @ManyToOne
+    public RegistroAcessoModel() {
+
+    }
+
+
+    @ManyToOne
         @JoinColumn(name = "dispositivo_id", referencedColumnName = "id")
         private DispositivoModel dispositivoModel;
 
@@ -23,7 +28,7 @@ public class RegistroAcessoModel {
         @JoinColumn(name = "credencial_id", referencedColumnName = "id")
         private CredencialModel credencialModel;
 
-        public int getId() { return id; }
+    public int getId() { return id; }
         public void setId(int id) { this.id = id; }
 
         public LocalDateTime getDataHora() { return dataHora; }
@@ -41,8 +46,6 @@ public class RegistroAcessoModel {
     public void setDispositivoModel(DispositivoModel dispositivoModel) {
         this.dispositivoModel = dispositivoModel;
     }
-
-
 
     public CredencialModel getCredencialModel() {
         return credencialModel;

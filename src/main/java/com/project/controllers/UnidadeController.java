@@ -1,5 +1,6 @@
 package com.project.controllers;
 
+import com.project.entities.Unidade;
 import com.project.facades.UnidadeFacade;
 import com.project.models.UnidadeModel;
 import org.springframework.http.ResponseEntity;
@@ -19,33 +20,33 @@ public class UnidadeController {
     }
 
     @GetMapping
-    public List<UnidadeModel> listAll() {
+    public List<Unidade> listAll() {
         return unidadeFacade.listarTodos();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UnidadeModel> buscar(@PathVariable Integer id) {
+    public ResponseEntity<Unidade> buscar(@PathVariable Integer id) {
         return unidadeFacade.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public UnidadeModel create(@RequestBody UnidadeModel model) {
-        UnidadeModel saved = unidadeFacade.salvar(model);
+    public Unidade create(@RequestBody Unidade unidade) {
+        Unidade saved = unidadeFacade.salvar(unidade);
         return saved;
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UnidadeModel> update(@PathVariable Integer id, @RequestBody UnidadeModel model) {
-        Optional<UnidadeModel> existing = unidadeFacade.buscarPorId(id);
+    public ResponseEntity<Unidade> update(@PathVariable Integer id, @RequestBody Unidade unidade) {
+        Optional<Unidade> existing = unidadeFacade.buscarPorId(id);
 
         if (existing.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        model.setId(id);
-        UnidadeModel updated = unidadeFacade.salvar(model);
+        unidade.setId(id);
+        Unidade updated = unidadeFacade.salvar(unidade);
         return ResponseEntity.ok(updated);
     }
 

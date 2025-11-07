@@ -1,5 +1,6 @@
 package com.project.controllers;
 
+import com.project.entities.Usuario;
 import com.project.facades.UsuarioFacade;
 import com.project.models.UsuarioModel;
 import org.springframework.http.ResponseEntity;
@@ -19,33 +20,33 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public UsuarioModel create(@RequestBody UsuarioModel model) {
-        UsuarioModel saved = usuarioFacade.salvar(model);
+    public Usuario create(@RequestBody Usuario usuario) {
+        Usuario saved = usuarioFacade.salvar(usuario);
         return saved;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioModel> read(@PathVariable Integer id) {
+    public ResponseEntity<Usuario> read(@PathVariable Integer id) {
         return usuarioFacade.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping
-    public List<UsuarioModel> listAll() {
+    public List<Usuario> listAll() {
         return usuarioFacade.listarTodos();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioModel> update(@PathVariable Integer id, @RequestBody UsuarioModel model) {
-        Optional<UsuarioModel> existing = usuarioFacade.buscarPorId(id);
+    public ResponseEntity<Usuario> update(@PathVariable Integer id, @RequestBody Usuario usuario) {
+        Optional<Usuario> existing = usuarioFacade.buscarPorId(id);
 
         if (existing.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        model.setId(id);
-        UsuarioModel updated = usuarioFacade.salvar(model);
+        usuario.setId(id);
+        Usuario updated = usuarioFacade.salvar(usuario);
         return ResponseEntity.ok(updated);
     }
 

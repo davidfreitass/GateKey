@@ -1,16 +1,18 @@
 package com.project.entities;
 
+import com.project.models.MoradorUnidadeModel;
+import com.project.models.UnidadeModel;
+
 public class MoradorUnidade {
 
     private Long id;
-
     private Integer idMorador;
-
     private Integer idUnidade;
 
     public MoradorUnidade() {}
 
-    public MoradorUnidade(Integer idMorador, Integer idUnidade) {
+    public MoradorUnidade(Long id, Integer idMorador, Integer idUnidade) {
+        this.id = id;
         this.idMorador = idMorador;
         this.idUnidade = idUnidade;
     }

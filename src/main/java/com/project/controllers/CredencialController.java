@@ -1,6 +1,7 @@
 package com.project.controllers;
 
-import com.project.applications.CredencialApplication;
+import com.project.entities.Credencial;
+import com.project.facades.CredencialFacade;
 import com.project.models.CredencialModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,48 +12,48 @@ import java.util.List;
 @RequestMapping("/credenciais")
 public class CredencialController {
 
-    private final CredencialApplication application;
+    private final CredencialFacade credencialFacade;
 
-    public CredencialController(CredencialApplication application) {
-        this.application = application;
+    public CredencialController(CredencialFacade credencialFacade) {
+        this.credencialFacade = credencialFacade;
     }
 
     @GetMapping
-    public List<CredencialModel> listAll() {
-        return application.listarTodos();
+    public List<Credencial> listAll() {
+        return credencialFacade.listarTodos();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CredencialModel> buscar(@PathVariable Integer id) {
-        return application.buscarPorId(id)
+    public ResponseEntity<Credencial> buscar(@PathVariable Integer id) {
+        return credencialFacade.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public CredencialModel create(@RequestBody CredencialModel model) {
-        CredencialModel saved = application.salvar(model);
+    public Credencial create(@RequestBody Credencial credencial) {
+        Credencial saved = credencialFacade.salvar(credencial);
         return saved;
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CredencialModel> update(@PathVariable Integer id, @RequestBody CredencialModel model) {
-        if (application.buscarPorId(id).isEmpty()) {
+    public ResponseEntity<Credencial> update(@PathVariable Integer id, @RequestBody Credencial credencial) {
+        if (credencialFacade.buscarPorId(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        model.setId(id);
-        CredencialModel updated = application.salvar(model);
+        credencial.setId(id);
+        Credencial updated = credencialFacade.salvar(credencial);
         return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
-        if (application.buscarPorId(id).isEmpty()) {
+        if (credencialFacade.buscarPorId(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        application.deletar(id);
+        credencialFacade.deletar(id);
         return ResponseEntity.noContent().build();
     }
 }

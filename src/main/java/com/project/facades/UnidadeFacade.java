@@ -17,15 +17,15 @@ public class UnidadeFacade {
         this.application = application;
     }
 
-    public UnidadeModel salvar(UnidadeModel unidadeModel) {
-        return application.salvar(unidadeModel);
+    public Unidade salvar(Unidade unidade) {
+        return application.salvar(unidade);
     }
 
-    public Optional<UnidadeModel> buscarPorId(int id) {
+    public Optional<Unidade> buscarPorId(int id) {
         return application.buscarPorId(id);
     }
 
-    public List<UnidadeModel> listarTodos() {
+    public List<Unidade> listarTodos() {
         return application.listarTodos();
     }
 

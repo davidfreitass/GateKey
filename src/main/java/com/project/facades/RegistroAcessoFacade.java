@@ -2,7 +2,6 @@ package com.project.facades;
 
 import com.project.applications.RegistroAcessoApplication;
 import com.project.entities.RegistroAcesso;
-import com.project.models.RegistroAcessoModel;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -15,15 +14,15 @@ public class RegistroAcessoFacade {
         this.application = application;
     }
 
-    public RegistroAcessoModel salvar(RegistroAcessoModel registroAcessoModel) {
-        return application.salvar(registroAcessoModel);
+    public RegistroAcesso salvar(RegistroAcesso registroAcesso) {
+        return application.salvar(registroAcesso);
     }
 
-    public Optional<RegistroAcessoModel> buscarPorId(int id) {
+    public Optional<RegistroAcesso> buscarPorId(int id) {
         return application.buscarPorId(id);
     }
 
-    public List<RegistroAcessoModel> listarTodos() {
+    public List<RegistroAcesso> listarTodos() {
         return application.listarTodos();
     }
 

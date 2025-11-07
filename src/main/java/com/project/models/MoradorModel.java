@@ -12,22 +12,25 @@ public class MoradorModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     private String nome;
-
     private String cpf;
-
     private String telefone;
-
     private String email;
-
-    @Lob
-    private byte[] fotoPerfil;
-
     private String status;
 
     @OneToMany(mappedBy = "morador")
     private List<MoradorUnidadeModel> moradorUnidadeModelList = new ArrayList<>();
+
+    public MoradorModel() {}
+
+    public MoradorModel(int id, String nome, String cpf, String telefone, String email, String status) {
+        this.id = id;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.telefone = telefone;
+        this.email = email;
+        this.status = status;
+    }
 
     public int getId() {
         return id;
@@ -67,14 +70,6 @@ public class MoradorModel {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public byte[] getFotoPerfil() {
-        return fotoPerfil;
-    }
-
-    public void setFotoPerfil(byte[] fotoPerfil) {
-        this.fotoPerfil = fotoPerfil;
     }
 
     public String getStatus() {

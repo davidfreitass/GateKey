@@ -1,5 +1,7 @@
 package com.project.entities;
 
+import com.project.models.RegistroAcessoModel;
+
 import java.time.LocalDateTime;
 
 public class RegistroAcesso {
@@ -9,7 +11,12 @@ public class RegistroAcesso {
 
         private String situacao;
 
-        public int getId() {
+    public RegistroAcesso() {
+
+    }
+
+
+    public int getId() {
             return id;
         }
 
@@ -32,7 +39,18 @@ public class RegistroAcesso {
         public void setSituacao(String situacao) {
             this.situacao = situacao;
         }
+
+    public RegistroAcessoModel toModel() {
+        return new RegistroAcessoModel(
+        );
+    }
+
+    public RegistroAcesso fromModel(RegistroAcessoModel model) {
+        return new RegistroAcesso(
+        );
+    }
 }
+
 
 
 

@@ -1,5 +1,6 @@
 package com.project.controllers;
 
+import com.project.entities.Dispositivo;
 import com.project.facades.DispositivoFacade;
 import com.project.models.DispositivoModel;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +19,13 @@ public class DispositivoController {
     }
 
     @GetMapping
-    public List<DispositivoModel> listAll() {
+    public List<Dispositivo> listAll() {
         return dispositivoFacade.listarTodos();
     }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<DispositivoModel> buscar(@PathVariable Integer id) {
+    public ResponseEntity<Dispositivo> buscar(@PathVariable Integer id) {
         return dispositivoFacade.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -32,19 +33,19 @@ public class DispositivoController {
 
 
     @PostMapping
-    public DispositivoModel create(@RequestBody DispositivoModel model) {
-        DispositivoModel saved = dispositivoFacade.salvar(model);
+    public Dispositivo create(@RequestBody Dispositivo dispositivo) {
+        Dispositivo saved = dispositivoFacade.salvar(dispositivo);
         return saved;
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DispositivoModel> update(@PathVariable Integer id, @RequestBody DispositivoModel model) {
+    public ResponseEntity<Dispositivo> update(@PathVariable Integer id, @RequestBody Dispositivo dispositivo) {
         if (dispositivoFacade.buscarPorId(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        model.setId(id);
-        DispositivoModel updated = dispositivoFacade.salvar(model);
+        dispositivo.setId(id);
+        Dispositivo updated = dispositivoFacade.salvar(dispositivo);
         return ResponseEntity.ok(updated);
     }
 

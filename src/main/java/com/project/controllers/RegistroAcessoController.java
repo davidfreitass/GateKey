@@ -1,7 +1,7 @@
 package com.project.controllers;
 
+import com.project.entities.RegistroAcesso;
 import com.project.facades.RegistroAcessoFacade;
-import com.project.models.RegistroAcessoModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,33 +19,33 @@ public class RegistroAcessoController {
     }
 
     @GetMapping
-    public List<RegistroAcessoModel> listAll() {
+    public List<RegistroAcesso> listAll() {
         return registroAcessoFacade.listarTodos();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RegistroAcessoModel> buscar(@PathVariable Integer id) {
+    public ResponseEntity<RegistroAcesso> buscar(@PathVariable Integer id) {
         return registroAcessoFacade.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public RegistroAcessoModel create(@RequestBody RegistroAcessoModel model) {
-        RegistroAcessoModel saved = registroAcessoFacade.salvar(model);
+    public RegistroAcesso create(@RequestBody RegistroAcesso registroAcesso) {
+        RegistroAcesso saved = registroAcessoFacade.salvar(registroAcesso);
         return saved;
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RegistroAcessoModel> update(@PathVariable Integer id, @RequestBody RegistroAcessoModel model) {
-        Optional<RegistroAcessoModel> existing = registroAcessoFacade.buscarPorId(id);
+    public ResponseEntity<RegistroAcesso> update(@PathVariable Integer id, @RequestBody RegistroAcesso registroAcesso) {
+        Optional<RegistroAcesso> existing = registroAcessoFacade.buscarPorId(id);
 
         if (existing.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        model.setId(id);
-        RegistroAcessoModel updated = registroAcessoFacade.salvar(model);
+        registroAcesso.setId(id);
+        RegistroAcesso updated = registroAcessoFacade.salvar(registroAcesso);
         return ResponseEntity.ok(updated);
     }
 
