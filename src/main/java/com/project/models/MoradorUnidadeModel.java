@@ -3,8 +3,8 @@ package com.project.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Morador_Unidade", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"morador_idMorador", "unidade_idUnidade"}, name = "UK_Morador_Unidade")
+@Table(name = "morador_unidade", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"morador_id_morador", "unidade_id_unidade"}, name = "uk_morador_unidade")
 })
 public class MoradorUnidadeModel {
 
@@ -16,19 +16,19 @@ public class MoradorUnidadeModel {
         this.id = id;
     }
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(
-            name = "morador_idMorador",
+            name = "morador_id_morador",
             nullable = false,
-            foreignKey = @ForeignKey(name = "FK_MoradorUnidade_Morador_ID")
+            foreignKey = @ForeignKey(name = "fk_morador_unidade_morador_id")
     )
     private MoradorModel morador;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(
-            name = "unidade_idUnidade",
+            name = "unidade_id_unidade",
             nullable = false,
-            foreignKey = @ForeignKey(name = "FK_MoradorUnidade_Unidade_ID")
+            foreignKey = @ForeignKey(name = "fk_morador_unidade_unidade_id")
     )
     private UnidadeModel unidade;
 

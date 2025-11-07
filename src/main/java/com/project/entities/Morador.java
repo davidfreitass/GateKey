@@ -9,16 +9,14 @@ public class Morador {
     private String cpf;
     private String telefone;
     private String email;
-    private byte[] fotoPerfil;
     private String status;
 
-    public Morador(int id, String nome, String cpf, String telefone, String email, byte[] fotoPerfil, String status) {
+    public Morador(int id, String nome, String cpf, String telefone, String email, String status) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
         this.telefone = telefone;
         this.email = email;
-        this.fotoPerfil = fotoPerfil;
         this.status = status;
     }
 
@@ -51,12 +49,6 @@ public class Morador {
     }
     public void setEmail(String email) {
         this.email = email;
-    }
-    public byte[] getFotoPerfil() {
-        return fotoPerfil;
-    }
-    public void setFotoPerfil(byte[] fotoPerfil) {
-        this.fotoPerfil = fotoPerfil;
     }
     public String getStatus() {
         return status;
@@ -107,7 +99,6 @@ public class Morador {
                 this.getCpf(),
                 this.getTelefone(),
                 this.getEmail(),
-                this.getFotoPerfil(),
                 this.getStatus()
         );
     }
@@ -119,7 +110,6 @@ public class Morador {
                 model.getCpf(),
                 model.getTelefone(),
                 model.getEmail(),
-                model.getFotoPerfil(),
                 model.getStatus()
         );
     }

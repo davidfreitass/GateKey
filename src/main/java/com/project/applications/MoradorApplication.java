@@ -38,7 +38,6 @@ public class MoradorApplication {
                 saved.getCpf(),
                 saved.getTelefone(),
                 saved.getEmail(),
-                saved.getFotoPerfil(),
                 saved.getStatus()
         );
     }
@@ -52,7 +51,6 @@ public class MoradorApplication {
                         model.getCpf(),
                         model.getTelefone(),
                         model.getEmail(),
-                        model.getFotoPerfil(),
                         model.getStatus()
                 ))
                 .toList();
@@ -66,7 +64,6 @@ public class MoradorApplication {
                         model.getCpf(),
                         model.getTelefone(),
                         model.getEmail(),
-                        model.getFotoPerfil(),
                         model.getStatus()
                 ));
     }
