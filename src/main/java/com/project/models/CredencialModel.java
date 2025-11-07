@@ -9,11 +9,13 @@ public class CredencialModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String tipo;
-
     @Lob
     private byte[] dadosBiometricos;
 
+    public CredencialModel(int id, byte[] dadosBiometricos) {
+        this.id = id;
+        this.dadosBiometricos = dadosBiometricos;
+    }
 
     @OneToOne
     @JoinColumn(name = "morador_id", referencedColumnName = "id")
@@ -29,14 +31,6 @@ public class CredencialModel {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
     }
 
     public byte[] getDadosBiometricos() {

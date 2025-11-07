@@ -12,6 +12,10 @@ public class MoradorUnidadeModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    public MoradorUnidadeModel(Long id) {
+        this.id = id;
+    }
+
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(
             name = "morador_idMorador",

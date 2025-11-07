@@ -1,36 +1,34 @@
 package com.project.facades;
 
+import com.project.applications.CredencialApplication;
 import com.project.entities.Credencial;
-import com.project.models.CredencialModel;
-import com.project.repositories.CredencialRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CredencialFacade {
 
-    private final CredencialRepository repository;
+    private final CredencialApplication credencialApplication;
 
-    public CredencialFacade(CredencialRepository repository) {
-        this.repository = repository;
+    public CredencialFacade(CredencialApplication credencialApplication) {
+        this.credencialApplication = credencialApplication;
     }
 
-
-    public CredencialModel salvar(CredencialModel credencialModel) {
-        return repository.save(credencialModel);
+    public Credencial salvar(Credencial credencial) {
+        return credencialApplication.salvar(credencial);
     }
 
-    public CredencialModel buscarPorId(int id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Credencial não encontrada"));
+    public Optional<Credencial> buscarPorId(int id) {
+        return credencialApplication.buscarPorId(id);
     }
 
-    public List<CredencialModel> listarTodos() {
-        return repository.findAll();
+    public List<Credencial> listarTodos() {
+        return credencialApplication.listarTodos();
     }
 
     public void deletar(int id) {
-        repository.deleteById(id);
+        credencialApplication.deletar(id);
     }
 }

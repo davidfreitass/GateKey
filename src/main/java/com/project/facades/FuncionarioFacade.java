@@ -1,5 +1,6 @@
 package com.project.facades;
 
+import com.project.applications.FuncionarioApplication;
 import com.project.entities.Funcionario;
 import com.project.models.FuncionarioModel;
 import com.project.repositories.FuncionarioRepository;
@@ -11,25 +12,25 @@ import java.util.Optional;
 @Service
 public class FuncionarioFacade {
 
-    private final FuncionarioRepository repository;
+    private final FuncionarioApplication funcionarioApplication;
 
-    public FuncionarioFacade(FuncionarioRepository repository) {
-        this.repository = repository;
+    public FuncionarioFacade(FuncionarioApplication funcionarioApplication) {
+        this.funcionarioApplication = funcionarioApplication;
     }
 
-    public FuncionarioModel salvar(FuncionarioModel funcionarioModel) {
-        return repository.save(funcionarioModel);
+    public Funcionario salvar(Funcionario funcionario) {
+        return funcionarioApplication.salvar(funcionario);
     }
 
-    public Optional<FuncionarioModel> buscarPorId(Integer id) {
-        return repository.findById(id);
+    public Optional<Funcionario> buscarPorId(Integer id) {
+        return funcionarioApplication.buscarPorId(id);
     }
 
-    public List<FuncionarioModel> listarTodos() {
-        return repository.findAll();
+    public List<Funcionario> listarTodos() {
+        return funcionarioApplication.listarTodos();
     }
 
     public void deletar(Integer id) {
-        repository.deleteById(id);
+        funcionarioApplication.deletar(id);
     }
 }
