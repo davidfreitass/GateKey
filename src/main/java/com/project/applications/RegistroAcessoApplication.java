@@ -4,33 +4,61 @@ import com.project.entities.RegistroAcesso;
 import com.project.models.RegistroAcessoModel;
 import com.project.repositories.RegistroAcessoRepository;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-    @Service
-    public class RegistroAcessoApplication {
+@Service
+public class RegistroAcessoApplication {
 
-        private final RegistroAcessoRepository repository;
+    private final RegistroAcessoRepository repository;
 
-        public RegistroAcessoApplication(RegistroAcessoRepository repository) {
-            this.repository = repository;
-        }
+    public RegistroAcessoApplication(RegistroAcessoRepository repository) {
+        this.repository = repository;
+    }
 
-        public RegistroAcessoModel salvar(RegistroAcessoModel registroAcessoModel) {
-            return repository.save(registroAcessoModel);
-        }
+    public RegistroAcesso salvar(RegistroAcesso registroAcesso) {
 
-        public List<RegistroAcessoModel> listarTodos() {
-            return repository.findAll();
-        }
+        RegistroAcessoModel modelParaSalvar = this.converterParaEntidade(registroAcesso);
 
-        public Optional<RegistroAcessoModel> buscarPorId(Integer id) {
-            return repository.findById(id);
-        }
+        RegistroAcessoModel modelSalvo = repository.save(modelParaSalvar);
 
-        public void deletar(Integer id) {
-            repository.deleteById(id);
-        }
+        return this.converterParaDTO(modelSalvo);
+    }
+
+    public List<RegistroAcesso> listarTodos() {
+        List<RegistroAcessoModel> listaDeModels = repository.findAll();
+
+        return listaDeModels.stream()
+                .map(this::converterParaDTO)
+                .collect(Collectors.toList());
+    }
+
+    public Optional<RegistroAcesso> buscarPorId(Integer id) {
+        Optional<RegistroAcessoModel> modelEncontrado = repository.findById(id);
+
+        return modelEncontrado.map(this::converterParaDTO);
+    }
+
+    public void deletar(Integer id) {
+        repository.deleteById(id);
+    }
+
+    private RegistroAcessoModel converterParaEntidade(RegistroAcesso dto) {
+        RegistroAcessoModel model = new RegistroAcessoModel();
+        model.setId(dto.getId());
+        model.setDataHora(dto.getDataHora());
+        model.setSituacao(dto.getSituacao());
+        return model;
     }
 
 
+    private RegistroAcesso converterParaDTO(RegistroAcessoModel model) {
+        RegistroAcesso dto = new RegistroAcesso();
+         dto.setId(model.getId());
+         dto.setDataHora(model.getDataHora());
+         dto.setSituacao(model.getSituacao());
+        return dto;
+    }
+}
