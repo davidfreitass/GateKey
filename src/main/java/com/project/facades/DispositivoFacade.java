@@ -10,26 +10,26 @@ import java.util.Optional;
 
 @Service
 public class DispositivoFacade {
-    private final DispositivoApplication application;
+    private final DispositivoApplication dispositivoApplication;
 
-    public DispositivoFacade(DispositivoApplication application) {
-        this.application = application;
+    public DispositivoFacade(DispositivoApplication dispositivoApplication) {
+        this.dispositivoApplication = dispositivoApplication;
     }
 
-    public DispositivoModel salvar(DispositivoModel dispositivoModel) {
-        return application.salvar(dispositivoModel);
+    public Dispositivo salvar(Dispositivo dispositivo) {
+        return dispositivoApplication.salvar(dispositivo);
     }
 
-    public Optional<DispositivoModel> buscarPorId(int id) {
-        return application.buscarPorId(id);
+    public Optional<Dispositivo> buscarPorId(int id) {
+        return dispositivoApplication.buscarPorId(id);
     }
 
-    public List<DispositivoModel> listarTodos() {
-        return application.listarTodos();
+    public List<Dispositivo> listarTodos() {
+        return dispositivoApplication.listarTodos();
     }
 
     public void deletar(int id) {
-        application.deletar(id);
+        dispositivoApplication.deletar(id);
     }
 }
 

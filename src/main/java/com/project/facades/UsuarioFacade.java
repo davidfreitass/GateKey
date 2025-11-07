@@ -1,5 +1,7 @@
 package com.project.facades;
 
+import com.project.applications.UnidadeApplication;
+import com.project.applications.UsuarioApplication;
 import com.project.entities.Usuario;
 import com.project.models.FuncionarioModel;
 import com.project.models.UsuarioModel;
@@ -12,25 +14,25 @@ import java.util.Optional;
 @Service
 public class UsuarioFacade {
 
-    private final UsuarioRepository repository;
+    private final UsuarioApplication usuarioApplication;
 
-    public UsuarioFacade(UsuarioRepository repository) {
-        this.repository = repository;
+    public UsuarioFacade(UsuarioApplication usuarioApplication) {
+        this.usuarioApplication = usuarioApplication;
     }
 
-    public UsuarioModel salvar(UsuarioModel usuarioModel) {
-        return repository.save(usuarioModel);
+    public Usuario salvar(Usuario usuario) {
+        return usuarioApplication.salvar(usuario);
     }
 
-    public Optional<UsuarioModel> buscarPorId(Integer id) {
-        return repository.findById(id);
+    public Optional<Usuario> buscarPorId(Integer id) {
+        return usuarioApplication.buscarPorId(id);
     }
 
-    public List<UsuarioModel> listarTodos() {
-        return repository.findAll();
+    public List<Usuario> listarTodos() {
+        return usuarioApplication.listarTodos();
     }
 
     public void deletar(int id) {
-        repository.deleteById(id);
+        usuarioApplication.deletar(id);
     }
 }

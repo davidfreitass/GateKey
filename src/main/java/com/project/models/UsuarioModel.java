@@ -14,6 +14,14 @@ public class UsuarioModel {
     private String nivelAcesso;
     private String status;
 
+    public UsuarioModel(Integer id, String login, String senha, String nivelAcesso, String status) {
+        this.id = id;
+        this.login = login;
+        this.senha = senha;
+        this.nivelAcesso = nivelAcesso;
+        this.status = status;
+    }
+
     @OneToOne()
     @JoinColumn(name = "morador_id", referencedColumnName = "id", nullable = true)
     private MoradorModel morador;

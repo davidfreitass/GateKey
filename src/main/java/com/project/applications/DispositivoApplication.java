@@ -19,16 +19,38 @@ public class DispositivoApplication {
         this.repository = repository;
     }
 
-    public DispositivoModel salvar(DispositivoModel dispositivoModel) {
-        return repository.save(dispositivoModel);
+    public Dispositivo salvar(Dispositivo dispositivo) {
+        DispositivoModel model = dispositivo.toModel();
+        DispositivoModel saved = repository.save(model);
+
+        return new Dispositivo(
+                saved.getId(),
+                saved.getLocalizacao(),
+                saved.getTipo(),
+                saved.getStatus()
+        );
     }
 
-    public List<DispositivoModel> listarTodos() {
-        return repository.findAll();
+    public List<Dispositivo> listarTodos() {
+        return repository.findAll()
+                .stream()
+                .map(model -> new Dispositivo(
+                        model.getId(),
+                        model.getLocalizacao(),
+                        model.getTipo(),
+                        model.getStatus()
+                ))
+                .toList();
     }
 
-    public Optional<DispositivoModel> buscarPorId(Integer id) {
-        return repository.findById(id);
+    public Optional<Dispositivo> buscarPorId(Integer id) {
+        return repository.findById(id)
+                .map(model -> new Dispositivo(
+                        model.getId(),
+                        model.getLocalizacao(),
+                        model.getTipo(),
+                        model.getStatus()
+                ));
     }
 
     public void deletar(Integer id) {

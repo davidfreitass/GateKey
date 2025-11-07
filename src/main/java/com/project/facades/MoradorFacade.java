@@ -11,25 +11,25 @@ import java.util.Optional;
 @Component
 public class MoradorFacade {
 
-    private final MoradorApplication application;
+    private final MoradorApplication moradorApplication;
 
     public MoradorFacade(MoradorApplication application) {
-        this.application = application;
+        this.moradorApplication = application;
     }
 
-    public MoradorModel salvar(MoradorModel moradorModel) {
-        return application.salvar(moradorModel);
+    public Morador salvar(Morador morador) {
+        return moradorApplication.salvar(morador);
     }
 
-    public Optional<MoradorModel> buscarPorId(Integer id) {
-        return application.buscarPorId(id);
+    public Optional<Morador> buscarPorId(Integer id) {
+        return moradorApplication.buscarPorId(id);
     }
 
-    public List<MoradorModel> listarTodos() {
-        return application.listarTodos();
+    public List<Morador> listarTodos() {
+        return moradorApplication.listarTodos();
     }
 
     public void deletar(Integer id) {
-        application.deletar(id);
+        moradorApplication.deletar(id);
     }
 }

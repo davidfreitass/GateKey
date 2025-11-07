@@ -17,16 +17,32 @@ public class CredencialApplication {
         this.repository = repository;
     }
 
-    public CredencialModel salvar(CredencialModel credencialModel) {
-        return repository.save(credencialModel);
+    public Credencial salvar(Credencial credencial) {
+        CredencialModel model = credencial.toModel();
+        CredencialModel saved = repository.save(model);
+
+        return new Credencial(
+                saved.getId(),
+                saved.getDadosBiometricos()
+        );
     }
 
-    public List<CredencialModel> listarTodos() {
-        return repository.findAll();
+    public List<Credencial> listarTodos() {
+        return repository.findAll()
+                .stream()
+                .map(model -> new Credencial(
+                        model.getId(),
+                        model.getDadosBiometricos()
+                ))
+                .toList();
     }
 
-    public Optional<CredencialModel> buscarPorId(Integer id) {
-        return repository.findById(id);
+    public Optional<Credencial> buscarPorId(Integer id) {
+        return repository.findById(id)
+                .map(model -> new Credencial(
+                        model.getId(),
+                        model.getDadosBiometricos()
+                ));
     }
 
     public void deletar(Integer id) {
