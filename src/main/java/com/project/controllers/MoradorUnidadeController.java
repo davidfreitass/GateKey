@@ -24,7 +24,7 @@ public class MoradorUnidadeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MoradorUnidadeModel> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<MoradorUnidadeModel> buscarPorId(@PathVariable int id) {
         return facade.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -47,7 +47,7 @@ public class MoradorUnidadeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MoradorUnidadeModel> update(@PathVariable Long id,
+    public ResponseEntity<MoradorUnidadeModel> update(@PathVariable int id,
                                                       @RequestBody MoradorUnidadeModel model) {
         if (facade.buscarPorId(id).isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -60,7 +60,7 @@ public class MoradorUnidadeController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePorId(@PathVariable Long id) {
+    public ResponseEntity<Void> deletePorId(@PathVariable int id) {
         if (facade.buscarPorId(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }

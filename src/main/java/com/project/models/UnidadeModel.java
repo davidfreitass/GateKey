@@ -8,13 +8,14 @@ import java.util.List;
 @Entity
 @Table(name = "unidade")
 public class UnidadeModel {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String numero;
     private String bloco;
     private String tipo;
+
+    public UnidadeModel(){}
 
     public UnidadeModel(int id, String numero, String bloco, String tipo) {
         this.id = id;

@@ -25,11 +25,11 @@ public class MoradorUnidadeApplication {
         return repository.findAll();
     }
 
-    public Optional<MoradorUnidadeModel> buscarPorId(Long id) {
+    public Optional<MoradorUnidadeModel> buscarPorId(int id) {
         return repository.findById(id);
     }
 
-    public void deletar(Long id) {
+    public void deletar(int id) {
         repository.deleteById(id);
     }
 
