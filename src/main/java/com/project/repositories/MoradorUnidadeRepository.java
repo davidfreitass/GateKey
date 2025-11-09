@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface MoradorUnidadeRepository extends JpaRepository<MoradorUnidadeModel, Long> {
+public interface MoradorUnidadeRepository extends JpaRepository<MoradorUnidadeModel, Integer> {
 
     Optional<MoradorUnidadeModel> findByMorador_IdAndUnidade_Id(Integer moradorId, Integer unidadeId);
 }

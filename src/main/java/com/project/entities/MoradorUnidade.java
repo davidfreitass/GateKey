@@ -5,23 +5,23 @@ import com.project.models.UnidadeModel;
 
 public class MoradorUnidade {
 
-    private Long id;
+    private Integer id;
     private Integer idMorador;
     private Integer idUnidade;
 
     public MoradorUnidade() {}
 
-    public MoradorUnidade(Long id, Integer idMorador, Integer idUnidade) {
+    public MoradorUnidade(Integer id, Integer idMorador, Integer idUnidade) {
         this.id = id;
         this.idMorador = idMorador;
         this.idUnidade = idUnidade;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

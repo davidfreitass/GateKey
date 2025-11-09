@@ -21,7 +21,7 @@ public class MoradorUnidadeFacade {
         return moradorUnidadeApplication.salvar(moradorUnidadeModel);
     }
 
-    public Optional<MoradorUnidadeModel> buscarPorId(Long id) {
+    public Optional<MoradorUnidadeModel> buscarPorId(int id) {
         return moradorUnidadeApplication.buscarPorId(id);
     }
 
@@ -29,7 +29,7 @@ public class MoradorUnidadeFacade {
         return moradorUnidadeApplication.listarTodos();
     }
 
-    public void deletar(Long id) {
+    public void deletar(int id) {
         moradorUnidadeApplication.deletar(id);
     }
 

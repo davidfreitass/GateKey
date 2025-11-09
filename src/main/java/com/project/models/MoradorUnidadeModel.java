@@ -4,42 +4,57 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "morador_unidade", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"morador_id_morador", "unidade_id_unidade"}, name = "uk_morador_unidade")
+        @UniqueConstraint(columnNames = {"morador_id", "unidade_id"}, name = "uk_morador_unidade")
 })
 public class MoradorUnidadeModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
-    public MoradorUnidadeModel(Long id) {
-        this.id = id;
-    }
+    @Column(name = "morador_id")
+    private int moradorId;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(
-            name = "morador_id_morador",
-            nullable = false,
-            foreignKey = @ForeignKey(name = "fk_morador_unidade_morador_id")
-    )
+            name = "morador_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "fk_morador_unidade_morador_id"),
+            insertable = false, updatable = false)
     private MoradorModel morador;
 
-    @ManyToOne()
+    @Column(name = "unidade_id")
+    private int unidadeId;
+
+    @ManyToOne
     @JoinColumn(
-            name = "unidade_id_unidade",
-            nullable = false,
-            foreignKey = @ForeignKey(name = "fk_morador_unidade_unidade_id")
-    )
+            name = "unidade_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "fk_morador_unidade_unidade_id"),
+            insertable = false, updatable = false)
     private UnidadeModel unidade;
 
     public MoradorUnidadeModel() {}
 
-    public Long getId() {
+    public MoradorUnidadeModel(MoradorModel morador, UnidadeModel unidade) {
+        this.morador = morador;
+        this.unidade = unidade;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
+    }
+
+    public int getMoradorId() {
+        return moradorId;
+    }
+
+    public void setMoradorId(int moradorId) {
+        this.moradorId = moradorId;
     }
 
     public MoradorModel getMorador() {
@@ -48,6 +63,14 @@ public class MoradorUnidadeModel {
 
     public void setMorador(MoradorModel morador) {
         this.morador = morador;
+    }
+
+    public int getUnidadeId() {
+        return unidadeId;
+    }
+
+    public void setUnidadeId(int unidadeId) {
+        this.unidadeId = unidadeId;
     }
 
     public UnidadeModel getUnidade() {
