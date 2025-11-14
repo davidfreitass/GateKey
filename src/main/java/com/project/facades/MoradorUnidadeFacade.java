@@ -17,27 +17,19 @@ public class MoradorUnidadeFacade {
         this.moradorUnidadeApplication = application;
     }
 
-    public MoradorUnidadeModel salvar(MoradorUnidadeModel moradorUnidadeModel) {
-        return moradorUnidadeApplication.salvar(moradorUnidadeModel);
+    public MoradorUnidade salvar(MoradorUnidade moradorUnidade) {
+        return moradorUnidadeApplication.salvar(moradorUnidade);
     }
 
-    public Optional<MoradorUnidadeModel> buscarPorId(int id) {
+    public Optional<MoradorUnidade> buscarPorId(Long id) {
         return moradorUnidadeApplication.buscarPorId(id);
     }
 
-    public List<MoradorUnidadeModel> listarTodos() {
+    public List<MoradorUnidade> listarTodos() {
         return moradorUnidadeApplication.listarTodos();
     }
 
-    public void deletar(int id) {
+    public void deletar(Long id) {
         moradorUnidadeApplication.deletar(id);
-    }
-
-    public Optional<MoradorUnidadeModel> buscarPorIdsMoradorUnidade(Integer moradorId, Integer unidadeId) {
-        return moradorUnidadeApplication.buscarPorIdsMoradorUnidade(moradorId, unidadeId);
-    }
-
-    public boolean deletarPorIdsMoradorUnidade(Integer moradorId, Integer unidadeId) {
-        return moradorUnidadeApplication.deletarPorIdsMoradorUnidade(moradorId, unidadeId);
     }
 }

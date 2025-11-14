@@ -1,9 +1,11 @@
 package com.project.applications;
 
+import com.project.entities.MoradorUnidade;
+import com.project.entities.RegistroAcesso;
 import com.project.models.MoradorUnidadeModel;
 import com.project.repositories.MoradorUnidadeRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -17,32 +19,38 @@ public class MoradorUnidadeApplication {
         this.repository = repository;
     }
 
-    public MoradorUnidadeModel salvar(MoradorUnidadeModel moradorUnidadeModel) {
-        return repository.save(moradorUnidadeModel);
+    public MoradorUnidade salvar(MoradorUnidade moradorUnidade) {
+        MoradorUnidadeModel model = moradorUnidade.toModel();
+        MoradorUnidadeModel saved = repository.save(model);
+
+        return new MoradorUnidade(
+                saved.getId(),
+                saved.getMoradorId(),
+                saved.getUnidadeId()
+        );
     }
 
-    public List<MoradorUnidadeModel> listarTodos() {
-        return repository.findAll();
+    public List<MoradorUnidade> listarTodos() {
+        return repository.findAll()
+                .stream()
+                .map(model -> new MoradorUnidade(
+                        model.getId(),
+                        model.getMoradorId(),
+                        model.getUnidadeId()
+                ))
+                .toList();
     }
 
-    public Optional<MoradorUnidadeModel> buscarPorId(int id) {
-        return repository.findById(id);
+    public Optional<MoradorUnidade> buscarPorId(Long id) {
+        return repository.findById(id)
+                .map(model -> new MoradorUnidade(
+                        model.getId(),
+                        model.getMoradorId(),
+                        model.getUnidadeId()
+                ));
     }
 
-    public void deletar(int id) {
+    public void deletar(Long id) {
         repository.deleteById(id);
-    }
-
-    public Optional<MoradorUnidadeModel> buscarPorIdsMoradorUnidade(Integer moradorId, Integer unidadeId) {
-        return repository.findByMorador_IdAndUnidade_Id(moradorId, unidadeId);
-    }
-
-    public boolean deletarPorIdsMoradorUnidade(Integer moradorId, Integer unidadeId) {
-        Optional<MoradorUnidadeModel> associacao = repository.findByMorador_IdAndUnidade_Id(moradorId, unidadeId);
-        if (associacao.isPresent()) {
-            repository.delete(associacao.get());
-            return true;
-        }
-        return false;
     }
 }

@@ -4,48 +4,60 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "morador_unidade", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"morador_id", "unidade_id"}, name = "uk_morador_unidade")
+        @UniqueConstraint(columnNames = {"morador_id_morador", "unidade_id_unidade"}, name = "uk_morador_unidade")
 })
 public class MoradorUnidadeModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
-    @Column(name = "morador_id")
+    @Column(name = "morador_id_morador")
     private int moradorId;
 
-    @ManyToOne
-    @JoinColumn(
-            name = "morador_id",
-            referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "fk_morador_unidade_morador_id"),
-            insertable = false, updatable = false)
-    private MoradorModel morador;
-
-    @Column(name = "unidade_id")
+    @Column(name = "unidade_id_unidade")
     private int unidadeId;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(
-            name = "unidade_id",
-            referencedColumnName = "id",
+            name = "morador_id_morador",
+            nullable = false,
+            foreignKey = @ForeignKey(name = "fk_morador_unidade_morador_id"),
+            updatable = false,
+            insertable = false
+    )
+    private MoradorModel morador;
+
+    @ManyToOne()
+    @JoinColumn(
+            name = "unidade_id_unidade",
+            nullable = false,
             foreignKey = @ForeignKey(name = "fk_morador_unidade_unidade_id"),
-            insertable = false, updatable = false)
+            updatable = false,
+            insertable = false
+    )
     private UnidadeModel unidade;
 
     public MoradorUnidadeModel() {}
 
-    public MoradorUnidadeModel(MoradorModel morador, UnidadeModel unidade) {
+    public MoradorUnidadeModel(Long id) {
+        this.id = id;
+    }
+
+    public MoradorUnidadeModel(Long id, int moradorId, MoradorModel morador, int unidadeId, UnidadeModel unidade) {
+        this.id = id;
+        this.moradorId = moradorId;
         this.morador = morador;
+        this.unidadeId = unidadeId;
         this.unidade = unidade;
     }
 
-    public int getId() {
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -57,20 +69,20 @@ public class MoradorUnidadeModel {
         this.moradorId = moradorId;
     }
 
-    public MoradorModel getMorador() {
-        return morador;
-    }
-
-    public void setMorador(MoradorModel morador) {
-        this.morador = morador;
-    }
-
     public int getUnidadeId() {
         return unidadeId;
     }
 
     public void setUnidadeId(int unidadeId) {
         this.unidadeId = unidadeId;
+    }
+
+    public MoradorModel getMorador() {
+        return morador;
+    }
+
+    public void setMorador(MoradorModel morador) {
+        this.morador = morador;
     }
 
     public UnidadeModel getUnidade() {
