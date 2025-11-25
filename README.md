@@ -77,3 +77,6 @@ segurança pode consultar mas não alterar dados).
 
 <img width="800" height="1080" alt="Captura de tela 2025-03-04 182738" src="https://raw.githubusercontent.com/davidfreitass/GateKey/refs/heads/main/images/EscopoDeEntrega.PNG" />
 
+
+https://www.thingiverse.com/thing:3498570
+
