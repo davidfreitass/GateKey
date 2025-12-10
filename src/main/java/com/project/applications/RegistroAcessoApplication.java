@@ -22,7 +22,7 @@ public class RegistroAcessoApplication {
 
         RegistroAcessoModel model = registroAcesso.toModel();
 
-        // REGISTRAR DATA/HORA AUTOMÁTICO
+        
         model.setDataHora(LocalDateTime.now());
 
         RegistroAcessoModel saved = repository.save(model);
