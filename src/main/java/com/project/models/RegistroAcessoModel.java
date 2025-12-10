@@ -7,13 +7,13 @@ import java.time.LocalDateTime;
 @Table(name = "registro_acesso")
 public class RegistroAcessoModel {
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-        private LocalDateTime dataHora;
+    private LocalDateTime dataHora;
 
-        private String situacao;
+    private String situacao;
 
     public RegistroAcessoModel() {}
 
@@ -22,38 +22,37 @@ public class RegistroAcessoModel {
         this.dataHora = dataHora;
         this.situacao = situacao;
     }
-        @Column(name = "dispositivo_id")
-        private int dispositivoId;
 
-        @ManyToOne
-        @JoinColumn(
-                name = "dispositivo_id",
-                referencedColumnName = "id",
-                foreignKey = @ForeignKey(name = "fk_registro_dispositivo_dispositivo_id"),
-                insertable = false, updatable = false)
-        private DispositivoModel dispositivoModel;
+    @Column(name = "dispositivo_id")
+    private int dispositivoId;
 
-        @Column(name = "credencial_id")
-        private int credencialId;
+    @ManyToOne
+    @JoinColumn(
+            name = "dispositivo_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "fk_registro_dispositivo_dispositivo_id"),
+            insertable = false, updatable = false)
+    private DispositivoModel dispositivoModel;
 
-        @ManyToOne
-        @JoinColumn(
-                name = "credencial_id",
-                referencedColumnName = "id",
-                foreignKey = @ForeignKey(name = "fk_registro_credencial_credencial_id"),
-                insertable = false, updatable = false)
-        private CredencialModel credencialModel;
+    @Column(name = "credencial_id")
+    private int credencialId;
+
+    @ManyToOne
+    @JoinColumn(
+            name = "credencial_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "fk_registro_credencial_credencial_id"),
+            insertable = false, updatable = false)
+    private CredencialModel credencialModel;
 
     public int getId() { return id; }
-        public void setId(int id) { this.id = id; }
+    public void setId(int id) { this.id = id; }
 
-        public LocalDateTime getDataHora() { return dataHora; }
-        public void setDataHora(LocalDateTime dataHora) { this.dataHora = dataHora; }
+    public LocalDateTime getDataHora() { return dataHora; }
+    public void setDataHora(LocalDateTime dataHora) { this.dataHora = dataHora; }
 
-        public String getSituacao() { return situacao; }
-        public void setSituacao(String situacao) { this.situacao = situacao; }
-
-
+    public String getSituacao() { return situacao; }
+    public void setSituacao(String situacao) { this.situacao = situacao; }
 
     public DispositivoModel getDispositivoModel() {
         return dispositivoModel;
@@ -70,8 +69,4 @@ public class RegistroAcessoModel {
     public void setCredencialModel(CredencialModel credencialModel) {
         this.credencialModel = credencialModel;
     }
-
-
 }
-
-

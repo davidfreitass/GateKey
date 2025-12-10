@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class RegistroAcessoApplication {
@@ -53,5 +52,4 @@ public class RegistroAcessoApplication {
     public void deletar(Integer id) {
         repository.deleteById(id);
     }
-
 }
