@@ -12,7 +12,7 @@ public class RegistroAcesso {
     private int dispositivoId;
 
     public RegistroAcesso() {
-        // construtor vazio necessário para o @RequestBody funcionar
+        
     }
 
     public RegistroAcesso(int id, LocalDateTime dataHora, String situacao,
@@ -24,7 +24,7 @@ public class RegistroAcesso {
         this.dispositivoId = dispositivoId;
     }
 
-    // GETTERS e SETTERS
+    
     public int getId() {
         return id;
     }
@@ -65,7 +65,7 @@ public class RegistroAcesso {
         this.dispositivoId = dispositivoId;
     }
 
-    // CONVERSÃO PARA MODEL
+    
     public RegistroAcessoModel toModel() {
         RegistroAcessoModel model = new RegistroAcessoModel();
         model.setId(this.id);
@@ -76,7 +76,7 @@ public class RegistroAcesso {
         return model;
     }
 
-    // CONVERSÃO DE MODEL PARA ENTITY
+   
     public static RegistroAcesso fromModel(RegistroAcessoModel model) {
         return new RegistroAcesso(
                 model.getId(),
