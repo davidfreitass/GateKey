@@ -1,27 +1,30 @@
 package com.project.entities;
 
+import com.project.models.MoradorModel;
 import com.project.models.MoradorUnidadeModel;
 import com.project.models.UnidadeModel;
 
 public class MoradorUnidade {
 
-    private Integer id;
+    private Long id;
     private Integer idMorador;
     private Integer idUnidade;
+    private Morador morador;
+    private Unidade unidade;
 
     public MoradorUnidade() {}
 
-    public MoradorUnidade(Integer id, Integer idMorador, Integer idUnidade) {
+    public MoradorUnidade(Long id, Integer idMorador, Integer idUnidade) {
         this.id = id;
         this.idMorador = idMorador;
         this.idUnidade = idUnidade;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -41,4 +44,38 @@ public class MoradorUnidade {
         this.idUnidade = idUnidade;
     }
 
+    public Unidade getUnidade() {
+        return unidade;
+    }
+
+    public void setUnidade(Unidade unidade) {
+        this.unidade = unidade;
+    }
+
+    public Morador getMorador() {
+        return morador;
+    }
+
+    public void setMorador(Morador morador) {
+        this.morador = morador;
+    }
+
+    public MoradorUnidadeModel toModel() {
+        return new MoradorUnidadeModel(
+                this.id,
+                this.idMorador,
+                null,
+                this.idUnidade,
+                null
+        );
+    }
+
+    public MoradorUnidade fromModel(MoradorUnidadeModel model) {
+
+        return new MoradorUnidade(
+                model.getId(),
+                model.getMoradorId(),
+                model.getUnidadeId()
+        );
+    }
 }
