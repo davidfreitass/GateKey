@@ -8,6 +8,8 @@ public class Credencial {
     private int id;
     private byte[] dadosBiometricos;
 
+    public Credencial() {}
+
     public Credencial(int id, byte[] dadosBiometricos) {
         this.id = id;
         this.dadosBiometricos = dadosBiometricos;

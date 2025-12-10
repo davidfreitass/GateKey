@@ -15,9 +15,7 @@ public class RegistroAcessoModel {
 
         private String situacao;
 
-    public RegistroAcessoModel() {
-
-    }
+    public RegistroAcessoModel() {}
 
     public RegistroAcessoModel(int id, LocalDateTime dataHora, String situacao) {
         this.id = id;

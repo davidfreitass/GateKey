@@ -5,9 +5,11 @@ import java.time.LocalDateTime;
 
 public class RegistroAcesso {
 
-        private int id;
-        private LocalDateTime dataHora;
-        private String situacao;
+    private int id;
+    private LocalDateTime dataHora;
+    private String situacao;
+
+    public RegistroAcesso() {}
 
     public RegistroAcesso(int id, LocalDateTime dataHora, String situacao) {
         this.id = id;
@@ -20,23 +22,23 @@ public class RegistroAcesso {
             return id;
         }
 
-        public void setId(int id) {
+    public void setId(int id) {
             this.id = id;
         }
 
-        public LocalDateTime getDataHora() {
+    public LocalDateTime getDataHora() {
             return dataHora;
         }
 
-        public void setDataHora(LocalDateTime dataHora) {
+    public void setDataHora(LocalDateTime dataHora) {
             this.dataHora = dataHora;
         }
 
-        public String getSituacao() {
+    public String getSituacao() {
             return situacao;
         }
 
-        public void setSituacao(String situacao) {
+    public void setSituacao(String situacao) {
             this.situacao = situacao;
         }
 

@@ -14,12 +14,17 @@ public class UsuarioModel {
     private String nivelAcesso;
     private String status;
 
-    public UsuarioModel(Integer id, String login, String senha, String nivelAcesso, String status) {
+    public UsuarioModel() {
+    }
+
+    public UsuarioModel(Integer id, String login, String senha, String nivelAcesso, String status, MoradorModel morador, FuncionarioModel funcionario) {
         this.id = id;
         this.login = login;
         this.senha = senha;
         this.nivelAcesso = nivelAcesso;
         this.status = status;
+        this.morador = morador;
+        this.funcionario = funcionario;
     }
 
     @OneToOne()

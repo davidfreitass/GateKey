@@ -12,6 +12,8 @@ public class CredencialModel {
     @Lob
     private byte[] dadosBiometricos;
 
+    public CredencialModel() { }
+
     public CredencialModel(int id, byte[] dadosBiometricos) {
         this.id = id;
         this.dadosBiometricos = dadosBiometricos;

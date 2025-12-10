@@ -67,15 +67,26 @@ public class MoradorUnidade {
                 null,
                 this.idUnidade,
                 null
+
+
         );
     }
 
     public MoradorUnidade fromModel(MoradorUnidadeModel model) {
-
-        return new MoradorUnidade(
+        MoradorUnidade entity = new MoradorUnidade(
                 model.getId(),
                 model.getMoradorId(),
                 model.getUnidadeId()
         );
+
+        if (model.getMorador() != null) {
+            entity.setMorador(new Morador().fromModel(model.getMorador()));
+        }
+
+        if (model.getUnidade() != null) {
+            entity.setUnidade(new Unidade().fromModel(model.getUnidade()));
+        }
+
+        return entity;
     }
 }
