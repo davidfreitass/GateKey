@@ -12,15 +12,19 @@ public class MoradorUnidadeModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    public MoradorUnidadeModel(Long id) {
-        this.id = id;
-    }
+    @Column(name = "morador_id_morador")
+    private int moradorId;
+
+    @Column(name = "unidade_id_unidade")
+    private int unidadeId;
 
     @ManyToOne()
     @JoinColumn(
             name = "morador_id_morador",
             nullable = false,
-            foreignKey = @ForeignKey(name = "fk_morador_unidade_morador_id")
+            foreignKey = @ForeignKey(name = "fk_morador_unidade_morador_id"),
+            updatable = false,
+            insertable = false
     )
     private MoradorModel morador;
 
@@ -28,11 +32,26 @@ public class MoradorUnidadeModel {
     @JoinColumn(
             name = "unidade_id_unidade",
             nullable = false,
-            foreignKey = @ForeignKey(name = "fk_morador_unidade_unidade_id")
+            foreignKey = @ForeignKey(name = "fk_morador_unidade_unidade_id"),
+            updatable = false,
+            insertable = false
     )
     private UnidadeModel unidade;
 
     public MoradorUnidadeModel() {}
+
+    public MoradorUnidadeModel(Long id) {
+        this.id = id;
+    }
+
+    public MoradorUnidadeModel(Long id, int moradorId, MoradorModel morador, int unidadeId, UnidadeModel unidade) {
+        this.id = id;
+        this.moradorId = moradorId;
+        this.morador = morador;
+        this.unidadeId = unidadeId;
+        this.unidade = unidade;
+    }
+
 
     public Long getId() {
         return id;
@@ -40,6 +59,22 @@ public class MoradorUnidadeModel {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public int getMoradorId() {
+        return moradorId;
+    }
+
+    public void setMoradorId(int moradorId) {
+        this.moradorId = moradorId;
+    }
+
+    public int getUnidadeId() {
+        return unidadeId;
+    }
+
+    public void setUnidadeId(int unidadeId) {
+        this.unidadeId = unidadeId;
     }
 
     public MoradorModel getMorador() {

@@ -1,5 +1,6 @@
 package com.project.controllers;
 
+import com.project.entities.MoradorUnidade;
 import com.project.facades.MoradorUnidadeFacade;
 import com.project.models.MoradorUnidadeModel;
 import org.springframework.http.ResponseEntity;
@@ -19,43 +20,33 @@ public class MoradorUnidadeController {
     }
 
     @GetMapping
-    public List<MoradorUnidadeModel> listAll() {
+    public List<MoradorUnidade> listAll() {
         return facade.listarTodos();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MoradorUnidadeModel> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<MoradorUnidade> buscarPorId(@PathVariable Long id) {
         return facade.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/detalhe/{moradorId}/{unidadeId}")
-    public ResponseEntity<MoradorUnidadeModel> buscarPorIdsLogicos(
-            @PathVariable Integer moradorId,
-            @PathVariable Integer unidadeId) {
-
-        return facade.buscarPorIdsMoradorUnidade(moradorId, unidadeId)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
     @PostMapping
-    public MoradorUnidadeModel create(@RequestBody MoradorUnidadeModel model) {
-        MoradorUnidadeModel saved = facade.salvar(model);
+    public MoradorUnidade create(@RequestBody MoradorUnidade moradorUnidade) {
+        MoradorUnidade saved = facade.salvar(moradorUnidade);
         return saved;
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MoradorUnidadeModel> update(@PathVariable Long id,
-                                                      @RequestBody MoradorUnidadeModel model) {
+    public ResponseEntity<MoradorUnidade> update(@PathVariable Long id,
+                                                      @RequestBody MoradorUnidade moradorUnidade) {
         if (facade.buscarPorId(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        model.setId(id);
+        moradorUnidade.setId(id);
 
-        MoradorUnidadeModel updated = facade.salvar(model);
+        MoradorUnidade updated = facade.salvar(moradorUnidade);
         return ResponseEntity.ok(updated);
     }
 
@@ -66,14 +57,5 @@ public class MoradorUnidadeController {
         }
         facade.deletar(id);
         return ResponseEntity.noContent().build();
-    }
-
-    @DeleteMapping("/detalhe/{moradorId}/{unidadeId}")
-    public ResponseEntity<Void> deletePorIdsLogicos(@PathVariable Integer moradorId,
-                                                    @PathVariable Integer unidadeId) {
-        if (facade.deletarPorIdsMoradorUnidade(moradorId, unidadeId)) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
     }
 }

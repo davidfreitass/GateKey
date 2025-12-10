@@ -1,5 +1,6 @@
 package com.project.entities;
 
+import com.project.models.MoradorModel;
 import com.project.models.MoradorUnidadeModel;
 import com.project.models.UnidadeModel;
 
@@ -8,6 +9,8 @@ public class MoradorUnidade {
     private Long id;
     private Integer idMorador;
     private Integer idUnidade;
+    private Morador morador;
+    private Unidade unidade;
 
     public MoradorUnidade() {}
 
@@ -41,4 +44,38 @@ public class MoradorUnidade {
         this.idUnidade = idUnidade;
     }
 
+    public Unidade getUnidade() {
+        return unidade;
+    }
+
+    public void setUnidade(Unidade unidade) {
+        this.unidade = unidade;
+    }
+
+    public Morador getMorador() {
+        return morador;
+    }
+
+    public void setMorador(Morador morador) {
+        this.morador = morador;
+    }
+
+    public MoradorUnidadeModel toModel() {
+        return new MoradorUnidadeModel(
+                this.id,
+                this.idMorador,
+                null,
+                this.idUnidade,
+                null
+        );
+    }
+
+    public MoradorUnidade fromModel(MoradorUnidadeModel model) {
+
+        return new MoradorUnidade(
+                model.getId(),
+                model.getMoradorId(),
+                model.getUnidadeId()
+        );
+    }
 }

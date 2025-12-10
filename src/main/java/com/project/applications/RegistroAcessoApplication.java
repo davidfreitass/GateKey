@@ -1,5 +1,6 @@
 package com.project.applications;
 
+import com.project.entities.Dispositivo;
 import com.project.entities.RegistroAcesso;
 import com.project.models.RegistroAcessoModel;
 import com.project.repositories.RegistroAcessoRepository;
@@ -19,46 +20,38 @@ public class RegistroAcessoApplication {
     }
 
     public RegistroAcesso salvar(RegistroAcesso registroAcesso) {
+        RegistroAcessoModel model = registroAcesso.toModel();
+        RegistroAcessoModel saved = repository.save(model);
 
-        RegistroAcessoModel modelParaSalvar = this.converterParaEntidade(registroAcesso);
-
-        RegistroAcessoModel modelSalvo = repository.save(modelParaSalvar);
-
-        return this.converterParaDTO(modelSalvo);
+        return new RegistroAcesso(
+                saved.getId(),
+                saved.getDataHora(),
+                saved.getSituacao()
+        );
     }
 
     public List<RegistroAcesso> listarTodos() {
-        List<RegistroAcessoModel> listaDeModels = repository.findAll();
-
-        return listaDeModels.stream()
-                .map(this::converterParaDTO)
-                .collect(Collectors.toList());
+        return repository.findAll()
+                .stream()
+                .map(model -> new RegistroAcesso(
+                        model.getId(),
+                        model.getDataHora(),
+                        model.getSituacao()
+                ))
+                .toList();
     }
 
     public Optional<RegistroAcesso> buscarPorId(Integer id) {
-        Optional<RegistroAcessoModel> modelEncontrado = repository.findById(id);
-
-        return modelEncontrado.map(this::converterParaDTO);
+        return repository.findById(id)
+                .map(model -> new RegistroAcesso(
+                        model.getId(),
+                        model.getDataHora(),
+                        model.getSituacao()
+                ));
     }
 
     public void deletar(Integer id) {
         repository.deleteById(id);
     }
 
-    private RegistroAcessoModel converterParaEntidade(RegistroAcesso dto) {
-        RegistroAcessoModel model = new RegistroAcessoModel();
-        model.setId(dto.getId());
-        model.setDataHora(dto.getDataHora());
-        model.setSituacao(dto.getSituacao());
-        return model;
-    }
-
-
-    private RegistroAcesso converterParaDTO(RegistroAcessoModel model) {
-        RegistroAcesso dto = new RegistroAcesso();
-         dto.setId(model.getId());
-         dto.setDataHora(model.getDataHora());
-         dto.setSituacao(model.getSituacao());
-        return dto;
-    }
 }
