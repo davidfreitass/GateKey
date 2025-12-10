@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "unidade")
+@Table(name = "unidades")
 public class UnidadeModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
