@@ -13,6 +13,8 @@ public class Funcionario {
     private byte[] fotoPerfil;
     private String status;
 
+    public Funcionario() {}
+
     public Funcionario(int id, String nome, String cpf, String telefone, String email, byte[] fotoPerfil, String status) {
         this.id = id;
         this.nome = nome;

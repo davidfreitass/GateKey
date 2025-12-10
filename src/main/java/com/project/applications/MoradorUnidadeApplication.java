@@ -23,31 +23,21 @@ public class MoradorUnidadeApplication {
         MoradorUnidadeModel model = moradorUnidade.toModel();
         MoradorUnidadeModel saved = repository.save(model);
 
-        return new MoradorUnidade(
-                saved.getId(),
-                saved.getMoradorId(),
-                saved.getUnidadeId()
-        );
+        return moradorUnidade.fromModel(saved);
     }
 
     public List<MoradorUnidade> listarTodos() {
+        MoradorUnidade moradorUnidadeConverter = new MoradorUnidade();
         return repository.findAll()
                 .stream()
-                .map(model -> new MoradorUnidade(
-                        model.getId(),
-                        model.getMoradorId(),
-                        model.getUnidadeId()
-                ))
+                .map(moradorUnidadeConverter::fromModel)
                 .toList();
     }
 
     public Optional<MoradorUnidade> buscarPorId(Long id) {
+        MoradorUnidade moradorUnidadeConverter = new MoradorUnidade();
         return repository.findById(id)
-                .map(model -> new MoradorUnidade(
-                        model.getId(),
-                        model.getMoradorId(),
-                        model.getUnidadeId()
-                ));
+                .map(moradorUnidadeConverter::fromModel);
     }
 
     public void deletar(Long id) {

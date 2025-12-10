@@ -9,12 +9,14 @@ import java.util.List;
     @Table(name = "dispositivos")
     public class DispositivoModel {
 
-            @Id
-            @GeneratedValue(strategy = GenerationType.IDENTITY)
-            private int id;
-            private String localizacao;
-            private String tipo;
-            private String status;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private String localizacao;
+    private String tipo;
+    private String status;
+
+    public DispositivoModel() { }
 
     public DispositivoModel(int id, String localizacao, String tipo, String status) {
         this.id = id;

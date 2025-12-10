@@ -10,6 +10,8 @@ public class Dispositivo {
     private String tipo;
     private String status;
 
+    public Dispositivo() {}
+
     public Dispositivo(int id, String localizacao, String tipo, String status) {
         this.id = id;
         this.localizacao = localizacao;

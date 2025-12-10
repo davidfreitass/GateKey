@@ -18,12 +18,16 @@ public class CredencialApplication {
     }
 
     public Credencial salvar(Credencial credencial) {
+
         CredencialModel model = credencial.toModel();
+
         CredencialModel saved = repository.save(model);
 
         return new Credencial(
                 saved.getId(),
-                saved.getDadosBiometricos()
+                saved.getDadosBiometricos(),
+                saved.getMoradorId(),
+                saved.getFuncionarioId()
         );
     }
 
@@ -32,7 +36,9 @@ public class CredencialApplication {
                 .stream()
                 .map(model -> new Credencial(
                         model.getId(),
-                        model.getDadosBiometricos()
+                        model.getDadosBiometricos(),
+                        model.getMoradorId(),
+                        model.getFuncionarioId()
                 ))
                 .toList();
     }
@@ -41,7 +47,9 @@ public class CredencialApplication {
         return repository.findById(id)
                 .map(model -> new Credencial(
                         model.getId(),
-                        model.getDadosBiometricos()
+                        model.getDadosBiometricos(),
+                        model.getMoradorId(),
+                        model.getFuncionarioId()
                 ));
     }
 
