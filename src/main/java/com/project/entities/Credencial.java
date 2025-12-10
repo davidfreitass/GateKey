@@ -7,10 +7,14 @@ public class Credencial {
 
     private int id;
     private byte[] dadosBiometricos;
+    private Integer moradorId;
+    private Integer funcionarioId;
 
-    public Credencial(int id, byte[] dadosBiometricos) {
+    public Credencial(int id, byte[] dadosBiometricos, Integer moradorId, Integer funcionarioId) {
         this.id = id;
         this.dadosBiometricos = dadosBiometricos;
+        this.moradorId = moradorId;
+        this.funcionarioId = funcionarioId;
     }
 
     public int getId() {
@@ -29,17 +33,37 @@ public class Credencial {
         this.dadosBiometricos = dadosBiometricos;
     }
 
+    public Integer getMoradorId() {
+        return moradorId;
+    }
+
+    public void setMoradorId(Integer moradorId) {
+        this.moradorId = moradorId;
+    }
+
+    public Integer getFuncionarioId() {
+        return funcionarioId;
+    }
+
+    public void setFuncionarioId(Integer funcionarioId) {
+        this.funcionarioId = funcionarioId;
+    }
+
     public CredencialModel toModel() {
-        return new CredencialModel(
-                this.getId(),
-                this.getDadosBiometricos()
-        );
+        CredencialModel model = new CredencialModel();
+        model.setId(this.id);
+        model.setDadosBiometricos(this.dadosBiometricos);
+        model.setMoradorId(this.moradorId);
+        model.setFuncionarioId(this.funcionarioId);
+        return model;
     }
 
     public Credencial fromModel(CredencialModel model) {
         return new Credencial(
                 model.getId(),
-                model.getDadosBiometricos()
+                model.getDadosBiometricos(),
+                model.getMoradorId(),
+                model.getFuncionarioId()
         );
     }
 }

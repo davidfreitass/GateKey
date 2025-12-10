@@ -11,6 +11,8 @@ public class Morador {
     private String email;
     private String status;
 
+    public Morador() {}
+
     public Morador(int id, String nome, String cpf, String telefone, String email, String status) {
         this.id = id;
         this.nome = nome;

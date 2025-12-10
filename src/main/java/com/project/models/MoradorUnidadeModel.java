@@ -18,7 +18,7 @@ public class MoradorUnidadeModel {
     @Column(name = "unidade_id_unidade")
     private int unidadeId;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(
             name = "morador_id_morador",
             nullable = false,
@@ -28,7 +28,7 @@ public class MoradorUnidadeModel {
     )
     private MoradorModel morador;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(
             name = "unidade_id_unidade",
             nullable = false,

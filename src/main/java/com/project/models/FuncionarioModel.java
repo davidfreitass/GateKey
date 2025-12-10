@@ -18,6 +18,8 @@ public class FuncionarioModel {
     private byte[] fotoPerfil;
     private String status;
 
+    public FuncionarioModel() { }
+
     public FuncionarioModel(int id, String nome, String cpf, String telefone, String email, byte[] fotoPerfil, String status) {
         this.id = id;
         this.nome = nome;

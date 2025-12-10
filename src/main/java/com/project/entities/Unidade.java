@@ -8,6 +8,8 @@ public class Unidade {
     private String bloco;
     private String tipo;
 
+    public Unidade() {}
+    
     public Unidade(int id, String numero, String bloco, String tipo) {
         this.id = id;
         this.numero = numero;
