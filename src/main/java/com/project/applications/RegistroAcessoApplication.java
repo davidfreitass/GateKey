@@ -1,11 +1,11 @@
 package com.project.applications;
 
-import com.project.entities.Dispositivo;
 import com.project.entities.RegistroAcesso;
 import com.project.models.RegistroAcessoModel;
 import com.project.repositories.RegistroAcessoRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,13 +19,20 @@ public class RegistroAcessoApplication {
     }
 
     public RegistroAcesso salvar(RegistroAcesso registroAcesso) {
+
         RegistroAcessoModel model = registroAcesso.toModel();
+
+        // REGISTRAR DATA/HORA AUTOMÁTICO
+        model.setDataHora(LocalDateTime.now());
+
         RegistroAcessoModel saved = repository.save(model);
 
         return new RegistroAcesso(
                 saved.getId(),
                 saved.getDataHora(),
-                saved.getSituacao()
+                saved.getSituacao(),
+                saved.getCredencialId(),
+                saved.getDispositivoId()
         );
     }
 
@@ -35,7 +42,9 @@ public class RegistroAcessoApplication {
                 .map(model -> new RegistroAcesso(
                         model.getId(),
                         model.getDataHora(),
-                        model.getSituacao()
+                        model.getSituacao(),
+                        model.getCredencialId(),
+                        model.getDispositivoId()
                 ))
                 .toList();
     }
@@ -45,7 +54,9 @@ public class RegistroAcessoApplication {
                 .map(model -> new RegistroAcesso(
                         model.getId(),
                         model.getDataHora(),
-                        model.getSituacao()
+                        model.getSituacao(),
+                        model.getCredencialId(),
+                        model.getDispositivoId()
                 ));
     }
 

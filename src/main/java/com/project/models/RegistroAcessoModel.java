@@ -17,10 +17,12 @@ public class RegistroAcessoModel {
 
     public RegistroAcessoModel() {}
 
-    public RegistroAcessoModel(int id, LocalDateTime dataHora, String situacao) {
+    public RegistroAcessoModel(int id, LocalDateTime dataHora, String situacao, int credencialId, int dispositivoId) {
         this.id = id;
         this.dataHora = dataHora;
         this.situacao = situacao;
+        this.credencialId = credencialId;
+        this.dispositivoId = dispositivoId;
     }
 
     @Column(name = "dispositivo_id")
@@ -69,4 +71,10 @@ public class RegistroAcessoModel {
     public void setCredencialModel(CredencialModel credencialModel) {
         this.credencialModel = credencialModel;
     }
+
+    public int getCredencialId() { return credencialId; }
+    public void setCredencialId(int credencialId) { this.credencialId = credencialId; }
+
+    public int getDispositivoId() { return dispositivoId; }
+    public void setDispositivoId(int dispositivoId) { this.dispositivoId = dispositivoId; }
 }
