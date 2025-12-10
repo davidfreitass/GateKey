@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "RegistroAcesso")
+@Table(name = "registro_acesso")
 public class RegistroAcessoModel {
 
         @Id
