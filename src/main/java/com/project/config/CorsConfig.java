@@ -10,7 +10,11 @@ public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost")
+                // INCLUINDO A PORTA 81 QUE VOCÊ ESTÁ USANDO NO FRONTEND
+                .allowedOrigins("http://localhost:81",
+                        "http://localhost:8081", // Opcional, para testes internos
+                        "http://127.0.0.1:5500", // Manter se usar Live Server
+                        "http://localhost")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true);
