@@ -26,7 +26,7 @@ public class FuncionarioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Funcionario> read(@PathVariable Integer id) {
+    public ResponseEntity<Funcionario> read(@PathVariable("id") Integer id) {
         return funcionarioFacade.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -51,7 +51,7 @@ public class FuncionarioController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+    public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
         if (funcionarioFacade.buscarPorId(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }

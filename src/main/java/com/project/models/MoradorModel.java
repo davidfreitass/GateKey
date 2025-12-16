@@ -1,5 +1,6 @@
 package com.project.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class MoradorModel {
     private String status;
 
     @OneToMany(mappedBy = "morador")
+    @JsonIgnore
     private List<MoradorUnidadeModel> moradorUnidadeModelList = new ArrayList<>();
 
     public MoradorModel() {}

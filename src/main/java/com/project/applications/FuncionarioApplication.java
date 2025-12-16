@@ -63,15 +63,7 @@ public class FuncionarioApplication {
 
     public Optional<Funcionario> buscarPorId(Integer id) {
         return repository.findById(id)
-                .map(model -> new Funcionario(
-                        model.getId(),
-                        model.getNome(),
-                        model.getCpf(),
-                        model.getTelefone(),
-                        model.getEmail(),
-                        model.getFotoPerfil(),
-                        model.getStatus()
-                ));
+                .map(Funcionario::fromModel);
     }
 
     public void deletar(Integer id) {

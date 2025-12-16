@@ -25,7 +25,7 @@ public class MoradorController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Morador> buscar(@PathVariable Integer id) {
+    public ResponseEntity<Morador> buscar(@PathVariable("id") Integer id) {
         return moradorFacade.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -51,7 +51,7 @@ public class MoradorController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+    public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
         if (moradorFacade.buscarPorId(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }

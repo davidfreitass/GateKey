@@ -1,5 +1,6 @@
 package com.project.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.models.FuncionarioModel;
 import com.project.models.MoradorModel;
 
@@ -10,7 +11,10 @@ public class Funcionario {
     private String cpf;
     private String telefone;
     private String email;
+
+    @JsonIgnore
     private byte[] fotoPerfil;
+
     private String status;
 
     public Funcionario() {}
@@ -88,19 +92,19 @@ public class Funcionario {
                 this.getCpf(),
                 this.getTelefone(),
                 this.getEmail(),
-                this.getFotoPerfil(),
+                null,
                 this.getStatus()
         );
     }
 
-    public Funcionario fromModel(FuncionarioModel model) {
+    public static Funcionario fromModel(FuncionarioModel model) {
         return new Funcionario(
                 model.getId(),
                 model.getNome(),
                 model.getCpf(),
                 model.getTelefone(),
                 model.getEmail(),
-                model.getFotoPerfil(),
+                null,
                 model.getStatus()
         );
     }

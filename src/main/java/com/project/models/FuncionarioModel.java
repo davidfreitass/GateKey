@@ -1,5 +1,6 @@
 package com.project.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,6 +16,7 @@ public class FuncionarioModel {
     private String email;
 
     @Lob
+    @JsonIgnore
     private byte[] fotoPerfil;
     private String status;
 

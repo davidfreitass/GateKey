@@ -5,6 +5,7 @@ import com.project.exceptions.MoradorException;
 
 import com.project.models.MoradorModel;
 import com.project.repositories.MoradorRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -56,16 +57,10 @@ public class MoradorApplication {
                 .toList();
     }
 
+    @Transactional
     public Optional<Morador> buscarPorId(Integer id) {
         return moradorRepository.findById(id)
-                .map(model -> new Morador(
-                        model.getId(),
-                        model.getNome(),
-                        model.getCpf(),
-                        model.getTelefone(),
-                        model.getEmail(),
-                        model.getStatus()
-                ));
+                .map(Morador::fromModel);
     }
 
     public void deletar(Integer id) {

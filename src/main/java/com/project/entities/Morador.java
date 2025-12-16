@@ -105,7 +105,7 @@ public class Morador {
         );
     }
 
-    public Morador fromModel(MoradorModel model) {
+    public static Morador fromModel(MoradorModel model) {
         return new Morador(
                 model.getId(),
                 model.getNome(),
