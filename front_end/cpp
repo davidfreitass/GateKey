@@ -1,0 +1,353 @@
+#include <LiquidCrystal.h>
+#include <WiFi.h>
+#include <ESP32Servo.h>
+#include <Adafruit_Fingerprint.h>
+#include <Firebase_ESP_Client.h>
+#include <time.h>
+#include <Keypad.h>
+
+#include "addons/TokenHelper.h"
+#include "addons/RTDBHelper.h"
+
+#define LCD_RS 2
+#define LCD_E 17
+#define LCD_D4 5
+#define LCD_D5 21
+#define LCD_D6 22
+#define LCD_D7 23
+
+LiquidCrystal lcd(LCD_RS, LCD_E, LCD_D4, LCD_D5, LCD_D6, LCD_D7);
+
+void logAndDisplay(String msg, bool clear = true, int line = 0) {
+    Serial.println(msg);
+    if (clear) lcd.clear();
+    if (line > 1) line = 1;
+    lcd.setCursor(0, line);
+    if (msg.length() > 16) msg = msg.substring(0, 16);
+    lcd.print(msg);
+}
+
+void serialOnlyPrint(String msg) {
+    Serial.print(msg);
+}
+
+#define WIFI_SSID "Coutinho"
+#define WIFI_PASSWORD "12345678"
+
+#define FIREBASE_AUTH "f8XHuISl1UHsgebAS6nYyBZkzhcYQn5wp9DnaIiG"
+#define DATABASE_URL "https://gatekey-9bb64-default-rtdb.firebaseio.com/"
+
+FirebaseData fbdo;
+FirebaseData stream;
+FirebaseAuth auth;
+FirebaseConfig config;
+
+String commandNode = "/system/commands/command";
+String statusPath = "/system/commands/status";
+String pendingCommand = "";
+
+Servo meuServo;
+
+int ledR = 16;
+int ledV = 4;
+const int SERVO_PIN = 15;
+
+HardwareSerial digitalSerial(2);
+Adafruit_Fingerprint digital = Adafruit_Fingerprint(&digitalSerial);
+uint8_t templateID = 1;
+
+const byte ROWS = 4;
+const byte COLS = 4;
+
+char keyMap[ROWS][COLS] = {
+ {'1','2','3','A'},
+ {'4','5','6','B'},
+ {'7','8','9','C'},
+ {'*','0','#','D'}
+};
+
+byte rowPins[ROWS] = {32, 33, 25, 26};
+byte colPins[COLS] = {27, 14, 12, 13};
+
+Keypad customKeypad = Keypad(makeKeymap(keyMap), rowPins, colPins, ROWS, COLS);
+
+const String ADMIN_PASSWORD = "1234";
+String inputPassword = "";
+const int PASSWORD_LENGTH = ADMIN_PASSWORD.length();
+const char ENTER_KEY = '#';
+const char CLEAR_KEY = '*';
+
+void streamCallback(FirebaseStream data) {
+    logAndDisplay("--- DADO RECEBIDO ---");
+    if (data.dataType() == "string") {
+        String cmd = data.stringData();
+        Serial.print("Conteúdo: ");
+        logAndDisplay(cmd, false, 1);
+        pendingCommand = cmd;
+        if (pendingCommand == "enroll") {
+            logAndDisplay(">> CADASTRO DETECTADO!", false, 0);
+            logAndDisplay("LIGANDO LED...", false, 1);
+        }
+    }
+    logAndDisplay("---------------------", false, 0);
+}
+
+void streamTimeoutCallback(bool timeout) {
+    if (timeout) {
+        logAndDisplay("AVISO: Stream Timeout.", true);
+        logAndDisplay("Tentando reconectar...", false, 1);
+    }
+}
+
+void sincronizarHoraNTP() {
+    configTime(-3 * 3600, 0, "pool.ntp.org", "time.nist.gov");
+    lcd.clear();
+    lcd.print("Sincronizando hora");
+    serialOnlyPrint("Sincronizando hora");
+    int tentativas = 0;
+    while (time(nullptr) < 1000000000 && tentativas < 20) {
+        serialOnlyPrint(".");
+        lcd.setCursor(16 + tentativas, 0);
+        lcd.print(".");
+        delay(500);
+        tentativas++;
+    }
+    logAndDisplay(" OK!", false, 1);
+}
+
+String obterHoraAtual() {
+    time_t agora = time(nullptr);
+    struct tm timeinfo;
+    localtime_r(&agora, &timeinfo);
+    char buffer[30];
+    strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", &timeinfo);
+    return String(buffer);
+}
+
+void portaAbrir(int id) {
+    logAndDisplay("ACESSO PERMITIDO!", true);
+    logAndDisplay("ID: " + String(id), false, 1);
+    digitalWrite(ledV, HIGH);
+    digitalWrite(ledR, LOW);
+    meuServo.write(0);
+    delay(3000);
+    meuServo.write(90);
+    digitalWrite(ledV, LOW);
+    digitalWrite(ledR, HIGH);
+    if (Firebase.ready()) {
+        FirebaseJson log;
+        log.set("fingerprintId", id);
+        log.set("status", "ACESSO PERMITIDO");
+        log.set("timestamp", obterHoraAtual());
+        Firebase.RTDB.pushJSON(&fbdo, "/logs", &log);
+    }
+}
+
+void portaNegada(String motivo) {
+    logAndDisplay("ACESSO NEGADO!", true);
+    logAndDisplay(motivo, false, 1);
+    digitalWrite(ledV, LOW);
+    digitalWrite(ledR, HIGH);
+    delay(2000);
+    if (Firebase.ready()) {
+        FirebaseJson log;
+        log.set("status", "ACESSO NEGADO");
+        log.set("motivo", motivo);
+        log.set("timestamp", obterHoraAtual());
+        Firebase.RTDB.pushJSON(&fbdo, "/logs", &log);
+    }
+}
+
+void checkPassword() {
+    char customKey = customKeypad.getKey();
+    if (customKey) {
+        if (customKey == ENTER_KEY) {
+            if (inputPassword == ADMIN_PASSWORD) {
+                logAndDisplay("Senha correta!", true);
+                logAndDisplay("Abrindo portao...", false, 1);
+                portaAbrir(9999);
+            } else {
+                logAndDisplay("Senha incorreta:", true);
+                logAndDisplay(inputPassword, false, 1);
+                portaNegada("Senha incorreta (Keypad)");
+            }
+            inputPassword = "";
+        }
+        else if (customKey == CLEAR_KEY) {
+            inputPassword = "";
+            logAndDisplay("Senha limpa.", true);
+        }
+        else if (inputPassword.length() < PASSWORD_LENGTH) {
+            inputPassword += customKey;
+            Serial.print("Input: ");
+            Serial.println(inputPassword);
+            String displayPassword = "";
+            for (size_t i = 0; i < inputPassword.length(); i++) displayPassword += "*";
+            lcd.clear();
+            lcd.setCursor(0, 0);
+            lcd.print("Digite a Senha:");
+            lcd.setCursor(0, 1);
+            lcd.print(displayPassword);
+        }
+    }
+}
+
+bool armazenarIDFirebase(int id) {
+    if (!Firebase.ready()) return false;
+    String path = "/users/" + String(id);
+    FirebaseJson json;
+    json.set("fingerprintId", id);
+    json.set("timestamp", obterHoraAtual());
+    return Firebase.RTDB.setJSON(&fbdo, path.c_str(), &json);
+}
+
+uint8_t getFingerprintEnroll(int id) {
+    int p = -1;
+    logAndDisplay("Iniciando cadastro...", true);
+    if (Firebase.ready())
+        Firebase.RTDB.setString(&fbdo, statusPath, "Coloque o dedo no sensor...");
+    while (p != FINGERPRINT_OK) {
+        p = digital.getImage();
+        if (p == FINGERPRINT_PACKETRECIEVEERR || p == FINGERPRINT_IMAGEFAIL)
+            return p;
+    }
+    p = digital.image2Tz(1);
+    if (p != FINGERPRINT_OK) return p;
+    logAndDisplay("Remova o dedo", true);
+    if (Firebase.ready()) Firebase.RTDB.setString(&fbdo, statusPath, "Remova o dedo...");
+    delay(2000);
+    while (digital.getImage() != FINGERPRINT_NOFINGER);
+    logAndDisplay("Coloque o dedo", true);
+    logAndDisplay("novamente", false, 1);
+    if (Firebase.ready()) Firebase.RTDB.setString(&fbdo, statusPath, "Coloque o mesmo dedo novamente...");
+    p = -1;
+    while (p != FINGERPRINT_OK) {
+        p = digital.getImage();
+        if (p == FINGERPRINT_PACKETRECIEVEERR || p == FINGERPRINT_IMAGEFAIL)
+            return p;
+    }
+    p = digital.image2Tz(2);
+    if (p != FINGERPRINT_OK) return p;
+    p = digital.createModel();
+    if (p == FINGERPRINT_OK) {
+        p = digital.storeModel(id);
+        if (p == FINGERPRINT_OK) {
+            armazenarIDFirebase(id);
+            logAndDisplay("Cadastro concluido!", true);
+            if (Firebase.ready()) Firebase.RTDB.setString(&fbdo, statusPath, "Cadastro concluido!");
+            return true;
+        }
+    } else {
+        logAndDisplay("Erro: Digitais", true);
+        logAndDisplay("nao coincidem", false, 1);
+        if (Firebase.ready()) Firebase.RTDB.setString(&fbdo, statusPath, "Erro: Digitais nao coincidem");
+    }
+    return false;
+}
+
+void deleteAllPrints() {
+    digital.emptyDatabase();
+    logAndDisplay("Banco de dados", true);
+    logAndDisplay("limpo!", false, 1);
+    if (Firebase.ready()) {
+        Firebase.RTDB.deleteNode(&fbdo, "/users");
+        Firebase.RTDB.setString(&fbdo, statusPath, "Banco de dados limpo!");
+    }
+}
+
+uint8_t identificarDigital() {
+    int p = digital.getImage();
+    if (p == FINGERPRINT_NOFINGER) {
+        lcd.setCursor(0, 0);
+        lcd.print("Aguardando Digital");
+        lcd.setCursor(0, 1);
+        lcd.print("ou Keypad...");
+        return p;
+    }
+    if (p != FINGERPRINT_OK) return p;
+    digital.image2Tz();
+    p = digital.fingerFastSearch();
+    if (p == FINGERPRINT_OK) portaAbrir(digital.fingerID);
+    else if (p == FINGERPRINT_NOTFOUND) portaNegada("Digital não encontrada");
+    return p;
+}
+
+void setup() {
+    Serial.begin(115200);
+    lcd.begin(16, 2);
+    pinMode(ledR, OUTPUT);
+    pinMode(ledV, OUTPUT);
+    digitalWrite(ledR, HIGH);
+    digitalWrite(ledV, LOW);
+    meuServo.attach(SERVO_PIN, 500, 2400);
+    meuServo.write(90);
+    digitalSerial.begin(57600, SERIAL_8N1, 18, 19);
+    digital.begin(57600);
+    if (!digital.verifyPassword()) {
+        logAndDisplay("ERRO: Sensor de", true);
+        logAndDisplay("digital nao ok!", false, 1);
+        while (1) delay(100);
+    }
+    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+    lcd.clear();
+    lcd.print("Conectando WiFi");
+    serialOnlyPrint("Conectando WiFi");
+    while (WiFi.status() != WL_CONNECTED) {
+        delay(500);
+        serialOnlyPrint(".");
+        lcd.print(".");
+    }
+    logAndDisplay(" OK", false, 1);
+    config.database_url = DATABASE_URL;
+    config.signer.tokens.legacy_token = FIREBASE_AUTH;
+    config.token_status_callback = tokenStatusCallback;
+    Firebase.begin(&config, &auth);
+    Firebase.reconnectWiFi(true);
+    stream.setResponseSize(4096);
+    Serial.print("Iniciando Stream em: ");
+    logAndDisplay(commandNode, true, 1);
+    if (!Firebase.RTDB.beginStream(&stream, commandNode)) {
+        logAndDisplay("ERRO STREAM:", true);
+        logAndDisplay(stream.errorReason(), false, 1);
+    }
+    Firebase.RTDB.setStreamCallback(&stream, streamCallback, streamTimeoutCallback);
+    sincronizarHoraNTP();
+    digital.getTemplateCount();
+    templateID = digital.templateCount + 1;
+    logAndDisplay("--- SISTEMA PRONTO ---", true);
+}
+
+void loop() {
+    if (!Firebase.ready()) {
+        static unsigned long lastLog = 0;
+        if (millis() - lastLog > 5000) {
+            logAndDisplay("Aviso: Firebase", true);
+            logAndDisplay("desconectado...", false, 1);
+            lastLog = millis();
+        }
+    }
+    checkPassword();
+    if (pendingCommand != "") {
+        logAndDisplay("Processando cmd:", true);
+        logAndDisplay(pendingCommand, false, 1);
+        if (pendingCommand == "enroll") {
+            if (templateID >= 1000) {
+                logAndDisplay("Erro: Base cheia!", true);
+                if (Firebase.ready()) Firebase.RTDB.setString(&fbdo, statusPath, "Erro: Base cheia!");
+            } else {
+                getFingerprintEnroll(templateID);
+                digital.getTemplateCount();
+                templateID = digital.templateCount + 1;
+            }
+        }
+        else if (pendingCommand == "delete_all") {
+            deleteAllPrints();
+            templateID = 1;
+        }
+        pendingCommand = "";
+        if (Firebase.ready()) Firebase.RTDB.setString(&fbdo, commandNode, "");
+    }
+    else {
+        identificarDigital();
+    }
+}
