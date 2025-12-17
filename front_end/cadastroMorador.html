@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>GateKey - Cadastro de Morador</title>
+  <link rel="stylesheet" href="pg.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="logo">GateKey</a>
+  </div>
+</nav>
+
+<main class="container mt-4">
+
+  <div class="card p-4">
+    <h4>Cadastrar Morador</h4>
+
+    <form id="formMorador">
+
+      <div class="mb-3">
+        <label class="form-label">Nome</label>
+        <input id="nome" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">CPF</label>
+        <input id="cpf" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Telefone</label>
+        <input id="telefone" class="form-control">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input id="email" class="form-control">
+      </div>
+
+      <button type="button" id="btnCadastrar" class="btn btn-primary">
+  Cadastrar
+</button>
+
+    </form>
+
+  </div>
+
+</main>
+
+<script src="cadastroMorador.js"></script>
+</body>
+</html>

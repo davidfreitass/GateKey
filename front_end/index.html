@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GateKey - Login</title>
+  <link rel="stylesheet" href="pg.css" />
+</head>
+<body>
+
+  <!-- 🔹 Barra de navegação -->
+  <nav class="navbar">
+    <div class="logo">GateKey</div>
+  </nav>
+
+  <main class="container">
+    <div class="card">
+      <h1>Entrar</h1>
+
+      <form id="login-form" class="form">
+        <label for="login-email">Email</label>
+        <input id="login-email" type="email" required />
+
+        <label for="login-password">Senha</label>
+        <input id="login-password" type="password" required />
+
+        <button id="login-btn" type="submit">Entrar</button>
+      </form>
+
+      <div class="or">— ou —</div>
+      <button id="google-btn" class="btn-google">Entrar com Google</button>
+
+      <div class="actions">
+        <a id="show-register" href="#">Criar conta</a>
+        <a id="show-reset" href="#">Esqueci a senha</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal: Registro -->
+  <div id="modal-register" class="modal hidden">
+    <div class="modal-card">
+      <button class="close" data-close>&times;</button>
+      <h2>Criar Conta</h2>
+      <form id="register-form" class="form">
+        <label for="reg-name">Nome</label>
+        <input id="reg-name" type="text" required />
+
+        <label for="reg-email">Email</label>
+        <input id="reg-email" type="email" required />
+
+        <label for="reg-password">Senha</label>
+        <input id="reg-password" type="password" required minlength="6" />
+
+        <button type="submit">Registrar</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Recuperar senha -->
+  <div id="modal-reset" class="modal hidden">
+    <div class="modal-card">
+      <button class="close" data-close>&times;</button>
+      <h2>Recuperar Senha</h2>
+      <form id="reset-form" class="form">
+        <label for="reset-email">Email</label>
+        <input id="reset-email" type="email" required />
+        <button type="submit">Enviar link de recuperação</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Firebase + App -->
+  <script type="module" src="pg.js"></script>
+</body>
+</html>
